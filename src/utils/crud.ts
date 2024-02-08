@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosResponse } from 'axios'
+import { createPathWithMultipleOptions } from './functions';
 
 interface Response {
   data: AxiosResponse<any>['data'];
@@ -11,21 +12,69 @@ class Crud {
   constructor(BASE_URL: string){
     this.BASE_URL = BASE_URL;
   }
-
-  async getInfos(path:string, id?:number) : Promise<Response> {
-    const res = typeof id !== 'undefined' 
-      ? await axios.get(`${this.BASE_URL}/${path}/${id}`) 
-      : await axios.get(`${this.BASE_URL}/${path}`);
+ 
+  async get(options:string[], ids:number[]) : Promise<Response> {
+    const path: string = createPathWithMultipleOptions(options, ids);       
+    const res = await axios.get(`${this.BASE_URL}/${path}`, {
+      headers: {
+        'Content-Type': 'application/json', 
+        Authorization: `Bearer...Token` /* Ajout du token JWT */
+      }
+    });
     return {data : res.data, status: res.status}
   }
-  async getInfosWithMultiplePaths(paths:string[], ids:number[]) : Promise<Response> {
-    let path : string = '';
-    for (let i : number = 0; i < paths.length; i++) {
-      path += `${paths[i]}/`;
-      if (typeof ids[i] !== 'undefined') path += `${ids[i]}/`; 
-    }    
-    const res = await axios.get(`${this.BASE_URL}/${path}`);
-    return {data : res.data, status: res.status}
+
+  async post(
+    options: string[],
+    ids: number[], 
+    body: { [k: string]: string | number | boolean | [] | undefined | null }
+  ): Promise<Response> {
+    const path:string = createPathWithMultipleOptions(options, ids);
+    const res = await axios.post(
+      `${this.BASE_URL}/${path}`,
+      {
+        ...body,
+      },
+      {
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer...Token` /* Ajout du token JWT */,
+        },
+      }
+    );
+    return { data: res.data, status: res.status };
+  }
+
+  async update(
+    options: string[],
+    ids: number[],
+    body: { [k: string]: string | number | boolean | any[] }
+  ): Promise<Response> {
+    const path:string = createPathWithMultipleOptions(options, ids);
+    const res = await axios.patch(
+      `${this.BASE_URL}/${path}`,
+      { 
+        ...body
+      },
+      {
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer...Token` /* Ajout du token JWT */,
+        },
+      }
+    );
+    return { data: res.data, status: res.status };
+  }
+  
+  async delete(options: string[],
+    ids: number[],): Promise<Response> {
+      const path:string = createPathWithMultipleOptions(options, ids);
+      const res = await axios.delete(`${this.BASE_URL}/${path}`, {
+      headers: {
+        Authorization: `Bearer...Token`/* Ajout du token JWT */,
+      },
+    });
+    return { data: res.data, status: res.status };
   }
 
 }
