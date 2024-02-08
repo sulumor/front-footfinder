@@ -1,0 +1,28 @@
+.footer {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 1%;
+    background-color: #EDF2F4;
+    padding: 2%;
+    display: flex;
+    justify-content: space-around;
+    border-radius: 0px 0px 10px 10px;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer_socials {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 2%;
+}
+
+.footer_legals {
+    margin-bottom: -2%;
+}
+
+a {
+    font-size: 0.8em;
+}
