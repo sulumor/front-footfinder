@@ -1,15 +1,15 @@
 .footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
-    margin-bottom: 1%;
+    width: 95%;
     background-color: #EDF2F4;
     padding: 2%;
     display: flex;
     justify-content: space-around;
-    border-radius: 0px 0px 10px 10px;
-    width: 80%;
+    border-radius: 10px 10px 0px 0px;
     display: flex;
     flex-direction: column;
+    margin-left: 2.5%;
 }
 
 .footer_socials {
@@ -21,6 +21,7 @@
 
 .footer_legals {
     margin-bottom: -2%;
+    text-align: center;
 }
 
 a {

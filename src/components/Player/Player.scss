@@ -1,0 +1,33 @@
+.player_name {
+    text-align: center;
+    margin: 2% 0% 2%
+}
+
+.player_name h2 {
+    font-size: 1.5em;
+}
+
+.player_container {
+    width: 90%;
+    height: 80vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-left: 18%;
+    margin-right: 0;
+    margin-top: 5%;
+}
+
+.player_infos {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5%;
+}
+
+
+
+
+.player_data {
+    height: 60%;
+    width: 60%;
+}

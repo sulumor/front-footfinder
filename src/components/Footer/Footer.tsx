@@ -10,7 +10,7 @@ const Footer = () => {
             <a href="#">Youtube</a>
         </div>
         <div className='footer_legals'>
-            <a href="#">Mentions légales</a>
+            <a href="/notices">Mentions légales</a>
         </div>
 
     </div>
