@@ -7,6 +7,11 @@ import Home from "@/components/Home/Home";
 import Signin from "@/components/Signin/Signin";
 import Notices from "@/components/Notices/Notices";
 import Player from "@/components/Player/Player";
+import Match from "@/components/Match/Match";
+import Stats from "@/components/Stats/Stats";
+import Scout from "@/components/Scout/Scout";
+import PlayerProfil from "@/components/PlayerProfil/PlayerProfil";
+import ScoutProfil from "@/components/ScoutProfil/ScoutProfil";
 
 
 const router = createBrowserRouter([
@@ -20,6 +25,11 @@ const router = createBrowserRouter([
       {path: "/signin", element: <Signin />},
       {path: "/notices", element: <Notices />},
       {path: "/player", element: <Player />},
+      {path: "/player/match", element: <Match />},
+      {path: "/player/match/1", element: <Stats />},
+      {path: "/scout", element: <Scout />},
+      {path: "/player/me", element: <PlayerProfil />},
+      {path: "/scout/me", element: <ScoutProfil />},
       {path: "/test", element: <Test />}
     ]
   }
