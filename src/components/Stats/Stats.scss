@@ -1,0 +1,116 @@
+.stats_main {
+    width: 90%;
+    margin: auto;
+    padding-bottom: 10%;
+    text-align: center;
+}
+
+h1 {
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+h2 {
+    font-size: 1.5em;
+}
+
+.stats_container {
+    display: flex;
+    flex-direction: column;
+}
+
+.stats_date {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-bottom: 1%;
+}
+
+.stats_date_button {
+    margin-left: 0.5%;
+}
+
+.stats_teams {
+    display: flex;
+    width: 60%;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 2.5% auto 2.5% auto;
+}
+
+.stats_teams_input_home {
+    display: flex;
+    flex-direction: row;
+}
+
+.stats_teams_inputs_away {
+    display: flex;
+    flex-direction: row;
+}
+
+.stats_form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 70%;
+    margin: 2% auto;
+    align-items: center;
+}
+
+.chakra-stack.css-d9vnmu {
+    margin: 1% auto;
+}
+
+.mobile_stats_date {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: baseline;
+    margin-bottom: 1%;
+}
+
+.mobile_stats_teams {
+    width: 80%;
+    margin: 2% auto 4%;
+}
+
+.mobile_stats_teams_input_home {
+    display: flex;
+    flex-direction: row;
+    margin-left: 10%;
+}
+
+.mobile_stats_teams_inputs_away {
+    display: flex;
+    flex-direction: row;
+    margin-left: 10%;
+}
+
+.mobile_stats_date_button {
+    padding-left: 2%;
+    padding-bottom: 2%;
+}
+
+.mobile_stats_form {
+    margin: 3% auto 3% auto;
+}
+
+.mobile_stats_form_both {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: space-between;
+    margin: 3% auto 6%;
+}
+
+.mobile_stats_form_right {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.mobile_buttons {
+    width: 65%;
+    margin: 3% auto;
+}

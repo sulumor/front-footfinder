@@ -1,0 +1,29 @@
+.header {
+    background-color: #EDF2F4;
+    padding: 2%;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 0px 0px 10px 10px;
+    width: 100%;
+}
+
+.header_buttons {
+    display: flex;
+    gap: 10%;
+    margin-right: 5%;
+    padding-top: 0.2em;
+}
+
+.mobile_header {
+    background-color: #EDF2F4;
+    padding: 4%;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 0px 0px 10px 10px;
+    margin-bottom: 10%;
+    width: 100%;
+}
+
+h1 {
+    font-size: 2em;
+}
