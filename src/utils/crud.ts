@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosResponse } from 'axios'
-import { createPathWithMultipleOptions } from './functions';
+import Cookies from 'js-cookie';
+import { createPathWithMultipleOptions } from './functions'
 
 interface Response {
   data: AxiosResponse<any>['data'];
@@ -18,7 +19,7 @@ class Crud {
     const res = await axios.get(`${this.BASE_URL}/${path}`, {
       headers: {
         'Content-Type': 'application/json', 
-        Authorization: `Bearer...Token` /* Ajout du token JWT */
+        Authorization: `Bearer ${Cookies.get('token')}`, 
       }
     });
     return {data : res.data, status: res.status}
@@ -38,7 +39,7 @@ class Crud {
       {
         headers: {
           'content-type': 'application/json',
-          Authorization: `Bearer...Token` /* Ajout du token JWT */,
+          Authorization: `Bearer ${Cookies.get('token')}`,
         },
       }
     );
@@ -59,7 +60,7 @@ class Crud {
       {
         headers: {
           'content-type': 'application/json',
-          Authorization: `Bearer...Token` /* Ajout du token JWT */,
+          Authorization: `Bearer ${Cookies.get('token')}`,
         },
       }
     );
@@ -71,7 +72,7 @@ class Crud {
       const path:string = createPathWithMultipleOptions(options, ids);
       const res = await axios.delete(`${this.BASE_URL}/${path}`, {
       headers: {
-        Authorization: `Bearer...Token`/* Ajout du token JWT */,
+        Authorization: `Bearer ${Cookies.get('token')}`,
       },
     });
     return { data: res.data, status: res.status };
@@ -79,4 +80,4 @@ class Crud {
 
 }
 
-export default new Crud('test');
+export default new Crud('http://localhost:3000');

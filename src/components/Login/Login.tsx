@@ -1,7 +1,7 @@
 import { SetStateAction, useState } from "react";
 import { Input, InputGroup, InputRightElement, Button } from "@chakra-ui/react";
 import { BrowserView, MobileView } from "react-device-detect";
-
+import { useAuth } from "@/context/auth";
 import "./Login.scss";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
@@ -9,14 +9,17 @@ const Login = () => {
   const [loginValue, setLoginValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const [show, setShow] = useState(false);
-
+  const { login } = useAuth();
   const handleLoginChange = (event: { target: { value: SetStateAction<string>; }; }) => setLoginValue(event.target.value);
   const handlePasswordChange = (event: { target: { value: SetStateAction<string>; }; }) => setPasswordValue(event.target.value);
   const handleClick = () => setShow(!show);
-
+  async function handleSubmit() {
+    await login({email: loginValue, password: passwordValue});
+  }
   return (
     <>
       <BrowserView>
+      <form onSubmit={handleSubmit}>
         <div className="login_container">
           <div className="input_container">
             <div className="login_input">
@@ -27,7 +30,7 @@ const Login = () => {
                 onChange={handleLoginChange}
                 placeholder="Login"
                 size="sm"
-              />
+                />
             </div>
             <div className="login_input">
               <div className="login_password">
@@ -40,7 +43,7 @@ const Login = () => {
                     type={show ? "text" : "password"}
                     placeholder="Mot de passe"
                     size="sm"
-                  />
+                    />
                   <div className="eye_element">
                     <InputRightElement width="4.5rem">
                       <Button h="1.75rem" size="sm" onClick={handleClick}>
@@ -52,10 +55,11 @@ const Login = () => {
               </div>
             </div>
             <div className="login_button">
-              <Button colorScheme="teal">Se connecter</Button>
+              <Button colorScheme="teal" onClick={handleSubmit}>Se connecter</Button>
             </div>
           </div>
         </div>
+      </form>
       </BrowserView>
       <MobileView>
         <div className="mobile_login_container">
@@ -91,7 +95,7 @@ const Login = () => {
               </div>
             </div>
             <div className="mobile_login_button">
-              <Button colorScheme="teal">Se connecter</Button>
+              <Button colorScheme="teal" onSubmit={handleSubmit}>Se connecter</Button>
             </div>
           </div>
         </div>
