@@ -32,7 +32,7 @@ import {
 
 import { BrowserView, MobileView } from "react-device-detect";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 
 import { useAuth } from "@/context/auth";
@@ -85,7 +85,10 @@ const Player = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [value, onChange] = useState<Value>(new Date());
   const { user } = useAuth();
-  console.log(user);
+
+  useEffect(() => {
+    console.log(user);
+  });
 
   return (
     <>
