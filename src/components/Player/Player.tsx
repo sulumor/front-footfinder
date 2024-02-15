@@ -35,6 +35,8 @@ import { BrowserView, MobileView } from "react-device-detect";
 import { useState } from "react";
 import Calendar from "react-calendar";
 
+import { useAuth } from "@/context/auth";
+
 import "./Player.scss";
 import "./Calendar.scss";
 
@@ -82,6 +84,8 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 const Player = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [value, onChange] = useState<Value>(new Date());
+  const { user } = useAuth();
+  console.log(user);
 
   return (
     <>
