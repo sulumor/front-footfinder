@@ -15,7 +15,7 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
   const [hasToBeRefetch, setHastoBeRefetch] = useState(false);
 
 
-  async function loadUserFromCookies(): Promise<void> {
+/*  async function loadUserFromCookies(): Promise<void> {
     const token = Cookies.get('token');
     if (token) {
       try {
@@ -34,6 +34,7 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
     }
     setHastoBeRefetch(false);
   }
+  
 
   useEffect(() => {
     loadUserFromCookies();
@@ -41,6 +42,8 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
       loadUserFromCookies();
     }
   }, [hasToBeRefetch]);
+
+  */
 
   async function login({
     email,

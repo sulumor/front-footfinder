@@ -11,7 +11,6 @@ import Match from "@/components/Match/Match";
 import Stats from "@/components/Stats/Stats";
 import Scout from "@/components/Scout/Scout";
 import PlayerProfil from "@/components/PlayerProfil/PlayerProfil";
-import ScoutProfil from "@/components/ScoutProfil/ScoutProfil";
 
 
 const router = createBrowserRouter([
@@ -29,7 +28,6 @@ const router = createBrowserRouter([
       {path: "/player/match/1", element: <Stats />},
       {path: "/scout", element: <Scout />},
       {path: "/player/me", element: <PlayerProfil />},
-      {path: "/scout/me", element: <ScoutProfil />},
       {path: "/test", element: <Test />}
     ]
   }
