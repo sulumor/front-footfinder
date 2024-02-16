@@ -30,6 +30,19 @@ export const getScoutInfos = createAsyncThunk<ScoutState>(
   }
 );
 
+export const updateScoutInfos = createAsyncThunk<ScoutState>(
+  "PATCH_SCOUT",
+  async (id, patchValues) => {
+    const response = await axios.patch(`http://localhost:3000/scout/${id}`,
+    patchValues);
+    console.log("requete update scout terminée");
+    console.log(response.data);
+    return response.data;
+  }
+);
+
+
+
 const scoutReducer = createReducer(initialState, (builder) => {
   builder.addCase(getScoutInfos.fulfilled, (state, action) => {
     state.firstname = action.payload.firstname;
