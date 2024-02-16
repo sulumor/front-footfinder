@@ -2,10 +2,11 @@ import { useEffect } from "react";
 import GuestHeader from "./Headers/GuestHeader";
 import PlayerHeader from "./Headers/PlayerHeader";
 import ScoutHeader from "./Headers/ScoutHeader";
+import { useAppSelector } from "../hooks/redux";
 
 const Header = () => {
 
-  const role = localStorage.getItem("role");
+  const role = useAppSelector((state) => state.user.role );
 
   useEffect(() => {
 

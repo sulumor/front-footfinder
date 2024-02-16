@@ -10,11 +10,13 @@ import Cookies from 'js-cookie';
 interface UserState {
   logged: boolean;
   role: string | null;
+  id: number | null;
 }
 
 export const initialState: UserState = {
   logged: false,
   role: null,
+  id: null
 };
 
 export const login = createAsyncThunk<{
@@ -41,6 +43,8 @@ const userReducer = createReducer(initialState, (builder) => {
   builder.addCase(login.fulfilled, (state, action) => {
     state.logged = true;
     state.role = action.payload.data.role;
+    state.id = action.payload.data.id;
+    localStorage.setItem("id", action.payload.data.id);
     localStorage.setItem("logged", "true");
     localStorage.setItem("role", action.payload.data.role);
     localStorage.setItem("token", action.payload.token.jwt);

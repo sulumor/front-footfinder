@@ -21,9 +21,32 @@ import {
 
 import "./PlayerProfil.scss";
 import { EditIcon } from "@chakra-ui/icons";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { getPlayerInfos } from "../store/reducers/player";
 
 const PlayerProfil = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const dispatch = useAppDispatch();
+  const id = localStorage.getItem("id");
+
+ // const firstName = useAppSelector((state) => state.player.firstname );
+  const lastName = useAppSelector((state) => state.player.lastname );
+  const firstName = useAppSelector((state) => state.player.firstname);
+  const position = useAppSelector((state) => state.player.position);
+  const email = useAppSelector((state) => state.player.email);
+  const country = useAppSelector((state) => state.player.nationality);
+  const foot = useAppSelector((state) => state.player.strong_foot);
+  const matches = useAppSelector((state) => state.player.number_of_matches_played);
+  const birthday = useAppSelector((state) => state.player.birth_date);
+  const genre = useAppSelector((state) => state.player.genre);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await dispatch(getPlayerInfos(id));
+    };
+    fetchData()
+  }, [])
 
   return (
     <div className="profil_main">
@@ -31,14 +54,14 @@ const PlayerProfil = () => {
         <Flex>
           <Avatar
             size="2xl"
-            name="Michel Blanc"
+            name={lastName}
             src="https://bit.ly/kent-c-dodds"
           />
           <Box ml="4">
             <Text fontWeight="bold" fontSize="2xl">
-              Michel Blanc
+              {firstName} {lastName}
             </Text>
-            <Text fontSize="xl">Attaquant</Text>
+            <Text fontSize="xl">{position}</Text>
             <IconButton
               onClick={onOpen}
               colorScheme="teal"
@@ -75,13 +98,13 @@ const PlayerProfil = () => {
           </div>
           <div className="profil_container_left_infos">
             <p>
-              Prénom: <span>Michel</span>
+              Prénom : <span>{firstName}</span>
             </p>
             <p>
-              Nom: <span>Blanc</span>
+              Nom : <span>{lastName}</span>
             </p>
             <p>
-              Email: <span>michelblanc@gmail.com</span>
+              Email : <span>{email}</span>
             </p>
           </div>
         </div>
@@ -91,22 +114,22 @@ const PlayerProfil = () => {
           </div>
           <div className="profil_container_right_infos">
             <p>
-              Date de naissance: <span>12/07/2003</span>
+              Date de naissance : <span>{birthday}</span>
             </p>
             <p>
-              Nationnalité: <span>Française</span>
+              Nationnalité : <span>{country}</span>
             </p>
             <p>
-              Genre: <span>Homme</span>
+              Genre : <span>{genre}</span>
             </p>
             <p>
-              Pied fort: <span>Droit</span>
+              Pied fort : <span>{foot}</span>
             </p>
             <p>
-              Position: <span>Attaquant</span>
+              Position : <span>{position}</span>
             </p>
             <p>
-              Nombre de match joué <span>21</span>
+              Nombre de match joué(s) :  <span>{matches}</span>
             </p>
           </div>
         </div>

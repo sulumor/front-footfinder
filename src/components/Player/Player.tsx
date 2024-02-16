@@ -31,13 +31,12 @@ import {
 } from "@chakra-ui/react";
 
 import { BrowserView, MobileView } from "react-device-detect";
-import { useSelector } from "react-redux";
-import { useState } from "react";
 
 import Calendar from "react-calendar";
 
 import "./Player.scss";
 import "./Calendar.scss";
+import { useState } from "react";
 
 ChartJS.register(
   RadialLinearScale,

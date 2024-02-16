@@ -33,10 +33,10 @@ const PlayerHeader = () => {
             <h1>FootFinder</h1>
           </a>
           <div className="header_buttons">
-          <a href="/login">
+          <a href="/player/me">
               <Button colorScheme="blue">Profil</Button>
             </a>
-            <a href="/login">
+            <a href="/player/match">
               <Button colorScheme="teal">Historique</Button>
             </a>
             <a href="/">
