@@ -1,20 +1,17 @@
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { Input, InputGroup, InputRightElement, Button } from "@chakra-ui/react";
 import { BrowserView, MobileView } from "react-device-detect";
 import "./Login.scss";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useAppDispatch } from "../hooks/redux";
 import { login } from "../store/reducers/user";
-import { useSelector } from "react-redux";
+import {useNavigate} from "react-router-dom";
 
 const Login = () => {
 
-  const logged = useSelector((state: any) => state.user.logged);
-  const role = useSelector((state: any) => state.user.role);
-
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
-  
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const [formValues, setFormValues] = useState({
@@ -22,16 +19,19 @@ const Login = () => {
     password: "yjjk8E676a9JQZ",
   });
   
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {;
-    dispatch(login(formValues));
+  const handleChangeField = (user: "email" | "password") => (value: string) => {
+    console.log(`New value for ${user}:`, value);
+    setFormValues({ ...formValues, [user]: value });
   };
 
-  const handleChangeField = (name: "email" | "password") => (value: string) => {
-    setFormValues({ ...formValues, [name]: value });
+  const handleSubmit = async () => {;
+    await dispatch(login(formValues));
+    if (localStorage.getItem("role") == "joueur") {
+      navigate("/player")
+    } else if (localStorage.getItem("role") == "recruteur") {
+      navigate("/scout")
+    } 
   };
-
-  console.log("logged :", logged);
-  console.log("role:", role);
 
   return (
     <>
@@ -44,7 +44,7 @@ const Login = () => {
                   width="auto"
                   htmlSize={24}
                   value={formValues.email}
-                  onChange={handleChangeField("email")}
+                  onChange={(e) => handleChangeField("email")(e.target.value)}
                   placeholder="Email"
                   size="sm"
                 />
@@ -56,7 +56,7 @@ const Login = () => {
                       width="auto"
                       htmlSize={28}
                       value={formValues.password}
-                      onChange={handleChangeField("password")}
+                      onChange={(e) => handleChangeField("password")(e.target.value)}
                       type={show ? "text" : "password"}
                       placeholder="Mot de passe"
                       size="sm"
@@ -72,11 +72,9 @@ const Login = () => {
                 </div>
               </div>
               <div className="login_button">
-                <a href="/player">
                 <Button colorScheme="teal" onClick={handleSubmit}>               
                   Se connecter
-                </Button>
-                </a>
+                </Button>               
               </div>
             </div>
           </div>
@@ -92,7 +90,7 @@ const Login = () => {
                   htmlSize={20}
                   width="auto"
                   value={formValues.email}
-                  onChange={handleChangeField("email")}
+                  onChange={(e) => handleChangeField("email")(e.target.value)}
                   placeholder="Email"
                   size="sm"
                 />
@@ -105,7 +103,7 @@ const Login = () => {
                       width="auto"
                       pr="8rem"
                       value={formValues.password}
-                      onChange={handleChangeField("password")}
+                      onChange={(e) => handleChangeField("password")(e.target.value)}
                       type={show ? "text" : "password"}
                       placeholder="Mot de passe"
                     />
