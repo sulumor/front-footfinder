@@ -34,9 +34,6 @@ const ScoutHeader = () => {
             <h1>FootFinder</h1>
           </a>
           <div className="header_buttons">
-            <a href="/login">
-              <Button colorScheme="blue">Profil</Button>
-            </a>
             <a href="/signin">
               <Button colorScheme="teal">Recherche</Button>
             </a>

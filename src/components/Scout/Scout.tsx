@@ -26,16 +26,33 @@ import {
   Avatar,
   Box,
 } from "@chakra-ui/react";
-
 import { EditIcon } from "@chakra-ui/icons";
 
 import { BrowserView, MobileView } from "react-device-detect";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { getScoutInfos } from "../store/reducers/scout";
 
 import "./Scout.scss";
 
 const Scout = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const id = localStorage.getItem("id");
+  const dispatch = useAppDispatch();
+
+  const lastName = useAppSelector((state) => state.scout.lastname );
+  const firstName = useAppSelector((state) => state.scout.firstname);
+  const email = useAppSelector((state) => state.scout.email);
+  const club = useAppSelector((state) => state.scout.club);
+  const city = useAppSelector((state) => state.scout.city);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await dispatch(getScoutInfos(id));
+    };
+    fetchData()
+  }, [])
 
   return (
     <>
@@ -46,12 +63,12 @@ const Scout = () => {
           <Flex>
             <Avatar
               size="2xl"
-              name="Karl Marx"
+              name={lastName}
               src="https://bit.ly/sage-adebayo"
             />
             <Box ml="4">
               <Text fontWeight="bold" fontSize="2xl">
-                Karl Marx
+                {firstName} {lastName}
               </Text>
               <Text fontSize="xl">Recruteur</Text>
               <IconButton
@@ -70,17 +87,17 @@ const Scout = () => {
               <ModalBody pb={6}>
                 <FormControl>
                   <FormLabel>Prénom</FormLabel>
-                  <Input placeholder="Prénom" />
+                  <Input defaultValue={firstName} />
                 </FormControl>
 
                 <FormControl mt={4}>
                   <FormLabel>Nom</FormLabel>
-                  <Input placeholder="Nom" />
+                  <Input defaultValue={lastName} />
                 </FormControl>
 
                 <FormControl mt={4}>
                   <FormLabel>Email</FormLabel>
-                  <Input placeholder="Email" />
+                  <Input defaultValue={email} />
                 </FormControl>
 
                 <FormControl mt={4}>

@@ -29,7 +29,7 @@ export const initialState: PlayerState = {
   position_id: 0,
 };
 
-export const getPlayerInfos = createAsyncThunk<{}>(
+export const getPlayerInfos = createAsyncThunk<PlayerState>(
   "PLAYER",
   async (id) => {
     const response = await axios.get(`http://localhost:3000/player/${id}`);
@@ -50,10 +50,8 @@ const playerReducer = createReducer(initialState, (builder) => {
     state.avatar = action.payload.avatar;
     state.genre = action.payload.genre;
     state.strong_foot = action.payload.strong_foot;
-    state.number_of_matches_played =
-      action.payload.number_of_matches_played;
-      localStorage.setItem("firstname", action.payload.firstname);
-    // localStorage.setItem("role", action.payload.data.role);
+    state.number_of_matches_played = action.payload.number_of_matches_played;
+    localStorage.setItem("firstname", action.payload.firstname);
   });
   builder.addCase(getPlayerInfos.rejected, (_state, action) => {
     console.log("Une erreur est survenue:", action.error.message);

@@ -5,10 +5,9 @@ import "./Login.scss";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useAppDispatch } from "../hooks/redux";
 import { login } from "../store/reducers/user";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const navigate = useNavigate();
@@ -18,20 +17,29 @@ const Login = () => {
     email: "jean.dujardin@mail.io",
     password: "yjjk8E676a9JQZ",
   });
-  
+
   const handleChangeField = (user: "email" | "password") => (value: string) => {
-    console.log(`New value for ${user}:`, value);
     setFormValues({ ...formValues, [user]: value });
   };
 
-  const handleSubmit = async () => {;
+  const handleSubmit = async () => {
     await dispatch(login(formValues));
     if (localStorage.getItem("role") == "joueur") {
-      navigate("/player")
+      navigate("/player");
     } else if (localStorage.getItem("role") == "recruteur") {
-      navigate("/scout")
-    } 
+      navigate("/scout");
+    }
   };
+
+  /*playerTest 
+ jean.dujardin@mail.io
+ yjjk8E676a9JQZ
+ */
+
+  /*scoutTest
+nicolas.dupon@mail.io
+X346Dc5V7kfYmv
+*/
 
   return (
     <>
@@ -56,7 +64,9 @@ const Login = () => {
                       width="auto"
                       htmlSize={28}
                       value={formValues.password}
-                      onChange={(e) => handleChangeField("password")(e.target.value)}
+                      onChange={(e) =>
+                        handleChangeField("password")(e.target.value)
+                      }
                       type={show ? "text" : "password"}
                       placeholder="Mot de passe"
                       size="sm"
@@ -72,10 +82,12 @@ const Login = () => {
                 </div>
               </div>
               <div className="login_button">
-                <Button colorScheme="teal" onClick={handleSubmit}>               
+                <Button colorScheme="teal" onClick={handleSubmit}>
                   Se connecter
-                </Button>               
+                </Button>
               </div>
+              <p>scout:</p>
+              <p>nicolas.dupon@mail.io X346Dc5V7kfYmv</p>
             </div>
           </div>
         </form>
@@ -103,7 +115,9 @@ const Login = () => {
                       width="auto"
                       pr="8rem"
                       value={formValues.password}
-                      onChange={(e) => handleChangeField("password")(e.target.value)}
+                      onChange={(e) =>
+                        handleChangeField("password")(e.target.value)
+                      }
                       type={show ? "text" : "password"}
                       placeholder="Mot de passe"
                     />

@@ -43,8 +43,8 @@ const userReducer = createReducer(initialState, (builder) => {
   builder.addCase(login.fulfilled, (state, action) => {
     state.logged = true;
     state.role = action.payload.data.role;
-    state.id = action.payload.data.id;
-    localStorage.setItem("id", action.payload.data.id);
+    state.id = action.payload.data.user_id;
+    localStorage.setItem("id", action.payload.data.user_id);
     localStorage.setItem("logged", "true");
     localStorage.setItem("role", action.payload.data.role);
     localStorage.setItem("token", action.payload.token.jwt);
@@ -55,8 +55,10 @@ const userReducer = createReducer(initialState, (builder) => {
   builder.addCase(logout, (state) => {
     state.logged = false;
     state.role = null; 
+    localStorage.removeItem("id");
     localStorage.removeItem("token");
     localStorage.removeItem("role");
+    Cookies.remove('token');
   });
   builder.addCase(tokenCheck,(state,_action)=>{
     state.logged = true;
