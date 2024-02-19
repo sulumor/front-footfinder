@@ -12,7 +12,6 @@ interface PlayerState {
   genre: string;
   strong_foot: string;
   number_of_matches_played: number;
-  position_id: number;
 }
 
 export const initialState: PlayerState = {
@@ -26,7 +25,6 @@ export const initialState: PlayerState = {
   genre: "",
   strong_foot: "",
   number_of_matches_played: 0,
-  position_id: 0,
 };
 
 export const getPlayerInfos = createAsyncThunk<PlayerState>(

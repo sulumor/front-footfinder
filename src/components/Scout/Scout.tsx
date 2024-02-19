@@ -31,7 +31,7 @@ import { EditIcon } from "@chakra-ui/icons";
 import { BrowserView, MobileView } from "react-device-detect";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { getScoutInfos, updateScoutInfos } from "../store/reducers/scout";
+import { getScoutInfos } from "../store/reducers/scout";
 
 import "./Scout.scss";
 import axios from "axios";
@@ -44,7 +44,6 @@ const Scout = () => {
   
   const lastName = useAppSelector((state) => state.scout.lastname);
   const firstName = useAppSelector((state) => state.scout.firstname);
-  const email = useAppSelector((state) => state.scout.email);
   const club = useAppSelector((state) => state.scout.club);
   const city = useAppSelector((state) => state.scout.city);
   

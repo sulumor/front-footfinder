@@ -16,21 +16,44 @@ import {
 import { BrowserView, MobileView } from "react-device-detect";
 
 import "./Match.scss";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Match = () => {
+
+  const [data, setData] = useState([]);
+  const id = localStorage.getItem("id");
+  
+  const getAllMatchs = async () => {
+    const response = await axios.get(`http://localhost:3000/player/${id}/match`);
+    console.log("requete getallmatchs terminée");
+    return setData(response.data);
+  }
+
+ useEffect(() => {
+    const fetchData = async () => {
+      await getAllMatchs();
+    };
+    fetchData();
+  }, []);
+
+  console.log(data);
+
   return (
     <>
       <BrowserView>
         <h1>Historique</h1>
         <div className="card_main">
           <div className="card_container">
-            <div className="card_left">
-              <Card align="center" size={"sm"}>
+              {data.map((element: any) => {
+                return (
+                  <div className="card_container_cards">
+                  <Card align="center" size={"sm"}>
                 <CardHeader>
                   <Heading size="sm"> 24 Janvier 2024</Heading>
                 </CardHeader>
                 <CardBody>
-                  <Text>RC Lens 0 - 5 Paris Saint Germain</Text>
+                  <Text>{element.team_id_as_home.club_name} {element.score} {element.team_id_as_outside.club_name}</Text>
                   <Text color={"green"}>En forme</Text>
                 </CardBody>
                 <CardFooter>
@@ -74,126 +97,9 @@ const Match = () => {
                   </Accordion>
                 </CardFooter>
               </Card>
-              <Card align="center" size={"sm"}>
-                <CardHeader>
-                  <Heading size="sm"> 03 Février 2024</Heading>
-                </CardHeader>
-                <CardBody>
-                  <Text>RC Lens 0 - 1 Olympique Lyonnais</Text>
-                  <Text color={"green"}>En forme</Text>
-                </CardBody>
-                <CardFooter>
-                  <Accordion allowMultiple>
-                    <AccordionItem>
-                      <h2>
-                        <AccordionButton>
-                          <Box as="span" flex="1" textAlign="center">
-                            <Button colorScheme="teal">Détails</Button>
-                          </Box>
-                        </AccordionButton>
-                      </h2>
-                      <AccordionPanel pb={4}>
-                        <Text>
-                          Minutes jouées: <Text as="b">60</Text>
-                          <br />
-                        </Text>
-                        <Text>
-                          Buts marqués: <Text as="b">3</Text>
-                          <br />
-                        </Text>
-                        <Text>
-                          Passes décisives: <Text as="b">0</Text>
-                          <br />
-                        </Text>
-                        <Button colorScheme="red" textAlign="center">
-                          Modifier
-                        </Button>
-                      </AccordionPanel>
-                    </AccordionItem>
-                  </Accordion>
-                </CardFooter>
-              </Card>
-            </div>
-            <div className="card_right">
-              <Card align="center" size={"sm"}>
-                <CardHeader>
-                  <Heading size="sm"> 12 Février 2024</Heading>
-                </CardHeader>
-                <CardBody>
-                  <Text>RC Lens 0 - 7 Lille OSC</Text>
-                  <Text color={"red"}>Absent</Text>
-                </CardBody>
-                <CardFooter>
-                  <Accordion allowMultiple>
-                    <AccordionItem>
-                      <h2>
-                        <AccordionButton>
-                          <Box as="span" flex="1" textAlign="center">
-                            <Button colorScheme="teal">Détails</Button>
-                          </Box>
-                        </AccordionButton>
-                      </h2>
-                      <AccordionPanel pb={4}>
-                        <Text>
-                          Minutes jouées: <Text as="b">90</Text>
-                          <br />
-                        </Text>
-                        <Text>
-                          Buts marqués: <Text as="b">0</Text>
-                          <br />
-                        </Text>
-                        <Text>
-                          Passes décisives: <Text as="b">0</Text>
-                          <br />
-                        </Text>
-                        <Button colorScheme="red" textAlign="center">
-                          Modifier
-                        </Button>
-                      </AccordionPanel>
-                    </AccordionItem>
-                  </Accordion>
-                </CardFooter>
-              </Card>
-              <Card align="center" size={"sm"}>
-                <CardHeader>
-                  <Heading size="sm"> 22 Février 2024</Heading>
-                </CardHeader>
-                <CardBody>
-                  <Text>RC Lens 1 - 1 AS Monaco</Text>
-                  <Text color={"green"}>En forme</Text>
-                </CardBody>
-                <CardFooter>
-                  <Accordion allowMultiple>
-                    <AccordionItem>
-                      <h2>
-                        <AccordionButton>
-                          <Box as="span" flex="1" textAlign="center">
-                            <Button colorScheme="teal">Détails</Button>
-                          </Box>
-                        </AccordionButton>
-                      </h2>
-                      <AccordionPanel pb={4}>
-                        <Text>
-                          Minutes jouées: <Text as="b">80</Text>
-                          <br />
-                        </Text>
-                        <Text>
-                          Buts marqués: <Text as="b">1</Text>
-                          <br />
-                        </Text>
-                        <Text>
-                          Passes décisives: <Text as="b">1</Text>
-                          <br />
-                        </Text>
-                        <Button colorScheme="red" textAlign="center">
-                          Modifier
-                        </Button>
-                      </AccordionPanel>
-                    </AccordionItem>
-                  </Accordion>
-                </CardFooter>
-              </Card>
-            </div>
+              </div>
+                )
+              })}
           </div>
           <div className="match_button">
             <Button colorScheme="teal">Voir plus de matchs</Button>
