@@ -32,13 +32,11 @@ import {
 
 import { BrowserView, MobileView } from "react-device-detect";
 
-import { useState } from "react";
 import Calendar from "react-calendar";
-
-import { useAuth } from "@/context/auth";
 
 import "./Player.scss";
 import "./Calendar.scss";
+import { useState } from "react";
 
 ChartJS.register(
   RadialLinearScale,
@@ -84,14 +82,14 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 const Player = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [value, onChange] = useState<Value>(new Date());
-  const { user } = useAuth();
-  console.log(user);
+  const firstName = localStorage.getItem("role");
+  console.log(firstName);
 
   return (
     <>
       <BrowserView>
         <div className="player_name">
-          <h2>Bonjour, Jean Dupont</h2>
+          <h2>Bonjour, {firstName} Dupont</h2>
         </div>
         <Center>
           <Divider width="50%" />

@@ -1,17 +1,51 @@
 import React from "react";
+import { Provider } from "react-redux";
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
-import router from "./router";
-import "./style/main.css";
 import { ChakraProvider } from "@chakra-ui/react";
-import { AuthProvider } from "./context/auth";
+
+import { createBrowserRouter } from "react-router-dom";
+import Test from "@/pages/test/test.tsx";
+import ErrorPage from "@/components/Error/Error";
+import Login from "@/components/Login/Login";
+import Home from "@/components/Home/Home";
+import Signin from "@/components/Signin/Signin";
+import Notices from "@/components/Notices/Notices";
+import Player from "@/components/Player/Player";
+import Match from "@/components/Match/Match";
+import Stats from "@/components/Stats/Stats";
+import Scout from "@/components/Scout/Scout";
+import PlayerProfil from "@/components/PlayerProfil/PlayerProfil";
+import App from "./components/App/App";
+
+import store from "./components/store";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <ErrorPage />,
+    children: [
+      { index: true, element: <Home /> },
+      { path: "/login", element: <Login /> },
+      { path: "/signin", element: <Signin /> },
+      { path: "/notices", element: <Notices /> },
+      { path: "/player", element: <Player /> },
+      { path: "/player/match", element: <Match /> },
+      { path: "/player/match/1", element: <Stats /> },
+      { path: "/scout", element: <Scout /> },
+      { path: "/player/me", element: <PlayerProfil /> },
+      { path: "/test", element: <Test /> },
+    ],
+  },
+]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ChakraProvider>
-      <AuthProvider>
+      <Provider store={store}>
         <RouterProvider router={router} />
-      </AuthProvider>
+      </Provider>
     </ChakraProvider>
   </React.StrictMode>
 );
