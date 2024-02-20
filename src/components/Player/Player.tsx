@@ -24,9 +24,6 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  FormControl,
-  FormLabel,
-  Input,
   useDisclosure,
 } from "@chakra-ui/react";
 
@@ -38,6 +35,7 @@ import "./Player.scss";
 import "./Calendar.scss";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import SelectTeam from "../Select/Select";
 
 ChartJS.register(
   RadialLinearScale,
@@ -67,6 +65,7 @@ interface Stats {
 }
 
 interface Match {
+  date: string | number | Date ;
   home: {
     club_name: string;
     stadium_name: string;
@@ -100,7 +99,9 @@ const Player = () => {
   }
   const getNextMatch = async () => {
     const responses = await axios.get(`http://localhost:3000/player/${id}/match`);
-    return setMatch(responses.data[responses.data.length -1]);
+    const today = Date.now();
+    const nextMatch = responses.data.filter(((match: { date: string | number | Date; }) => new Date(match.date).getTime() > today))
+    return setMatch(nextMatch[0]);
   }
 
   useEffect(()=> {
@@ -145,9 +146,9 @@ const Player = () => {
           <div className="player_infos">
             <div className="player_match">
               <h3>Prochain match: </h3>
-              <span>Samedi 12 Janvier 2024</span>
+              <span>{new Date(match?.date as Date).toLocaleDateString('fr-FR', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}</span>
               <div className="player_match_infos">
-                <h3>{match?.home.club_name}- {match?.away.club_name}</h3>
+                <h3>{match?.home.club_name} - {match?.away.club_name}</h3>
                 <p>{match?.home.stadium_name}</p>
                 <p>{match?.home.adress}, {match?.home.zip_code} {match?.home.city}</p>
                 <div className="player_match_button">
@@ -168,15 +169,8 @@ const Player = () => {
                         showWeekNumbers
                         value={value}
                       />
-                      <FormControl>
-                        <FormLabel>Equipe à domicile</FormLabel>
-                        <Input />
-                      </FormControl>
-
-                      <FormControl mt={4}>
-                        <FormLabel>Equipe à l'extérieur</FormLabel>
-                        <Input />
-                      </FormControl>
+                      <SelectTeam label={"Équipe à domicile"}/>
+                      <SelectTeam label={"Équipe à l'extérieur"}/>
                     </ModalBody>
 
                     <ModalFooter>
@@ -243,9 +237,9 @@ const Player = () => {
           <div className="player_infos">
             <div className="player_match">
             <h3>Prochain match: </h3>
-              <span>Samedi 12 Janvier 2024</span>
+              <span>{new Date(match?.date as Date).toLocaleDateString('fr-FR', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}</span>
               <div className="player_match_infos">
-                <h3>{match?.home.club_name}- {match?.away.club_name}</h3>
+                <h3>{match?.home.club_name} - {match?.away.club_name}</h3>
                 <p>{match?.home.stadium_name}</p>
                 <p>{match?.home.adress}, {match?.home.zip_code} {match?.home.city}</p>
                 <div className="player_match_button">
@@ -266,15 +260,8 @@ const Player = () => {
                         showWeekNumbers
                         value={value}
                       />
-                      <FormControl>
-                        <FormLabel>Equipe à domicile</FormLabel>
-                        <Input />
-                      </FormControl>
-
-                      <FormControl mt={4}>
-                        <FormLabel>Equipe à l'extérieur</FormLabel>
-                        <Input />
-                      </FormControl>
+                      <SelectTeam label={"Équipe à domicile"}/>
+                      <SelectTeam label={"Équipe à l'extérieur"}/>
                     </ModalBody>
 
                     <ModalFooter>
