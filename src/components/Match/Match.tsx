@@ -11,7 +11,6 @@ import {
   AccordionButton,
   AccordionPanel,
   Box,
-  Link,
 } from "@chakra-ui/react";
 
 import { BrowserView, MobileView } from "react-device-detect";
@@ -31,6 +30,8 @@ const Match = () => {
     return setData(response.data);
   }
 
+  const numAscending = [...data].sort((a: number, b: number) => a.match_id - b.match_id);
+
  useEffect(() => {
     const fetchData = async () => {
       await getAllMatchs();
@@ -46,15 +47,15 @@ const Match = () => {
         <h1>Historique</h1>
         <div className="card_main">
           <div className="card_container">
-              {data.map((element: any) => {
+              {numAscending.map((element: any) => {
                 return (
-                  <div className="card_container_cards">
+                  <div key={element.match_id} className="card_container_cards">
                   <Card align="center" size={"sm"}>
                 <CardHeader>
-                  <Heading size="sm"> 24 Janvier 2024</Heading>
+                  <Heading size="sm"> {element.date}</Heading>
                 </CardHeader>
                 <CardBody>
-                  <Text>{element.team_id_as_home.club_name} {element.score} {element.team_id_as_outside.club_name}</Text>
+                  <Text>{element.home.club_name} {element.score} {element.away.club_name}</Text>
                   <Text color={element.fitness == "En forme" ? "green" : "red"}>{element.fitness}</Text>
                 </CardBody>
                 <CardFooter>

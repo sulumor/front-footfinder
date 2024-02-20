@@ -224,6 +224,7 @@ const Stats = () => {
               </div>
               <Divider />
               <Stack direction="row" spacing={4}>
+                <a href="/player/match">
                 <Button
                   rightIcon={<CloseIcon />}
                   colorScheme="red"
@@ -231,6 +232,7 @@ const Stats = () => {
                 >
                   Annuler
                 </Button>
+                </a>
                 <Button
                   rightIcon={<CheckIcon />}
                   colorScheme="teal"

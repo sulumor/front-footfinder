@@ -12,6 +12,8 @@ interface PlayerState {
   genre: string;
   strong_foot: string;
   number_of_matches_played: number;
+  height: number;
+  weight: number;
 }
 
 export const initialState: PlayerState = {
@@ -25,6 +27,8 @@ export const initialState: PlayerState = {
   genre: "",
   strong_foot: "",
   number_of_matches_played: 0,
+  height: 0,
+  weight: 0
 };
 
 export const getPlayerInfos = createAsyncThunk<PlayerState>(
@@ -49,6 +53,8 @@ const playerReducer = createReducer(initialState, (builder) => {
     state.genre = action.payload.genre;
     state.strong_foot = action.payload.strong_foot;
     state.number_of_matches_played = action.payload.number_of_matches_played;
+    state.height = action.payload.height;
+    state.weight = action.payload.weight;
   });
   builder.addCase(getPlayerInfos.rejected, (_state, action) => {
     console.log("Une erreur est survenue:", action.error.message);

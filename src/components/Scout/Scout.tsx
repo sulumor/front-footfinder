@@ -38,6 +38,7 @@ import axios from "axios";
 
 const Scout = () => {
 
+  const [data, setData] = useState([])
   const { isOpen, onOpen, onClose } = useDisclosure();
   const id = localStorage.getItem("id");
   const dispatch = useAppDispatch();
@@ -49,7 +50,8 @@ const Scout = () => {
   
   useEffect(() => {
     const fetchData = async () => {
-      await dispatch(getScoutInfos(id));
+      await dispatch(getScoutInfos(id))
+      await getScoutFollows()
     };
     fetchData();
   }, []);
@@ -77,6 +79,11 @@ const Scout = () => {
       return response.data;
     }
 
+  const getScoutFollows = async () => {
+    const response = await axios.get(`http://localhost:3000/scout/${id}`);
+    return setData(response.data.players)
+  }
+
   return (
     <>
       <BrowserView>
@@ -87,7 +94,7 @@ const Scout = () => {
                 <Avatar
                   size="2xl"
                   name={lastName}
-                  src="https://bit.ly/sage-adebayo"
+                  src="https://bit.ly/dan-abramov"
                 />
                 <Box ml="4">
                   <div className="scout_box_left">
@@ -173,7 +180,9 @@ const Scout = () => {
                   spacing={4}
                   templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
                 >
-                  <Card>
+                  {data.map((player: any) => {
+                    return (
+                      <Card key={player.id}>
                     <CardHeader>
                       <Flex>
                         <Flex
@@ -183,12 +192,12 @@ const Scout = () => {
                           flexWrap="wrap"
                         >
                           <Avatar
-                            name="Roland Ronaldo"
+                            name={player.lastname}
                             src="https://bit.ly/sage-adebayo"
                           />
                           <Box>
-                            <Heading size="sm">Roland Ronaldo</Heading>
-                            <Text>RC Lens</Text>
+                            <Heading size="sm">{player.firstname} {player.lastname}</Heading>
+                            <Text>Marseille</Text>
                           </Box>
                         </Flex>
                       </Flex>
@@ -196,192 +205,38 @@ const Scout = () => {
                     <CardBody>
                       <div className="card_body_text">
                         <Text>
-                          Poste: <Text as="b">Attaquant</Text>
+                          Poste: <Text as="b">{player.position}</Text>
                           <br />
                         </Text>
                         <Text>
-                          Pied fort: <Text as="b">Droit</Text>
+                          Pied fort: <Text as="b">{player.strong_foot}</Text>
                           <br />
                         </Text>
                         <Text>
-                          Taille: <Text as="b">198cm</Text>
+                          Taille: <Text as="b">{player.height} cm</Text>
                           <br />
                         </Text>
                         <Text>
-                          Poids: <Text as="b">90kg</Text>
+                          Poids: <Text as="b">{player.weight} kg</Text>
                           <br />
                         </Text>
                       </div>
                     </CardBody>
                     <CardFooter>
                       <ButtonGroup spacing="2">
+                        <a href={`/player/${player.id}`}>
                         <Button variant="solid" colorScheme="teal">
                           Profil
                         </Button>
+                        </a>
                         <Button variant="outline" colorScheme="red">
                           Retirer
                         </Button>
                       </ButtonGroup>
                     </CardFooter>
                   </Card>
-
-                  <Card>
-                    <CardHeader>
-                      <Flex>
-                        <Flex
-                          flex="1"
-                          gap="4"
-                          alignItems="center"
-                          flexWrap="wrap"
-                        >
-                          <Avatar
-                            name="Michel Blanc"
-                            src="https://bit.ly/tioluwani-kolawole"
-                          />
-
-                          <Box>
-                            <Heading size="sm">Michel Blanc</Heading>
-                            <Text>RC Lens</Text>
-                          </Box>
-                        </Flex>
-                      </Flex>
-                    </CardHeader>
-                    <CardBody>
-                      <div className="card_body_text">
-                        <Text>
-                          Poste: <Text as="b">Attaquant</Text>
-                          <br />
-                        </Text>
-                        <Text>
-                          Pied fort: <Text as="b">Droit</Text>
-                          <br />
-                        </Text>
-                        <Text>
-                          Taille: <Text as="b">198cm</Text>
-                          <br />
-                        </Text>
-                        <Text>
-                          Poids: <Text as="b">90kg</Text>
-                          <br />
-                        </Text>
-                      </div>
-                    </CardBody>
-                    <CardFooter>
-                      <ButtonGroup spacing="2">
-                        <Button variant="solid" colorScheme="teal">
-                          Profil
-                        </Button>
-                        <Button variant="outline" colorScheme="red">
-                          Retirer
-                        </Button>
-                      </ButtonGroup>
-                    </CardFooter>
-                  </Card>
-
-                  <Card>
-                    <CardHeader>
-                      <Flex>
-                        <Flex
-                          flex="1"
-                          gap="4"
-                          alignItems="center"
-                          flexWrap="wrap"
-                        >
-                          <Avatar
-                            name="Roland Ronaldo"
-                            src="https://bit.ly/kent-c-dodds"
-                          />
-
-                          <Box>
-                            <Heading size="sm">Alex Red</Heading>
-                            <Text>Paris SG</Text>
-                          </Box>
-                        </Flex>
-                      </Flex>
-                    </CardHeader>
-                    <CardBody>
-                      <div className="card_body_text">
-                        <Text>
-                          Poste: <Text as="b">Attaquant</Text>
-                          <br />
-                        </Text>
-                        <Text>
-                          Pied fort: <Text as="b">Droit</Text>
-                          <br />
-                        </Text>
-                        <Text>
-                          Taille: <Text as="b">198cm</Text>
-                          <br />
-                        </Text>
-                        <Text>
-                          Poids: <Text as="b">90kg</Text>
-                          <br />
-                        </Text>
-                      </div>
-                    </CardBody>
-                    <CardFooter>
-                      <ButtonGroup spacing="2">
-                        <Button variant="solid" colorScheme="teal">
-                          Profil
-                        </Button>
-                        <Button variant="outline" colorScheme="red">
-                          Retirer
-                        </Button>
-                      </ButtonGroup>
-                    </CardFooter>
-                  </Card>
-                  <Card>
-                    <CardHeader>
-                      <Flex>
-                        <Flex
-                          flex="1"
-                          gap="4"
-                          alignItems="center"
-                          flexWrap="wrap"
-                        >
-                          <Avatar
-                            name="Roland Ronaldo"
-                            src="https://bit.ly/kent-c-dodds"
-                          />
-
-                          <Box>
-                            <Heading size="sm">Alex Red</Heading>
-                            <Text>Paris SG</Text>
-                          </Box>
-                        </Flex>
-                      </Flex>
-                    </CardHeader>
-                    <CardBody>
-                      <div className="card_body_text">
-                        <Text>
-                          Poste: <Text as="b">Attaquant</Text>
-                          <br />
-                        </Text>
-                        <Text>
-                          Pied fort: <Text as="b">Droit</Text>
-                          <br />
-                        </Text>
-                        <Text>
-                          Taille: <Text as="b">198cm</Text>
-                          <br />
-                        </Text>
-                        <Text>
-                          Poids: <Text as="b">90kg</Text>
-                          <br />
-                        </Text>
-                      </div>
-                    </CardBody>
-                    <CardFooter>
-                      <ButtonGroup spacing="2">
-                        <Button variant="solid" colorScheme="teal">
-                          Profil
-                        </Button>
-                        <Button variant="outline" colorScheme="red">
-                          Retirer
-                        </Button>
-                      </ButtonGroup>
-                    </CardFooter>
-                  </Card>
+                    )
+                  })}
                 </SimpleGrid>
               </div>
             </div>

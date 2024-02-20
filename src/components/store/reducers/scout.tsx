@@ -9,7 +9,7 @@ interface ScoutState {
     lastname: string,
     email: string,
     club: string,
-    city: string
+    city: string,
 };
 
 export const initialState: ScoutState = {
@@ -17,7 +17,7 @@ export const initialState: ScoutState = {
     lastname: "",
     email: "",
     club: "",
-    city: ""
+    city: "",
 };
 
 export const getScoutInfos = createAsyncThunk<ScoutState>(

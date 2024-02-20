@@ -17,6 +17,7 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
+  Select,
 } from "@chakra-ui/react";
 
 import "./PlayerProfil.scss";
@@ -41,6 +42,8 @@ const PlayerProfil = () => {
   );
   const birthday = useAppSelector((state) => state.player.birth_date);
   const genre = useAppSelector((state) => state.player.genre);
+  const height = useAppSelector((state) => state.player.height);
+  const weight = useAppSelector((state) => state.player.weight);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,22 +59,45 @@ const PlayerProfil = () => {
     position: "",
     nationality: "",
     strong_foot: "",
+    height: "",
+    weight: "",
   });
 
-  const handleChangeField = (player: "firstname" | "lastname" | "email" | "position" | "nationality" | "strong_foot") => (value: string) => {
-    setPatchValues({ ...patchValues, [player]: value });
-  };
+  const handleChangeField =
+    (
+      player:
+        | "firstname"
+        | "lastname"
+        | "email"
+        | "position"
+        | "nationality"
+        | "strong_foot"
+        | "height"
+        | "weight"
+    ) =>
+    (value: string | number) => {
+      setPatchValues({ ...patchValues, [player]: value });
+    };
 
   const handleSubmit = () => {
     updatePlayerInfos();
-  }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await dispatch(getPlayerInfos(id));
+    };
+    fetchData();
+  }, []);
 
   const updatePlayerInfos = async () => {
-    const response = await axios.patch(`http://localhost:3000/player/${id}`, {...patchValues});
+    const response = await axios.patch(`http://localhost:3000/player/${id}`, {
+      ...patchValues,
+    });
     console.log("requete update player terminée");
     console.log(response.data);
     return response.data;
-  }
+  };
 
   return (
     <div className="profil_main">
@@ -84,18 +110,18 @@ const PlayerProfil = () => {
           />
           <Box ml="4">
             <div className="profil_title_name">
-            <Text fontWeight="bold" fontSize="2xl">
-              {firstName}
-            </Text>            
-            <Text fontWeight="bold" fontSize="2xl">
-              {lastName}
-            </Text>
+              <Text fontWeight="bold" fontSize="2xl">
+                {firstName}
+              </Text>
+              <Text fontWeight="bold" fontSize="2xl">
+                {lastName}
+              </Text>
             </div>
-            <div className="profil_title_position">           
-            <Text fontSize="xl">{position}</Text>
+            <div className="profil_title_position">
+              <Text fontSize="xl">{position}</Text>
             </div>
             <Modal isOpen={isOpen} onClose={onClose}>
-                <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit}>
                 <ModalOverlay />
                 <ModalContent>
                   <ModalHeader>Modifiez vos informations</ModalHeader>
@@ -103,32 +129,102 @@ const PlayerProfil = () => {
                   <ModalBody pb={6}>
                     <FormControl>
                       <FormLabel>Prénom</FormLabel>
-                      <Input value={patchValues.firstname} onChange={(e) => handleChangeField("firstname")(e.target.value)} />
+                      <Input
+                        value={patchValues.firstname}
+                        onChange={(e) =>
+                          handleChangeField("firstname")(e.target.value)
+                        }
+                      />
                     </FormControl>
 
                     <FormControl mt={4}>
                       <FormLabel>Nom</FormLabel>
-                      <Input value={patchValues.lastname} onChange={(e) => handleChangeField("lastname")(e.target.value)} />
+                      <Input
+                        value={patchValues.lastname}
+                        onChange={(e) =>
+                          handleChangeField("lastname")(e.target.value)
+                        }
+                      />
                     </FormControl>
 
                     <FormControl mt={4}>
                       <FormLabel>Email</FormLabel>
-                      <Input value={patchValues.email} onChange={(e) => handleChangeField("email")(e.target.value)} />
+                      <Input
+                        value={patchValues.email}
+                        onChange={(e) =>
+                          handleChangeField("email")(e.target.value)
+                        }
+                      />
                     </FormControl>
 
                     <FormControl mt={4}>
                       <FormLabel>Nationalité</FormLabel>
-                      <Input value={patchValues.nationality} onChange={(e) => handleChangeField("nationality")(e.target.value)} />
+                      <Input
+                        value={patchValues.nationality}
+                        onChange={(e) =>
+                          handleChangeField("nationality")(e.target.value)
+                        }
+                      />
                     </FormControl>
 
                     <FormControl mt={4}>
                       <FormLabel>Position</FormLabel>
-                      <Input value={patchValues.position} onChange={(e) => handleChangeField("position")(e.target.value)} />
+                      <Select
+                        value={patchValues.position}
+                        onChange={(e) =>
+                          handleChangeField("position")(e.target.value)
+                        }
+                      >
+                        <option>Gardien</option>
+                        <option>Libéro</option>
+                        <option>Défenseur gauche</option>
+                        <option>Défenseur droit</option>
+                        <option>Milieu défensif gauche</option>
+                        <option>Milieu défensif droit</option>
+                        <option>Milieu défensif central</option>
+                        <option>Milieu gauche</option>
+                        <option>Milieu droit</option>
+                        <option>Milieu offensif</option>
+                        <option>Ailier gauche</option>
+                        <option>Ailier droit</option>
+                        <option>Attaquant</option>
+                        <option>Avant-centre</option>
+                        <option>Remplaçant</option>
+                        </Select>
+                    </FormControl>
+
+                    <FormControl mt={4}>
+                      <FormLabel>Taille (en cm)</FormLabel>
+                      <Input
+                        value={patchValues.height}
+                        onChange={(e) =>
+                          handleChangeField("height")(e.target.value)
+                        }
+                      />
+                    </FormControl>
+
+                    <FormControl mt={4}>
+                      <FormLabel>Poids (en kg)</FormLabel>
+                      <Input
+                        value={patchValues.weight}
+                        onChange={(e) =>
+                          handleChangeField("weight")(e.target.value)
+                        }
+                      />
                     </FormControl>
 
                     <FormControl mt={4}>
                       <FormLabel>Pied fort</FormLabel>
-                      <Input value={patchValues.strong_foot} onChange={(e) => handleChangeField("strong_foot")(e.target.value)} />
+                      <Select
+                        placeholder="--Choix du pied--"
+                        value={patchValues.strong_foot}
+                        onChange={(e) =>
+                          handleChangeField("strong_foot")(e.target.value)
+                        }
+                      >
+                        <option>Droit</option>
+                        <option>Gauche</option>
+                      </Select>
                     </FormControl>
 
                     <FormControl mt={4}>
@@ -144,11 +240,10 @@ const PlayerProfil = () => {
                     <Button onClick={onClose}>Annuler</Button>
                   </ModalFooter>
                 </ModalContent>
-                </form>
-              </Modal>
+              </form>
+            </Modal>
           </Box>
         </Flex>
-        
       </div>
       <Divider />
       <div className="profil_container">
@@ -183,6 +278,12 @@ const PlayerProfil = () => {
               Genre : <span>{genre}</span>
             </p>
             <p>
+              Taille : <span>{height}</span> cm
+            </p>
+            <p>
+              Poids : <span>{weight}</span> kg
+            </p>
+            <p>
               Pied fort : <span>{foot}</span>
             </p>
             <p>
@@ -195,7 +296,9 @@ const PlayerProfil = () => {
         </div>
       </div>
       <div className="edit_profil_button">
-        <Button colorScheme="teal" onClick={onOpen}>Modifier</Button>
+        <Button colorScheme="teal" onClick={onOpen}>
+          Modifier
+        </Button>
       </div>
     </div>
   );

@@ -17,6 +17,7 @@ import Stats from "@/components/Stats/Stats";
 import Scout from "@/components/Scout/Scout";
 import PlayerProfil from "@/components/PlayerProfil/PlayerProfil";
 import App from "./components/App/App";
+import PlayerForScout from "./components/PlayerForScout/PlayerForScout";
 
 import store from "./components/store";
 
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
       { path: "/signin", element: <Signin /> },
       { path: "/notices", element: <Notices /> },
       { path: "/player", element: <Player /> },
+      { path: "/player/:id", element: <PlayerForScout />},
       { path: "/player/match", element: <Match /> },
       { path: "/player/match/:matchId", element: <Stats /> },
       { path: "/scout", element: <Scout /> },

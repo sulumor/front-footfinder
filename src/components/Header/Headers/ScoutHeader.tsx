@@ -30,7 +30,7 @@ const ScoutHeader = () => {
     <>
       <BrowserView>
         <div className="header">
-          <a href="/">
+          <a href="/scout">
             <h1>FootFinder</h1>
           </a>
           <div className="header_buttons">
