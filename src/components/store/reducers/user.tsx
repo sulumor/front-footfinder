@@ -21,7 +21,9 @@ export const initialState: UserState = {
 
 export const login = createAsyncThunk<{
   token: { jwt: string };   
-    data: any; email: string; password: string 
+  data: any; 
+  email: string;
+  password: string 
 }>(
   "LOGIN",
   async (formValues) => {
@@ -48,6 +50,7 @@ const userReducer = createReducer(initialState, (builder) => {
     localStorage.setItem("logged", "true");
     localStorage.setItem("role", action.payload.data.role);
     localStorage.setItem("token", action.payload.token.jwt);
+    localStorage.setItem("firstname", action.payload.data.firstname);
   });
   builder.addCase(login.rejected, (_state, action) => {
     console.log("Une erreur est survenue:", action.error.message);

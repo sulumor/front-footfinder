@@ -36,7 +36,8 @@ import Calendar from "react-calendar";
 
 import "./Player.scss";
 import "./Calendar.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 ChartJS.register(
   RadialLinearScale,
@@ -56,25 +57,31 @@ interface ModalProps {
 }
 */
 
-export const data = {
-  labels: [
-    "Passes décisives",
-    "Buts",
-    "Fautes",
-    "Cartons jaunes",
-    "Cartons rouges",
-    "Tacles",
-  ],
-  datasets: [
-    {
-      label: "vos statistiques",
-      data: [4, 9, 3, 5, 0, 3],
-      backgroundColor: "rgba(255, 99, 132, 0.2)",
-      borderColor: "rgba(255, 99, 132, 1)",
-      borderWidth: 1,
-    },
-  ],
-};
+interface Stats {
+  assists:number;
+  goals_conceded:number;
+  red_card:number;
+  yellow_card:number;
+  stops:number;
+  goals_scored:number;
+}
+
+interface Match {
+  home: {
+    club_name: string;
+    stadium_name: string;
+    adress:string;
+    zip_code:string;
+    city:string;
+  };
+  away: {
+    club_name: string;
+    adress:string;
+    zip_code:string;
+    city:string;
+  };
+}
+
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -82,14 +89,54 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 const Player = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [value, onChange] = useState<Value>(new Date());
-  const firstName = localStorage.getItem("role");
-  console.log(firstName);
+  const firstName = localStorage.getItem("firstname");
+  const [stats, setStats] = useState<Stats>();
+  const [match, setMatch] = useState<Match>();
+  const id = localStorage.getItem("id");
+  
+  const getAllStats = async () => {
+    const responses = await axios.get(`http://localhost:3000/player/${id}/stats`);
+    return setStats(responses.data);
+  }
+  const getNextMatch = async () => {
+    const responses = await axios.get(`http://localhost:3000/player/${id}/match`);
+    return setMatch(responses.data[responses.data.length -1]);
+  }
 
+  useEffect(()=> {
+    const fetchData = async () => {
+      await getAllStats();
+      await getNextMatch();
+    };
+    
+    fetchData();
+    
+  }, []);
+  
+  const data = {
+    labels: [
+      "Passes décisives",
+      "Buts marqués",
+      "Arrêts",
+      "Cartons jaunes",
+      "Cartons rouges",
+      "Buts concedés",
+    ],
+    datasets: [
+      {
+        label: "vos statistiques",
+        data: [stats?.assists, stats?.goals_scored, stats?.stops, stats?.yellow_card, stats?.red_card, stats?.goals_conceded],
+        backgroundColor: "rgba(255, 99, 132, 0.2)",
+        borderColor: "rgba(255, 99, 132, 1)",
+        borderWidth: 1,
+      },
+    ],
+  };
   return (
     <>
       <BrowserView>
         <div className="player_name">
-          <h2>Bonjour, {firstName} Dupont</h2>
+          <h2>Bonjour, {firstName}</h2>
         </div>
         <Center>
           <Divider width="50%" />
@@ -100,9 +147,9 @@ const Player = () => {
               <h3>Prochain match: </h3>
               <span>Samedi 12 Janvier 2024</span>
               <div className="player_match_infos">
-                <h3>RC Lens - Paris Saint Germain</h3>
-                <p>Stade Bollaert-Delelis</p>
-                <p>Av. Alfred Meas, 62300 Lens</p>
+                <h3>{match?.home.club_name}- {match?.away.club_name}</h3>
+                <p>{match?.home.stadium_name}</p>
+                <p>{match?.home.adress}, {match?.home.zip_code} {match?.home.city}</p>
                 <div className="player_match_button">
                   <Button colorScheme="teal" onClick={onOpen}>
                     Modifier
@@ -187,7 +234,7 @@ const Player = () => {
 
       <MobileView>
         <div className="player_name">
-          <h2>Bonjour, Jean Dupont</h2>
+          <h2>Bonjour, { firstName }</h2>
         </div>
         <Center>
           <Divider width="50%" />
@@ -195,12 +242,12 @@ const Player = () => {
         <div className="mobile_player_container">
           <div className="player_infos">
             <div className="player_match">
-              <h3>Prochain match: </h3>
+            <h3>Prochain match: </h3>
               <span>Samedi 12 Janvier 2024</span>
               <div className="player_match_infos">
-                <h3>RC Lens - Paris Saint Germain</h3>
-                <p>Stade Bollaert-Delelis</p>
-                <p>Av. Alfred Meas, 62300 Lens</p>
+                <h3>{match?.home.club_name}- {match?.away.club_name}</h3>
+                <p>{match?.home.stadium_name}</p>
+                <p>{match?.home.adress}, {match?.home.zip_code} {match?.home.city}</p>
                 <div className="player_match_button">
                   <Button colorScheme="teal" onClick={onOpen}>
                     Modifier

@@ -49,7 +49,6 @@ const playerReducer = createReducer(initialState, (builder) => {
     state.genre = action.payload.genre;
     state.strong_foot = action.payload.strong_foot;
     state.number_of_matches_played = action.payload.number_of_matches_played;
-    localStorage.setItem("firstname", action.payload.firstname);
   });
   builder.addCase(getPlayerInfos.rejected, (_state, action) => {
     console.log("Une erreur est survenue:", action.error.message);
