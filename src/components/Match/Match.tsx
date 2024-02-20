@@ -11,6 +11,7 @@ import {
   AccordionButton,
   AccordionPanel,
   Box,
+  Link,
 } from "@chakra-ui/react";
 
 import { BrowserView, MobileView } from "react-device-detect";
@@ -25,7 +26,7 @@ const Match = () => {
   const id = localStorage.getItem("id");
   
   const getAllMatchs = async () => {
-    const response = await axios.get(`http://localhost:3000/player/${id}/match`);
+    const response = await axios.get(`http://localhost:3000/player/${id}/match/stats`);
     console.log("requete getallmatchs terminée");
     return setData(response.data);
   }
@@ -54,7 +55,7 @@ const Match = () => {
                 </CardHeader>
                 <CardBody>
                   <Text>{element.team_id_as_home.club_name} {element.score} {element.team_id_as_outside.club_name}</Text>
-                  <Text color={"green"}>En forme</Text>
+                  <Text color={element.fitness == "En forme" ? "green" : "red"}>{element.fitness}</Text>
                 </CardBody>
                 <CardFooter>
                   <Accordion allowMultiple>
@@ -68,30 +69,30 @@ const Match = () => {
                       </h2>
                       <AccordionPanel pb={4}>
                         <Text>
-                          Minutes jouées: <Text as="b">90</Text>
+                          Minutes jouées: <Text as="b">{element.minutes_played}</Text>
                           <br />
                         </Text>
                         <Text>
-                          But(s) inscrits(s): <Text as="b">4</Text>
+                          But(s) inscrits(s): <Text as="b">{element.goals_scored}</Text>
                           <br />
                         </Text>
                         <Text>
-                          Passe(s) décisive(s): <Text as="b">2</Text>
+                          Passe(s) décisive(s): <Text as="b">{element.assists}</Text>
                           <br />
                         </Text>
                         <Text>
-                          Carton(s) jaune(s): <Text as="b">0</Text>
+                          Carton(s) jaune(s): <Text as="b">{element.yellow_card}</Text>
                           <br />
                         </Text>
                         <Text>
-                          Carton rouge: <Text as="b">0</Text>
+                          Carton rouge: <Text as="b">{element.red_card}</Text>
                           <br />
                         </Text>
-                        <a href="/player/match/1">
+                        <a href={`/player/match/${element.match_id}`}>
                           <Button colorScheme="red" textAlign="center">
                             Modifier
                           </Button>
-                        </a>
+                          </a>
                       </AccordionPanel>
                     </AccordionItem>
                   </Accordion>
