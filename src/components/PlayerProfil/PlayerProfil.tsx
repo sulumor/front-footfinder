@@ -4,7 +4,6 @@ import {
   Divider,
   Flex,
   Text,
-  IconButton,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -174,7 +173,7 @@ const PlayerProfil = () => {
           </div>
           <div className="profil_container_right_infos">
             <p>
-              Date de naissance : <span>{birthday}</span>
+              Date de naissance : <span>{new Date(birthday).toLocaleDateString('fr-FR', {year: 'numeric', month: 'long', day: 'numeric'})}</span>
             </p>
             <p>
               Nationnalité : <span>{country}</span>
