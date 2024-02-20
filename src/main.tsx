@@ -32,7 +32,7 @@ const router = createBrowserRouter([
       { path: "/notices", element: <Notices /> },
       { path: "/player", element: <Player /> },
       { path: "/player/match", element: <Match /> },
-      { path: "/player/match/1", element: <Stats /> },
+      { path: "/player/match/:matchId", element: <Stats /> },
       { path: "/scout", element: <Scout /> },
       { path: "/player/me", element: <PlayerProfil /> },
       { path: "/test", element: <Test /> },
