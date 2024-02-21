@@ -36,8 +36,9 @@ import {
   
   import "../Player/Player.scss";
   import { useEffect, useState } from "react";
-  import axios from "axios";
+  
 import { useParams } from "react-router-dom";
+import crud from "@/utils/crud";
   
   ChartJS.register(
     RadialLinearScale,
@@ -85,11 +86,11 @@ import { useParams } from "react-router-dom";
     const {id} = useParams({id: true});
     
     const getAllStats = async () => {
-      const responses = await axios.get(`http://localhost:3000/player/${id}/stats`);
+      const responses = await crud.get(["player", "stats"], [Number.parseInt(id!, 10)]);
       return setStats(responses.data);
     }
     const getNextMatch = async () => {
-      const responses = await axios.get(`http://localhost:3000/player/${id}/match`);
+      const responses = await crud.get(["player", "match"], [Number.parseInt(id!, 10)]);
       return setMatch(responses.data[responses.data.length -1]);
     }
   
