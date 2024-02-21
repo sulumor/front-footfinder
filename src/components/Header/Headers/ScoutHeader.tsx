@@ -22,7 +22,7 @@ const ScoutHeader = () => {
 
   const dispatch = useAppDispatch();
 
-    const handleDisconect = () => {;
+    const handleDisconect = () => {
         dispatch(logout());
       };
 
@@ -34,7 +34,7 @@ const ScoutHeader = () => {
             <h1>FootFinder</h1>
           </a>
           <div className="header_buttons">
-            <a href="/signin">
+            <a href="/scout/search">
               <Button colorScheme="teal">Recherche</Button>
             </a>
             <a href="/">

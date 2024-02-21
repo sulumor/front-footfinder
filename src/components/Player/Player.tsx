@@ -35,7 +35,8 @@ import "./Player.scss";
 import "./Calendar.scss";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import SelectTeam from "../Select/Select";
+import SelectTeam from "../Select/TeamSelect";
+import crud from "@/utils/crud";
 
 ChartJS.register(
   RadialLinearScale,
@@ -94,7 +95,9 @@ const Player = () => {
   const id = localStorage.getItem("id");
   
   const getAllStats = async () => {
-    const responses = await axios.get(`http://localhost:3000/player/${id}/stats`);
+    const responses = await crud.get(["player", "stats"], [Number.parseInt(id!, 10)]);
+    console.log(responses);
+    
     return setStats(responses.data);
   }
   const getNextMatch = async () => {

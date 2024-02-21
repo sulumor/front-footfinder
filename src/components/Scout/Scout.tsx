@@ -36,6 +36,7 @@ import { getScoutInfos } from "../store/reducers/scout";
 import "./Scout.scss";
 import axios from "axios";
 
+
 const Scout = () => {
 
   const [data, setData] = useState([])
