@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Input, InputGroup, InputRightElement, Button } from "@chakra-ui/react";
+import { Input, InputGroup, InputRightElement, Button, FormControl, Select } from "@chakra-ui/react";
 import { BrowserView, MobileView } from "react-device-detect";
 import "./Login.scss";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -15,10 +15,11 @@ const Login = () => {
 
   const [formValues, setFormValues] = useState({
     email: "jean.dujardin@mail.io",
-    password: "yjjk8E676a9JQZ",
+    password: "yjjk8E676a9JQZ!",
+    role: ""
   });
 
-  const handleChangeField = (user: "email" | "password") => (value: string) => {
+  const handleChangeField = (user: "email" | "password" | "role") => (value: string) => {
     setFormValues({ ...formValues, [user]: value });
   };
 
@@ -78,8 +79,21 @@ X346Dc5V7kfYmv
                         </Button>
                       </InputRightElement>
                     </div>
+                    
                   </InputGroup>
                 </div>
+                <FormControl mt={4}>
+                      <Select
+                        placeholder="--Role--"
+                        value={formValues.role}
+                        onChange={(e) =>
+                          handleChangeField("role")(e.target.value)
+                        }
+                      >
+                        <option>joueur</option>
+                        <option>recruteur</option>
+                      </Select>
+                    </FormControl>
               </div>
               <div className="login_button">
                 <Button colorScheme="teal" onClick={handleSubmit}>
@@ -87,7 +101,7 @@ X346Dc5V7kfYmv
                 </Button>
               </div>
               <p>scout:</p>
-              <p>nicolas.dupon@mail.io X346Dc5V7kfYmv</p>
+              <p>nicolas.dupon@mail.io X346Dc5V7kfYmv!</p>
             </div>
           </div>
         </form>
