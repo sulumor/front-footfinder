@@ -82,6 +82,9 @@ const Scout = () => {
 
   const getScoutFollows = async () => {
     const response = await axios.get(`http://localhost:3000/scout/${id}`);
+    if (response.data.players === "Pas de joueur suivi") {
+      return setData([]);
+    }
     return setData(response.data.players)
   }
 
@@ -181,7 +184,7 @@ const Scout = () => {
                   spacing={4}
                   templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
                 >
-                  {data.map((player: any) => {
+                  {data?.map((player: any) => {
                     return (
                       <Card key={player.id}>
                     <CardHeader>
