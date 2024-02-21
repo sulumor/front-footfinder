@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 import "./CreatePlayer.scss";
 
-const createPlayer = () => {
+const CreatePlayer = () => {
 
     const navigate = useNavigate();
 
@@ -168,4 +168,4 @@ const createPlayer = () => {
   );
 };
 
-export default createPlayer;
+export default CreatePlayer;
