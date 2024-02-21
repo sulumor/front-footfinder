@@ -52,7 +52,7 @@ const Match = () => {
                   <div key={element.match_id} className="card_container_cards">
                   <Card align="center" size={"sm"}>
                 <CardHeader>
-                  <Heading size="sm"> {element.date}</Heading>
+                  <Heading size="sm"> {new Date(element.date as Date).toLocaleDateString('fr-FR', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}</Heading>
                 </CardHeader>
                 <CardBody>
                   <Text>{element.home.club_name} {element.score} {element.away.club_name}</Text>
