@@ -1,5 +1,5 @@
+import crud from "@/utils/crud";
 import { FormControl, FormLabel, Select } from "@chakra-ui/react";
-import axios from "axios";
 import { useEffect, useState } from "react";
 
 interface Team {
@@ -12,7 +12,7 @@ const SelectTeam = ({label}:{label:string}) => {
   const [teams, setTeams] = useState([]);
 
   const getAllTeams = async () => {
-    const responses = await axios.get(`http://localhost:3000/datas/teams`);
+    const responses = await crud.get(['datas', 'teams'], []);
     return setTeams(responses.data);
   }
 

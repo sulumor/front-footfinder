@@ -40,6 +40,7 @@ import "./PlayerForScout.scss";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import crud from "@/utils/crud";
 
 ChartJS.register(
   RadialLinearScale,
@@ -102,16 +103,12 @@ const Player = () => {
   const { id } = useParams();
 
   const getAllStats = async () => {
-    const responses = await axios.get(
-      `http://localhost:3000/scout/${scoutId}/player/${id}/stats`
-    );
+    const responses = await crud.get(['scout', 'player', 'stats'], [Number.parseInt(scoutId!, 10), Number.parseInt(id!, 10)]);   
     console.log(responses.data);
     return setStats(responses.data);
   };
   const getNextMatch = async () => {
-    const responses = await axios.get(
-      `http://localhost:3000/scout/${scoutId}/player/${id}/match`
-    );
+    const responses = await crud.get(['scout', 'player', 'match'], [Number.parseInt(scoutId!, 10), Number.parseInt(id!, 10)]);
     const today = Date.now();
     const nextMatch = responses.data.filter(
       (match: { date: string | number | Date }) =>
@@ -121,11 +118,15 @@ const Player = () => {
   };
 
   const getPlayerInfos = async () => {
-    const responses = await axios.get(
-      `http://localhost:3000/scout/${scoutId}/player/${id}`
-    );
+    const responses = await crud.get(['scout', 'player'], [Number.parseInt(scoutId!, 10), Number.parseInt(id!, 10)]);
     console.log(responses.data);
     return setInfos(responses.data);
+  };
+
+  const addPlayerFollow = async () => {
+    const responses = await crud.post(['scout', 'player'], [Number.parseInt(scoutId!, 10), Number.parseInt(id!, 10)], {});
+    console.log(responses.data);
+    return responses.data;
   };
 
   useEffect(() => {
@@ -201,7 +202,7 @@ const Player = () => {
             </div>
             <Divider />
             <div className="player_follow">
-              <h3>Machin est suivi par</h3> <span>3 recruteurs:</span>
+              <h3>{infos?.firstname} {infos?.lastname} est suivi par</h3> <span>3 recruteurs:</span>
               <div className="player_follow_pics">
                 <Wrap>
                   <WrapItem>
@@ -246,13 +247,16 @@ const Player = () => {
             </h2>
           </div>
           <div className="player_infos_footer_content">
-            <p>Né le: {infos?.birth_date}</p>
+            <p>Né le: {new Date(infos?.birth_date as unknown as Date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric'})}</p>
             <p>Genre: {infos?.genre}</p>
             <p>Taille: {infos?.height} cm</p>
             <p>Poids: {infos?.weight} kg</p>
             <p>Poste: {infos?.position}</p>
             <p>Pied fort: {infos?.strong_foot}</p>
             <p>Nationalité: {infos?.nationality}</p>
+          </div>
+          <div className="player_add_button">
+          <Button colorScheme="teal" onClick={addPlayerFollow}>Suivre le joueur</Button>
           </div>
         </div>
       </BrowserView>

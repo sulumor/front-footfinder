@@ -10,8 +10,11 @@ interface Response {
 
 class Crud {
   private BASE_URL:string;
-  constructor(BASE_URL: string){
+  private TOKEN: string | null
+
+  constructor(BASE_URL: string, TOKEN: string |null){
     this.BASE_URL = BASE_URL;
+    this.TOKEN = TOKEN;
   }
  
   async get(options:string[], ids:number[]) : Promise<Response> {
@@ -19,7 +22,7 @@ class Crud {
     const res = await axios.get(`${this.BASE_URL}/${path}`, {
       headers: {
         'Content-Type': 'application/json', 
-        Authorization: `Bearer ${Cookies.get('token')}`, 
+        Authorization: `Bearer ${this.TOKEN}`, 
       }
     });
     return {data : res.data, status: res.status}
@@ -80,4 +83,4 @@ class Crud {
 
 }
 
-export default new Crud('http://localhost:3000');
+export default new Crud('http://localhost:3000', localStorage.getItem("token"));

@@ -34,7 +34,7 @@ import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { getScoutInfos } from "../store/reducers/scout";
 
 import "./Scout.scss";
-import axios from "axios";
+import crud from "@/utils/crud";
 
 
 const Scout = () => {
@@ -55,7 +55,7 @@ const Scout = () => {
       await getScoutFollows()
     };
     fetchData();
-  }, []);
+  });
   
   const [patchValues, setPatchValues] = useState({
     firstname: "",
@@ -74,18 +74,25 @@ const Scout = () => {
   }
 
   const updateScoutInfos = async () => {
-      const response = await axios.patch(`http://localhost:3000/scout/${id}`, {...patchValues});
+    const response = await crud.update(['scout'], [Number.parseInt(id!, 10)], {...patchValues});
       console.log("requete update scout terminée");
       console.log(response.data);
       return response.data;
     }
 
   const getScoutFollows = async () => {
-    const response = await axios.get(`http://localhost:3000/scout/${id}`);
+    const response = await crud.get(['scout'], [Number.parseInt(id!, 10)]);
     if (response.data.players === "Pas de joueur suivi") {
       return setData([]);
     }
-    return setData(response.data.players)
+    return setData(response.data.players);
+  }
+
+  const deleteScoutFollow = async (playerId: any) => {
+    const response = await crud.delete(['scout', 'player'], [Number.parseInt(id!, 10), Number.parseInt(playerId!, 10)]);
+    console.log("requete delete follow terminée");
+    console.log(response.data)
+    return setData(response.data.players);
   }
 
   return (
@@ -233,7 +240,7 @@ const Scout = () => {
                           Profil
                         </Button>
                         </a>
-                        <Button variant="outline" colorScheme="red">
+                        <Button variant="outline" colorScheme="red" onClick={() => deleteScoutFollow(player.id)}>
                           Retirer
                         </Button>
                       </ButtonGroup>

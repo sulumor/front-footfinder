@@ -6,10 +6,10 @@ import {
   Select,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import "./CreatePlayer.scss";
+import crud from "@/utils/crud";
 
 const CreatePlayer = () => {
 
@@ -47,9 +47,7 @@ const CreatePlayer = () => {
     };
 
   const postPlayerInfos = async () => {
-    const response = await axios.post("http://localhost:3000/register/joueur", {
-      ...formValues,
-    });
+    const response = await crud.post(['register', 'joueur'], [], {...formValues});
     console.log("requete create player terminée");
     console.log(response.data);
     return response.data;

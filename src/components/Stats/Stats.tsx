@@ -30,8 +30,8 @@ import Calendar from "react-calendar";
 import "./Stats.scss";
 import "./Calendar.scss";
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
-import axios from "axios";
 import { useParams } from "react-router-dom";
+import crud from "@/utils/crud";
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -73,10 +73,7 @@ const Stats = () => {
   };
 
   const updateMatchStats = async () => {
-    const response = await axios.patch(
-      `http://localhost:3000/player/${id}/match/${matchId}/stats`,
-      { ...patchValues }
-    );
+    const response = await crud.update(['player', 'match', 'stats'], [Number.parseInt(id!, 10), Number.parseInt(matchId!, 10)], {...patchValues});
     console.log("requete update match terminée");
     console.log(response.data);
     return response.data;

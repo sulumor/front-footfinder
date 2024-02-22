@@ -34,7 +34,6 @@ import Calendar from "react-calendar";
 import "./Player.scss";
 import "./Calendar.scss";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import SelectTeam from "../Select/TeamSelect";
 import crud from "@/utils/crud";
 
@@ -46,15 +45,6 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
-/*
-interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onOpen: () => void;
-  children: void;
-}
-*/
 
 interface Stats {
   assists:number;
@@ -101,7 +91,7 @@ const Player = () => {
     return setStats(responses.data);
   }
   const getNextMatch = async () => {
-    const responses = await axios.get(`http://localhost:3000/player/${id}/match`);
+    const responses = await crud.get(['player', 'match'], [Number.parseInt(id!, 10)]);
     const today = Date.now();
     const nextMatch = responses.data.filter(((match: { date: string | number | Date; }) => new Date(match.date).getTime() > today))
     return setMatch(nextMatch[0]);

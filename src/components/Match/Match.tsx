@@ -17,7 +17,7 @@ import { BrowserView, MobileView } from "react-device-detect";
 
 import "./Match.scss";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import crud from "@/utils/crud";
 
 const Match = () => {
 
@@ -25,7 +25,7 @@ const Match = () => {
   const id = localStorage.getItem("id");
   
   const getAllMatchs = async () => {
-    const response = await axios.get(`http://localhost:3000/player/${id}/match/stats`);
+    const response = await crud.get(['player', 'match', 'stats'], [Number.parseInt(id!, 10)]);
     console.log("requete getallmatchs terminée");
     return setData(response.data);
   }

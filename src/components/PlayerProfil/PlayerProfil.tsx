@@ -23,7 +23,7 @@ import "./PlayerProfil.scss";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { getPlayerInfos } from "../store/reducers/player";
-import axios from "axios";
+import crud from "@/utils/crud";
 
 const PlayerProfil = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -90,9 +90,7 @@ const PlayerProfil = () => {
   }, []);
 
   const updatePlayerInfos = async () => {
-    const response = await axios.patch(`http://localhost:3000/player/${id}`, {
-      ...patchValues,
-    });
+    const response = await crud.update(['player'], [Number.parseInt(id!, 10)], {...patchValues});
     console.log("requete update player terminée");
     console.log(response.data);
     return response.data;
