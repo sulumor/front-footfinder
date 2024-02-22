@@ -84,7 +84,17 @@ const PlayerProfil = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await dispatch(getPlayerInfos(id));
+      const res = await dispatch(getPlayerInfos(id));
+      
+      setPatchValues({...patchValues, firstname:res.payload.firstname});
+      patchValues.firstname = res.payload.firstname;
+      patchValues.lastname= res.payload.lastname;
+      patchValues.email= res.payload.email;
+      patchValues.position = res.payload.position;
+      patchValues.nationality = res.payload.nationality;
+      patchValues.strong_foot = res.payload.strong_foot;
+      patchValues.height = res.payload.height;
+      patchValues.weight = res.payload.weight;
     };
     fetchData();
   }, []);
