@@ -33,8 +33,6 @@ import {
 
 import { BrowserView, MobileView } from "react-device-detect";
 
-import Calendar from "react-calendar";
-
 import "./Player.scss";
 import "./Calendar.scss";
 import { useEffect, useState } from "react";
@@ -320,7 +318,7 @@ const Player = () => {
           <Divider width="50%" />
         </Center>
         <div className="mobile_player_container">
-          <div className="player_infos">
+          <div className="mobile_player_infos">
             <div className="player_match">
               <h3>Prochain match: </h3>
               <span>
@@ -331,7 +329,7 @@ const Player = () => {
                   day: "numeric",
                 })}
               </span>
-              <div className="player_match_infos">
+              <div className="mobile_player_match_infos">
                 <h3>
                   {match?.home.club_name} - {match?.away.club_name}
                 </h3>
@@ -342,22 +340,65 @@ const Player = () => {
                 </p>
                 <div className="player_match_button">
                   <Button colorScheme="teal" onClick={onOpen}>
-                    Modifier
+                    Ajouter un match
                   </Button>
                 </div>
                 <Modal isOpen={isOpen} onClose={onClose}>
                   <ModalOverlay />
                   <ModalContent>
-                    <ModalHeader>Modifier le match</ModalHeader>
+                    <ModalHeader>Ajouter un match</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
-                      <SelectTeam label={"Équipe à domicile"} />
-                      <SelectTeam label={"Équipe à l'extérieur"} />
+                    <FormControl isRequired>
+                          <FormLabel>Date du match</FormLabel>
+                          <Input
+                            placeholder="Select Date and Time"
+                            size="md"
+                            type="date"
+                            value={matchValues.date}
+                            onChange={(e) =>
+                              handleChangeField("date")(e.target.value)
+                            }
+                          />
+                        </FormControl>
+
+                        <FormControl mt={4} isRequired>
+                          <FormLabel>Equipe à domicile</FormLabel>
+                          <Select
+                            placeholder="-- équipe à domicile --"
+                            value={matchValues.homeTeam}
+                            onChange={(e) =>
+                              handleChangeField("homeTeam")(e.target.value)
+                            }
+                          >
+                            {teams?.map((team: Team) => (
+                              <option key={team.id} value={team.id}>
+                                {team.club_name}
+                              </option>
+                            ))}
+                          </Select>
+                        </FormControl>
+                        <FormControl mt={4} isRequired>
+                          <FormLabel>Equipe visiteur</FormLabel>
+                          <Select
+                            placeholder="-- équipe visiteur --"
+                            value={matchValues.awayTeam}
+                            onChange={(e) =>
+                              handleChangeField("awayTeam")(e.target.value)
+                            }
+                          >
+                            {teams?.map((team: Team) => (
+                              <option key={team.id} value={team.id}>
+                                {team.club_name}
+                              </option>
+                            ))}
+                          </Select>
+                        </FormControl>
                     </ModalBody>
 
                     <ModalFooter>
-                      <Button colorScheme="teal" mr={3}>
-                        Modifier
+                      <Button onClick={handleSubmit} colorScheme="teal" mr={3}>
+                        Ajouter
                       </Button>
                       <Button onClick={onClose}>Annuler</Button>
                     </ModalFooter>

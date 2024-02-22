@@ -271,21 +271,16 @@ const Scout = () => {
                       {firstName} {lastName}
                     </Text>
                     <Text fontSize="xl">Recruteur</Text>
+                  <div className="scout_box_right">
+                    <Text fontSize="xl">Ville: {city}</Text>
+                    <Text fontSize="xl">Club: {club}</Text>
+                  </div>
                     <IconButton
                       onClick={onOpen}
                       colorScheme="teal"
                       aria-label="Search database"
                       icon={<EditIcon />}
                     />
-                  </div>
-                  <div className="scout_box_divider">
-                  <Center height="100px">
-                    <Divider orientation="vertical" />
-                  </Center>
-                  </div>
-                  <div className="scout_box_right">
-                    <Text fontSize="xl">Ville: {city}</Text>
-                    <Text fontSize="xl">Club: {club}</Text>
                   </div>
                 </Box>
               </Flex>
