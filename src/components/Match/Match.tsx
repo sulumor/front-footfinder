@@ -11,6 +11,11 @@ import {
   AccordionButton,
   AccordionPanel,
   Box,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel
 } from "@chakra-ui/react";
 
 import { BrowserView, MobileView } from "react-device-detect";
@@ -22,15 +27,29 @@ import crud from "@/utils/crud";
 const Match = () => {
 
   const [data, setData] = useState([]);
+  const pastMatches: any = [];
+  const futureMatches: any = [];
   const id = localStorage.getItem("id");
+  const today = new Date();
   
   const getAllMatchs = async () => {
     const response = await crud.get(['player', 'match', 'stats'], [Number.parseInt(id!, 10)]);
     console.log("requete getallmatchs terminée");
     return setData(response.data);
-  }
+  };
+  
+  data.forEach((match: any) => {
+    const matchDate = new Date(match.date)
 
-  const numAscending = [...data].sort((a: number, b: number) => a.match_id - b.match_id);
+    if (matchDate < today) {
+      pastMatches.push(match);
+    } else {
+      futureMatches.push(match);
+    }
+  });
+
+  console.log(pastMatches);
+  console.log(futureMatches);
 
  useEffect(() => {
     const fetchData = async () => {
@@ -44,10 +63,19 @@ const Match = () => {
   return (
     <>
       <BrowserView>
-        <h1>Historique</h1>
+      <div className="matches_main">
+      <Tabs variant='soft-rounded' colorScheme='green'>
+  <TabList>
+    <div className="tab_panels_title">
+    <Tab>Historique</Tab>
+    <Tab>A venir</Tab>
+    </div>
+  </TabList>
+  <TabPanels>
+    <TabPanel>
         <div className="card_main">
           <div className="card_container">
-              {numAscending.map((element: any) => {
+              {pastMatches.map((element: any) => {
                 return (
                   <div key={element.match_id} className="card_container_cards">
                   <Card align="center" size={"sm"}>
@@ -103,9 +131,34 @@ const Match = () => {
                 )
               })}
           </div>
-          <div className="match_button">
-            <Button colorScheme="teal">Voir plus de matchs</Button>
+        </div>
+        </TabPanel>
+        <TabPanel>
+        <div className="card_main">
+          <div className="card_container">
+              {futureMatches.map((match: any) => {
+                return (
+                  <div key={match.match_id} className="card_container_cards">
+                  <Card align="center" size={"sm"}>
+                <CardHeader>
+                  <Heading size="sm"> {new Date(match.date as Date).toLocaleDateString('fr-FR', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}</Heading>
+                </CardHeader>
+                <CardBody>
+                  <Text>{match.home.club_name} {match.score} {match.away.club_name}</Text>
+                  <Text color={match.fitness == "En forme" ? "green" : "red"}>{match.fitness}</Text>
+                </CardBody>
+                <CardFooter>
+                  
+                </CardFooter>
+              </Card>
+              </div>
+                )
+              })}
           </div>
+        </div>
+        </TabPanel>
+        </TabPanels>
+        </Tabs>
         </div>
       </BrowserView>
       <MobileView>

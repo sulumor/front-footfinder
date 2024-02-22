@@ -32,16 +32,6 @@ const Login = () => {
     }
   };
 
-  /*playerTest 
- jean.dujardin@mail.io
- yjjk8E676a9JQZ
- */
-
-  /*scoutTest
-nicolas.dupon@mail.io
-X346Dc5V7kfYmv
-*/
-
   return (
     <>
       <BrowserView>
@@ -78,8 +68,7 @@ X346Dc5V7kfYmv
                           {show ? <ViewOffIcon /> : <ViewIcon />}
                         </Button>
                       </InputRightElement>
-                    </div>
-                    
+                    </div>     
                   </InputGroup>
                 </div>
                 <FormControl mt={4}>
@@ -143,12 +132,26 @@ X346Dc5V7kfYmv
                     </InputRightElement>
                   </InputGroup>
                 </div>
+                <FormControl mt={4}>
+                      <Select
+                        placeholder="--Role--"
+                        value={formValues.role}
+                        onChange={(e) =>
+                          handleChangeField("role")(e.target.value)
+                        }
+                      >
+                        <option>joueur</option>
+                        <option>recruteur</option>
+                      </Select>
+                    </FormControl>
               </div>
               <div className="mobile_login_button">
                 <Button colorScheme="teal" onClick={handleSubmit}>
                   Se connecter
                 </Button>
               </div>
+              <p>scout:</p>
+              <p>nicolas.dupon@mail.io X346Dc5V7kfYmv!</p>
             </div>
           </div>
         </form>

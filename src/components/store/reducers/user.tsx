@@ -49,7 +49,6 @@ export const signin = createAsyncThunk<UserState>(
       "http://localhost:3000/register",
       formValues 
     );
-    Cookies.set('token', response.data.token.jwt);
     console.log("requete signin terminée");
     console.log(response.data);
     return response.data;
