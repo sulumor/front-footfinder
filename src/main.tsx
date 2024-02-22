@@ -43,7 +43,7 @@ const router = createBrowserRouter([
       { path: "/scout", element: <Scout /> },
       { path: "/player/me", element: <PlayerProfil /> },
       { path: "/test", element: <Test /> },
-      {path: "/scout/search", element : <SearchPlayer/>},
+      { path: "/scout/search", element : <SearchPlayer/> },
     ],
   },
 ]);

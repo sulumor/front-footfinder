@@ -40,6 +40,7 @@ import "./PlayerForScout.scss";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import crud from "@/utils/crud";
 
 ChartJS.register(
   RadialLinearScale,
@@ -102,16 +103,12 @@ const Player = () => {
   const { id } = useParams();
 
   const getAllStats = async () => {
-    const responses = await axios.get(
-      `http://localhost:3000/scout/${scoutId}/player/${id}/stats`
-    );
+    const responses = await crud.get(['scout', 'player', 'stats'], [Number.parseInt(scoutId!, 10), Number.parseInt(id!, 10)])
     console.log(responses.data);
     return setStats(responses.data);
   };
   const getNextMatch = async () => {
-    const responses = await axios.get(
-      `http://localhost:3000/scout/${scoutId}/player/${id}/match`
-    );
+    const responses = await crud.get(['scout', 'player', 'match'], [Number.parseInt(scoutId!, 10), Number.parseInt(id!, 10)])
     const today = Date.now();
     const nextMatch = responses.data.filter(
       (match: { date: string | number | Date }) =>
@@ -121,9 +118,7 @@ const Player = () => {
   };
 
   const getPlayerInfos = async () => {
-    const responses = await axios.get(
-      `http://localhost:3000/scout/${scoutId}/player/${id}`
-    );
+    const responses = await crud.get(['scout', 'player'], [Number.parseInt(scoutId!, 10), Number.parseInt(id!, 10)])
     console.log(responses.data);
     return setInfos(responses.data);
   };
