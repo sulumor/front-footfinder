@@ -241,7 +241,11 @@ const Player = () => {
             </h2>
           </div>
           <div className="player_infos_footer_content">
-            <p>Né le: {infos?.birth_date}</p>
+            <p>Né le: {new Date(infos?.birth_date as Date).toLocaleDateString("fr-FR", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}</p>
             <p>Genre: {infos?.genre}</p>
             <p>Taille: {infos?.height} cm</p>
             <p>Poids: {infos?.weight} kg</p>
