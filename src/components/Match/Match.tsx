@@ -23,23 +23,23 @@ import { BrowserView, MobileView } from "react-device-detect";
 import "./Match.scss";
 import { useEffect, useState } from "react";
 import crud from "@/utils/crud";
+import { Match as MatchType } from "@/@Types";
 
 const Match = () => {
 
-  const [data, setData] = useState([]);
-  const pastMatches: any = [];
-  const futureMatches: any = [];
-  const id = localStorage.getItem("id");
-  const today = new Date();
+  const [data, setData] = useState<MatchType[]>([]);
+  const pastMatches: MatchType[] = [];
+  const futureMatches: MatchType[] = [];
+  const id : string | null = localStorage.getItem("id");
   
   const getAllMatchs = async () => {
     const response = await crud.get(['player', 'match', 'stats'], [Number.parseInt(id!, 10)]);
     return setData(response.data);
   };
   
-  data.forEach((match: any) => {
-    const matchDate = new Date(match.date)
-    if (matchDate < today) {
+
+  data.forEach((match: MatchType) => {
+    if (new Date(match.date) < new Date()) {
       pastMatches.push(match);
     } else {
       futureMatches.push(match);
@@ -68,7 +68,7 @@ const Match = () => {
     <TabPanel>
         <div className="card_main">
           <div className="card_container">
-              {pastMatches.map((element: any) => {
+              {pastMatches.map((element: MatchType) => {
                 return (
                   <div key={element.match_id} className="card_container_cards">
                   <Card align="center" size={"sm"}>
@@ -129,7 +129,7 @@ const Match = () => {
         <TabPanel>
         <div className="card_main">
           <div className="card_container">
-              {futureMatches.map((match: any) => {
+              {futureMatches.map((match: MatchType) => {
                 return (
                   <div key={match.match_id} className="card_container_cards">
                   <Card align="center" size={"sm"}>
@@ -168,7 +168,7 @@ const Match = () => {
     <TabPanel>
         <div className="mobile_card_main">
           <div className="mobile_card_container">
-              {pastMatches.map((element: any) => {
+              {pastMatches.map((element: MatchType) => {
                 return (
                   <div key={element.match_id} className="mobile_card_container_cards">
                   <Card align="center" size={"sm"}>
@@ -229,7 +229,7 @@ const Match = () => {
         <TabPanel>
         <div className="card_main">
           <div className="mobile_card_container">
-              {futureMatches.map((match: any) => {
+              {futureMatches.map((match: MatchType) => {
                 return (
                   <div key={match.match_id} className="mobile_card_container_cards">
                   <Card align="center" size={"sm"}>

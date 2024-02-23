@@ -5,13 +5,12 @@ import { RouterProvider } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 
 import { createBrowserRouter } from "react-router-dom";
-import Test from "@/pages/test/test.tsx";
 import ErrorPage from "@/components/Error/Error";
 import Login from "@/components/Login/Login";
 import Home from "@/components/Home/Home";
 import Signin from "@/components/Signin/Signin";
 import Notices from "@/components/Notices/Notices";
-import Player from "@/components/Player/Player";
+import Player from "@/pages/Player/Player";
 import Match from "@/components/Match/Match";
 import Stats from "@/components/Stats/Stats";
 import Scout from "@/components/Scout/Scout";
@@ -43,7 +42,6 @@ const router = createBrowserRouter([
       { path: "/scout", element: <Scout /> },
       { path: "/player/me", element: <PlayerProfil /> },
       { path: "/scout/search", element : <SearchPlayer/> },
-      { path: "/test", element: <Test /> },
     ],
   },
 ]);

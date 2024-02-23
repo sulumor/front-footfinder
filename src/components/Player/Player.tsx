@@ -34,11 +34,7 @@ import crud from "@/utils/crud";
 
 import "./Player.scss";
 import "./Calendar.scss";
-
-interface Team {
-  id: number;
-  club_name: string;
-}
+import { Match, setMatch as setMatchType, Team, Stats } from "@/@Types";
 
 ChartJS.register(
   RadialLinearScale,
@@ -49,72 +45,58 @@ ChartJS.register(
   Legend
 );
 
-interface Stats {
-  assists: number;
-  goals_conceded: number;
-  red_card: number;
-  yellow_card: number;
-  stops: number;
-  goals_scored: number;
-}
-
-interface Match {
-  date: string | number | Date;
-  home: {
-    club_name: string;
-    stadium_name: string;
-    adress: string;
-    zip_code: string;
-    city: string;
-  };
-  away: {
-    club_name: string;
-    adress: string;
-    zip_code: string;
-    city: string;
-  };
-}
-
 const Player = () => {
-  const [teams, setTeams] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const firstName = localStorage.getItem("firstname");
+  const id : string | null = localStorage.getItem("id");
+  const firstName : string | null = localStorage.getItem("firstname");
+  const [teams, setTeams] = useState<Team[]>();
   const [stats, setStats] = useState<Stats>();
   const [match, setMatch] = useState<Match>();
-  const id = localStorage.getItem("id");
 
-  const [matchValues, setMatchValues] = useState({
+  const [matchValues, setMatchValues] = useState<setMatchType>({
     homeTeam: 0,
     awayTeam: 0,
     date: "",
   });
 
-  const getAllStats = async () => {
+  const getAllStats : () => Promise<void> = async () => {
     const responses = await crud.get(
       ["player", "stats"],
       [Number.parseInt(id!, 10)]
     );
-    console.log(responses);
     return setStats(responses.data);
   };
 
-  const getNextMatch = async () => {
 
-    const responses = await crud.get(['player', 'match', 'stats'], [Number.parseInt(id!, 10)]);
-    
-     const sortResponse = responses.data.sort(function(a : Match, b : Match) {
+  const getNextMatch : () => Promise<void> = async () => {
+    const responses  = await crud.get(['player', 'match', 'stats'], [Number.parseInt(id!, 10)]);
+    const sortResponse : Match[] = responses.data.sort(function(a : Match, b : Match) {
       return new Date(a.date).getTime()  - new Date(b.date).getTime();
     });
     
-    const today = Date.now();
-    const nextMatch = sortResponse.filter(((match: { date: string | number | Date; }) => new Date(match.date).getTime() > today))
+    const today : Date = new Date();
+    const nextMatch : Match[] = sortResponse.filter(((match: Match) => new Date(match.date) > today))
     return setMatch(nextMatch[0]);
   };
 
-  const getAllTeams = async () => {
+  const getAllTeams : () => Promise<void> = async () => {
     const response = await crud.get(["datas", "teams"], []);
     return setTeams(response.data);
   };
+
+  const addMatch : () => Promise<Match> = async () => {
+    const response = await crud.post(['player', 'match'], [Number.parseInt(id!, 10)], {...matchValues});
+    return response.data
+  }
+
+  const handleChangeField : (match: "homeTeam" | "awayTeam" | "date") => (value: number | string | Date) => void =
+    (match: "homeTeam" | "awayTeam" | "date") => (value: number | string | Date) => {
+      setMatchValues({ ...matchValues, [match]: value });
+    };
+
+  const handleSubmit : () => void = () => {
+    addMatch()
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -124,21 +106,6 @@ const Player = () => {
     };
     fetchData();
   }, []);
-
-  const addMatch = async () => {
-    const response = await crud.post(['player', 'match'], [Number.parseInt(id!, 10)], {...matchValues});
-    console.log(response.data);
-    return response.data
-  }
-
-  const handleChangeField =
-    (match: "homeTeam" | "awayTeam" | "date") => (value: any) => {
-      setMatchValues({ ...matchValues, [match]: value });
-    };
-
-  const handleSubmit = () => {
-    addMatch()
-  }
 
   const data = {
     labels: [
@@ -214,7 +181,7 @@ const Player = () => {
                             placeholder="Select Date and Time"
                             size="md"
                             type="date"
-                            value={matchValues.date}
+                            value={matchValues.date as string}
                             onChange={(e) =>
                               handleChangeField("date")(e.target.value)
                             }
@@ -353,7 +320,7 @@ const Player = () => {
                             placeholder="Select Date and Time"
                             size="md"
                             type="date"
-                            value={matchValues.date}
+                            value={matchValues.date as string}
                             onChange={(e) =>
                               handleChangeField("date")(e.target.value)
                             }

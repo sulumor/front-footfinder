@@ -25,34 +25,28 @@ import { getPlayerInfos } from "../store/reducers/player";
 import crud from "@/utils/crud";
 
 import "./PlayerProfil.scss";
+import { PlayerPatch } from "@/@Types";
 
 const PlayerProfil = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useAppDispatch();
-  const id = localStorage.getItem("id");
+  const id : string | null = localStorage.getItem("id");
 
-  const lastName = useAppSelector((state) => state.player.lastname);
-  const firstName = useAppSelector((state) => state.player.firstname);
-  const position = useAppSelector((state) => state.player.position);
-  const email = useAppSelector((state) => state.player.email);
-  const country = useAppSelector((state) => state.player.nationality);
-  const foot = useAppSelector((state) => state.player.strong_foot);
-  const matches = useAppSelector(
+  const lastName : string = useAppSelector((state) => state.player.lastname);
+  const firstName : string = useAppSelector((state) => state.player.firstname);
+  const position: string = useAppSelector((state) => state.player.position);
+  const email : string = useAppSelector((state) => state.player.email);
+  const country: string = useAppSelector((state) => state.player.nationality);
+  const foot : string = useAppSelector((state) => state.player.strong_foot);
+  const matches: number = useAppSelector(
     (state) => state.player.number_of_matches_played
   );
-  const birthday = useAppSelector((state) => state.player.birth_date);
-  const genre = useAppSelector((state) => state.player.genre);
-  const height = useAppSelector((state) => state.player.height);
-  const weight = useAppSelector((state) => state.player.weight);
+  const birthday : string | Date = useAppSelector((state) => state.player.birth_date);
+  const genre : string = useAppSelector((state) => state.player.genre);
+  const height : number = useAppSelector((state) => state.player.height);
+  const weight: number = useAppSelector((state) => state.player.weight);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await dispatch(getPlayerInfos(id));
-    };
-    fetchData();
-  }, []);
-
-  const [patchValues, setPatchValues] = useState({
+  const [patchValues, setPatchValues] = useState<PlayerPatch>({
     firstname: "",
     lastname: "",
     email: "",
@@ -83,31 +77,30 @@ const PlayerProfil = () => {
     updatePlayerInfos();
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await dispatch(getPlayerInfos(id));
-      
-      setPatchValues({...patchValues, firstname:res.payload.firstname});
-      patchValues.firstname = res.payload.firstname;
-      patchValues.lastname= res.payload.lastname;
-      patchValues.email= res.payload.email;
-      patchValues.position = res.payload.position;
-      patchValues.nationality = res.payload.nationality;
-      patchValues.strong_foot = res.payload.strong_foot;
-      patchValues.height = res.payload.height;
-      patchValues.weight = res.payload.weight;
-    };
-    fetchData();
-  }, []);
-
   const updatePlayerInfos = async () => {
     const response = await crud.update(["player"], [Number.parseInt(id!, 10)], {
       ...patchValues,
     });
     console.log("requete update player terminée");
-    console.log(response.data);
     return response.data;
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await dispatch(getPlayerInfos(id));
+
+      setPatchValues({...patchValues, firstname:(res.payload as PlayerPatch).firstname});
+      patchValues.firstname = (res.payload as PlayerPatch).firstname;
+      patchValues.lastname= (res.payload as PlayerPatch).lastname;
+      patchValues.email= (res.payload as PlayerPatch).email;
+      patchValues.position = (res.payload as PlayerPatch).position;
+      patchValues.nationality = (res.payload as PlayerPatch).nationality;
+      patchValues.strong_foot = (res.payload as PlayerPatch).strong_foot;
+      patchValues.height = (res.payload as PlayerPatch).height;
+      patchValues.weight = (res.payload as PlayerPatch).weight;
+    };
+    fetchData();
+  }, []);
 
   return (
     <>
