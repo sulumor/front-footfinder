@@ -102,8 +102,12 @@ const Player = () => {
   }
   const getNextMatch = async () => {
     const responses = await axios.get(`http://localhost:3000/player/${id}/match`);
+    const sortResponse = responses.data.sort(function(a : Match, b : Match) {
+      return (a.date as Date).getTime()  - (b.date as Date).getTime();
+    });
+    
     const today = Date.now();
-    const nextMatch = responses.data.filter(((match: { date: string | number | Date; }) => new Date(match.date).getTime() > today))
+    const nextMatch = sortResponse.filter(((match: { date: string | number | Date; }) => new Date(match.date).getTime() > today))
     return setMatch(nextMatch[0]);
   }
 
