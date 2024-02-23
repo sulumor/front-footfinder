@@ -36,7 +36,6 @@ export const getPlayerInfos = createAsyncThunk<PlayerState>(
   async (id) => {
     const response = await crud.get(['player'], [Number.parseInt(id!, 10)]);
     console.log("requete player terminée");
-    console.log(response.data);
     return response.data;
   }
 );
