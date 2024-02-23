@@ -17,20 +17,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 import "./SearchPlayer.scss";
+import { Player } from "@/@Types";
 
-interface Player {
-  id: number;
-  firstname: string;
-  lastname: string;
-  position: string;
-  strong_foot: string;
-  height: number;
-  weight: number;
-}
+
 
 const SearchPlayer = () => {
   const [patchValues, setPatchValues] = useState({});
-  const [players, setPlayers] = useState([]);
+  const [players, setPlayers] = useState<Player[]>([]);
 
   const handleChangeField =
     (search: "nationality" | "genre" | "strong_foot" | "position") =>

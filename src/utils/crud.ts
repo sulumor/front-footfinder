@@ -31,7 +31,7 @@ class Crud {
   async post(
     options: string[],
     ids: number[], 
-    body: { [k: string]: string | number | boolean | [] | undefined | null }
+    body: { [k: string]: string | number | boolean | Date | [] | undefined | null }
   ): Promise<Response> {
     const path:string = createPathWithMultipleOptions(options, ids);
     const res = await axios.post(
