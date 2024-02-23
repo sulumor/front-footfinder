@@ -3,14 +3,8 @@ import {
   createAsyncThunk,
   createReducer,
 } from "@reduxjs/toolkit";
-
-interface ScoutState {
-    firstname: string,
-    lastname: string,
-    email: string,
-    club: string,
-    city: string,
-};
+import {ScoutState} from "@/@Types";
+import { UDPATE_SCOUT, UNFOLLOW } from "../actions/scout";
 
 export const initialState: ScoutState = {
     firstname: "",
@@ -18,14 +12,14 @@ export const initialState: ScoutState = {
     email: "",
     club: "",
     city: "",
+    players: 0,
+    count: 0,
 };
 
 export const getScoutInfos = createAsyncThunk<ScoutState>(
   "SCOUT",
   async (id) => {
     const response = await crud.get(['scout'], [Number.parseInt(id!, 10)]);
-    console.log("requete scout terminée");
-    console.log(response.data);
     return response.data;
   }
 );
@@ -37,10 +31,17 @@ const scoutReducer = createReducer(initialState, (builder) => {
     state.email = action.payload.email;
     state.club = action.payload.club;
     state.city = action.payload.city;
+    state.players = action.payload.players.length
   });
   builder.addCase(getScoutInfos.rejected, (_state, action) => {
     console.log("Une erreur est survenue:", action.error.message);
   });
+  builder.addCase(UNFOLLOW, (state, _action) => {
+    state.players = state.players -1;
+  });
+  builder.addCase(UDPATE_SCOUT, (state, _action) => {
+    state.count = state.count +1;
+  })
 });
 
 export default scoutReducer;

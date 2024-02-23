@@ -103,7 +103,7 @@ const Player = () => {
     const responses = await crud.get(['player', 'match', 'stats'], [Number.parseInt(id!, 10)]);
     
      const sortResponse = responses.data.sort(function(a : Match, b : Match) {
-      return (a.date as Date).getTime()  - (b.date as Date).getTime();
+      return new Date(a.date).getTime()  - new Date(b.date).getTime();
     });
     
     const today = Date.now();

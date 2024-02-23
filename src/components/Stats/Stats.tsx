@@ -12,13 +12,7 @@ import {
   Input,
   FormControl,
   FormLabel,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
   Select,
-  Stack,
 } from "@chakra-ui/react";
 
 import { useEffect, useState } from "react";
@@ -59,7 +53,7 @@ const Stats = () => {
     }
   });
   const id = localStorage.getItem("id");
-  const { matchId } = useParams({ id: true });
+  const { matchId } = useParams();
 
   const [patchValues, setPatchValues] = useState({
     score: "",
@@ -90,7 +84,10 @@ const Stats = () => {
     updateMatchStats();
   };
   const getMatchStats = async () => {
-    const response = await axios.get(`http://localhost:3000/player/${id}/match/${matchId}/stats`);
+    const response = await crud.get(
+      ["player", "match", "stats"],
+      [Number.parseInt(id!, 10), Number.parseInt(matchId!, 10)]
+    );
     setPatchValues({...patchValues, score:response.data[0].score});
     patchValues.score =response.data[0].score;
     patchValues.assists = response.data[0].assists;
@@ -138,7 +135,7 @@ const Stats = () => {
                   </Button>
                 </div>
                   <h3 className="stats_teams">
-                    {new Date(stat?.date as Date).toLocaleDateString('fr-FR', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}
+                    {new Date(stat?.date as unknown as Date).toLocaleDateString('fr-FR', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}
                     </h3>
                 <Modal isOpen={isOpen} onClose={onClose}>
                   <ModalOverlay />

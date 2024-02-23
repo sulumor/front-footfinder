@@ -4,16 +4,9 @@ import {
   createReducer,
 } from "@reduxjs/toolkit";
 import axios from "axios";
+import { UserState } from "@/@Types";
 
 import Cookies from 'js-cookie';
-
-interface UserState {
-  logged: boolean;
-  role: string;
-  id: any;
-  firstname: string
-  email: string
-}
 
 export const initialState: UserState = {
   logged: false,
@@ -26,8 +19,6 @@ export const initialState: UserState = {
 export const login = createAsyncThunk<{
   token: { jwt: string };   
   data: any; 
-  email: string;
-  password: string 
 }>(
   "LOGIN",
   async (formValues) => {
@@ -93,16 +84,10 @@ const userReducer = createReducer(initialState, (builder) => {
     localStorage.removeItem("role");
     Cookies.remove('token');
   });
-  builder.addCase(tokenCheck,(state,_action)=>{
+  builder.addCase(tokenCheck,(state: UserState,_action)=>{
     state.logged = true;
     state.role = localStorage.getItem("role");
   });
 });
 
 export default userReducer;
-
-
-/* if (storedToken && storedUserName) {
-    StatHelpText.isLogged = true;
-    StatHelpText.username
-} */
