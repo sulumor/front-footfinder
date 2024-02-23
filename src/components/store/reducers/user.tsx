@@ -27,8 +27,6 @@ export const login = createAsyncThunk<{
       formValues 
     );
     Cookies.set('token', response.data.token.jwt);
-    console.log("requete terminée");
-    console.log(response.data);
     return response.data;
   }
 );
@@ -40,8 +38,6 @@ export const signin = createAsyncThunk<UserState>(
       "http://localhost:3000/register",
       formValues 
     );
-    console.log("requete signin terminée");
-    console.log(response.data);
     return response.data;
   }
 );
@@ -53,7 +49,6 @@ const userReducer = createReducer(initialState, (builder) => {
   builder.addCase(login.fulfilled, (state, action) => {
     state.logged = true;
     state.role = action.payload.data.role;
-    console.log(action.payload.data.role)
     state.id = action.payload.data.id;
     localStorage.setItem("id", action.payload.data.id);
     localStorage.setItem("logged", "true");

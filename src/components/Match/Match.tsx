@@ -34,13 +34,11 @@ const Match = () => {
   
   const getAllMatchs = async () => {
     const response = await crud.get(['player', 'match', 'stats'], [Number.parseInt(id!, 10)]);
-    console.log("requete getallmatchs terminée");
     return setData(response.data);
   };
   
   data.forEach((match: any) => {
     const matchDate = new Date(match.date)
-
     if (matchDate < today) {
       pastMatches.push(match);
     } else {
@@ -48,17 +46,12 @@ const Match = () => {
     }
   });
 
-  console.log(pastMatches);
-  console.log(futureMatches);
-
  useEffect(() => {
     const fetchData = async () => {
       await getAllMatchs();
     };
     fetchData();
   }, []);
-
-  console.log(data);
 
   return (
     <>

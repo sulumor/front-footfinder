@@ -13,8 +13,6 @@ export const getMatchId = createAsyncThunk<MatchState>(
   "ALLMATCH",
   async (id) => {
     const response = await crud.get(['player', 'match'], [Number.parseInt(id!, 10)]);
-    console.log("requete allmatchs terminée");
-    console.log(response.data);
     return response.data;
   }
 );

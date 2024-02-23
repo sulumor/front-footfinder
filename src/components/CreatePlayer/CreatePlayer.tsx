@@ -49,8 +49,6 @@ const CreatePlayer = () => {
 
   const postPlayerInfos = async () => {
     const response = await crud.post(['register', 'joueur'], [], {...formValues});
-    console.log("requete create player terminée");
-    console.log(response.data);
     return response.data;
   };
 

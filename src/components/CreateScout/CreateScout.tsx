@@ -31,8 +31,6 @@ const CreateScout = () => {
 
   const postPlayerInfos = async () => {
     const response = await crud.post(['register', 'recruteur'], [], {...formValues});
-    console.log("requete create scout terminée");
-    console.log(response.data);
     return response.data;
   };
 

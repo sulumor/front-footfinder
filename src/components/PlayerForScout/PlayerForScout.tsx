@@ -38,7 +38,6 @@ import Calendar from "react-calendar";
 import "../Player/Player.scss";
 import "./PlayerForScout.scss";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import crud from "@/utils/crud";
 

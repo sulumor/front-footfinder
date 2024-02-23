@@ -14,10 +14,6 @@ const App = () => {
     useEffect(() => {
         if (localStorage.getItem("token")) {
           dispatch(tokenCheck());
-          console.log("token checked !")
-          console.log(localStorage.getItem("logged"));
-          console.log(localStorage.getItem("role"));
-          console.log(localStorage.getItem("token"));
         }
       }, []);
 
