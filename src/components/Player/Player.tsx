@@ -99,13 +99,15 @@ const Player = () => {
   };
 
   const getNextMatch = async () => {
+
     const responses = await crud.get(['player', 'match', 'stats'], [Number.parseInt(id!, 10)]);
     
+     const sortResponse = responses.data.sort(function(a : Match, b : Match) {
+      return (a.date as Date).getTime()  - (b.date as Date).getTime();
+    });
+    
     const today = Date.now();
-    const nextMatch = responses.data.filter(
-      (match: { date: string | number | Date }) =>
-        new Date(match.date).getTime() > today
-    );
+    const nextMatch = sortResponse.filter(((match: { date: string | number | Date; }) => new Date(match.date).getTime() > today))
     return setMatch(nextMatch[0]);
   };
 

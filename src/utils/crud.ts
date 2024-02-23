@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosResponse } from 'axios'
-import Cookies from 'js-cookie';
 import { createPathWithMultipleOptions } from './functions'
 
 interface Response {
@@ -10,11 +9,12 @@ interface Response {
 
 class Crud {
   private BASE_URL:string;
-  private TOKEN: string | null
 
-  constructor(BASE_URL: string, TOKEN: string |null){
+  private TOKEN: string | null;
+
+  constructor(BASE_URL: string, TOKEN: string | null){
     this.BASE_URL = BASE_URL;
-    this.TOKEN = TOKEN;
+    this.TOKEN = TOKEN; 
   }
  
   async get(options:string[], ids:number[]) : Promise<Response> {
@@ -42,7 +42,7 @@ class Crud {
       {
         headers: {
           'content-type': 'application/json',
-          Authorization: `Bearer ${Cookies.get('token')}`,
+          Authorization: `Bearer ${this.TOKEN}`,
         },
       }
     );
@@ -63,7 +63,7 @@ class Crud {
       {
         headers: {
           'content-type': 'application/json',
-          Authorization: `Bearer ${Cookies.get('token')}`,
+          Authorization: `Bearer ${this.TOKEN}`,
         },
       }
     );
@@ -75,7 +75,7 @@ class Crud {
       const path:string = createPathWithMultipleOptions(options, ids);
       const res = await axios.delete(`${this.BASE_URL}/${path}`, {
       headers: {
-        Authorization: `Bearer ${Cookies.get('token')}`,
+        Authorization: `Bearer ${this.TOKEN}`,
       },
     });
     return { data: res.data, status: res.status };

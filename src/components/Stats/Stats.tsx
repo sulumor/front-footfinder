@@ -21,7 +21,7 @@ import {
   Stack,
 } from "@chakra-ui/react";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { BrowserView, MobileView } from "react-device-detect";
 
@@ -36,10 +36,28 @@ import crud from "@/utils/crud";
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
+interface Stat {
+  date: string;
+  home:{
+    club_name:string;
+  };
+  away:{
+    club_name:string;
+  };
+}
+
 const Stats = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [value, onChange] = useState<Value>(new Date());
-
+  const [stat, setStat] = useState<Stat>({
+    date: "today",
+    home: {
+      club_name: "RC Lens"
+    },
+    away: {
+      club_name: "RC Lens"
+    }
+  });
   const id = localStorage.getItem("id");
   const { matchId } = useParams({ id: true });
 
@@ -71,6 +89,18 @@ const Stats = () => {
   const handleSubmit = () => {
     updateMatchStats();
   };
+  const getMatchStats = async () => {
+    const response = await axios.get(`http://localhost:3000/player/${id}/match/${matchId}/stats`);
+    setPatchValues({...patchValues, score:response.data[0].score});
+    patchValues.score =response.data[0].score;
+    patchValues.assists = response.data[0].assists;
+    patchValues.fitness = response.data[0].fitness;
+    patchValues.yellow_card = response.data[0].yellow_card;
+    patchValues.red_card = response.data[0].red_card;
+    patchValues.goals_scored = response.data[0].goals_scored;
+    patchValues.minutes_played = response.data[0].minutes_played;
+   return response.data[0];
+  }
 
   const updateMatchStats = async () => {
     const response = await crud.update(
@@ -83,6 +113,16 @@ const Stats = () => {
     return response.data;
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+     const res = await getMatchStats();
+     setStat(res);
+    };
+    fetchData();
+  }, []);
+
+  console.log(stat);
+  
   return (
     <>
       <BrowserView>
@@ -90,8 +130,41 @@ const Stats = () => {
         <div className="stats_main">
           <div className="stats_container">
             <form onSubmit={handleSubmit}>
+
+              <div className="stats_date">
+                <div className="stats_date_button" >
+                  <Button colorScheme="teal" size="sm" onClick={onOpen}>
+                    Modification
+                  </Button>
+                </div>
+                  <h3 className="stats_teams">
+                    {new Date(stat?.date as Date).toLocaleDateString('fr-FR', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}
+                    </h3>
+                <Modal isOpen={isOpen} onClose={onClose}>
+                  <ModalOverlay />
+                  <ModalContent>
+                    <ModalHeader>Date</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                      <Calendar
+                        onChange={onChange}
+                        showWeekNumbers
+                        value={value}
+                      />
+                    </ModalBody>
+
+                    <ModalFooter>
+                      <Button colorScheme="red" mr={3} onClick={onClose}>
+                        Fermer
+                      </Button>
+                      <Button colorScheme="teal">Valider</Button>
+                    </ModalFooter>
+                  </ModalContent>
+                </Modal>
+              </div>
+              <Divider />
               <div className="stats_teams">
-                <h2>Score</h2>
+                <h2>{stat.home.club_name} - {stat.away.club_name} </h2>
 
                 <div className="stats_teams_input_home">
                   <FormControl>

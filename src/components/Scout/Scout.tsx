@@ -51,8 +51,14 @@ const Scout = () => {
   
   useEffect(() => {
     const fetchData = async () => {
-      await dispatch(getScoutInfos(id))
+      const res = await dispatch(getScoutInfos(id))
       await getScoutFollows()
+      setPatchValues({...patchValues, firstname: res.payload.firstname});
+      patchValues.firstname = res.payload.firstname;
+      patchValues.lastname= res.payload.lastname;
+      patchValues.email= res.payload.email;
+      patchValues.city = res.payload.city;
+      patchValues.club = res.payload.club;
     };
     fetchData();
   });

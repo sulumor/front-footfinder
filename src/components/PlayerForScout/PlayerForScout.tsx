@@ -107,6 +107,7 @@ const Player = () => {
     console.log(responses.data);
     return setStats(responses.data);
   };
+  
   const getNextMatch = async () => {
     const responses = await crud.get(['scout', 'player', 'match'], [Number.parseInt(scoutId!, 10), Number.parseInt(id!, 10)]);
     const today = Date.now();
@@ -119,6 +120,7 @@ const Player = () => {
 
   const getPlayerInfos = async () => {
     const responses = await crud.get(['scout', 'player'], [Number.parseInt(scoutId!, 10), Number.parseInt(id!, 10)]);
+
     console.log(responses.data);
     return setInfos(responses.data);
   };
