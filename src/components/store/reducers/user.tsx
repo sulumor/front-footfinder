@@ -4,16 +4,9 @@ import {
   createReducer,
 } from "@reduxjs/toolkit";
 import axios from "axios";
+import { UserState } from "@/@Types";
 
 import Cookies from 'js-cookie';
-
-interface UserState {
-  logged: boolean;
-  role: string;
-  id: any;
-  firstname: string
-  email: string
-}
 
 export const initialState: UserState = {
   logged: false,
@@ -26,8 +19,6 @@ export const initialState: UserState = {
 export const login = createAsyncThunk<{
   token: { jwt: string };   
   data: any; 
-  email: string;
-  password: string 
 }>(
   "LOGIN",
   async (formValues) => {
@@ -36,8 +27,6 @@ export const login = createAsyncThunk<{
       formValues 
     );
     Cookies.set('token', response.data.token.jwt);
-    console.log("requete terminée");
-    console.log(response.data);
     return response.data;
   }
 );
@@ -49,8 +38,6 @@ export const signin = createAsyncThunk<UserState>(
       "http://localhost:3000/register",
       formValues 
     );
-    console.log("requete signin terminée");
-    console.log(response.data);
     return response.data;
   }
 );
@@ -62,7 +49,6 @@ const userReducer = createReducer(initialState, (builder) => {
   builder.addCase(login.fulfilled, (state, action) => {
     state.logged = true;
     state.role = action.payload.data.role;
-    console.log(action.payload.data.role)
     state.id = action.payload.data.id;
     localStorage.setItem("id", action.payload.data.id);
     localStorage.setItem("logged", "true");
@@ -93,16 +79,10 @@ const userReducer = createReducer(initialState, (builder) => {
     localStorage.removeItem("role");
     Cookies.remove('token');
   });
-  builder.addCase(tokenCheck,(state,_action)=>{
+  builder.addCase(tokenCheck,(state: UserState,_action)=>{
     state.logged = true;
     state.role = localStorage.getItem("role");
   });
 });
 
 export default userReducer;
-
-
-/* if (storedToken && storedUserName) {
-    StatHelpText.isLogged = true;
-    StatHelpText.username
-} */

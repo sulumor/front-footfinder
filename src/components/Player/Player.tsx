@@ -67,10 +67,10 @@ const Player = () => {
     return setStats(responses.data);
   };
 
+
   const getNextMatch : () => Promise<void> = async () => {
     const responses  = await crud.get(['player', 'match', 'stats'], [Number.parseInt(id!, 10)]);
     const sortResponse : Match[] = responses.data.sort(function(a : Match, b : Match) {
-      
       return new Date(a.date).getTime()  - new Date(b.date).getTime();
     });
     

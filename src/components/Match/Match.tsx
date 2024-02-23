@@ -34,10 +34,10 @@ const Match = () => {
   
   const getAllMatchs = async () => {
     const response = await crud.get(['player', 'match', 'stats'], [Number.parseInt(id!, 10)]);
-    console.log("requete getallmatchs terminée");
     return setData(response.data);
   };
   
+
   data.forEach((match: MatchType) => {
     if (new Date(match.date) < new Date()) {
       pastMatches.push(match);

@@ -53,7 +53,7 @@ const Stats = () => {
     }
   });
   const id = localStorage.getItem("id");
-  const { matchId } = useParams({ id: true });
+  const { matchId } = useParams();
 
   const [patchValues, setPatchValues] = useState({
     score: "",
