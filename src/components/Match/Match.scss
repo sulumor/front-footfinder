@@ -33,7 +33,7 @@ h1 {
 }
 
 .mobile_card_container {
-    width: 85%;
+    width: 99%;
     margin: 3% auto;
 }
 
@@ -58,4 +58,16 @@ p {
     width: 90%;
     margin: 2% auto;
     padding-bottom: 10%;
+}
+
+.mobile_tab_panels_title {
+    display: flex;
+    flex: row;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 2%;
+}
+
+.mobile_card_container_cards {
+    padding-bottom: 2%;
 }

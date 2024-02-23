@@ -32,10 +32,10 @@ h2 {
 
 .stats_teams {
     display: flex;
-    width: 60%;
     flex-direction: row;
-    justify-content: space-between;
-    margin: 2.5% auto 2.5% auto;
+    justify-content: center;
+    margin: 2% auto 3%;
+    gap: 5%;
 }
 
 .stats_teams_input_home {
@@ -74,21 +74,14 @@ h2 {
     margin: 2% auto 4%;
 }
 
-.mobile_stats_teams_input_home {
-    display: flex;
-    flex-direction: row;
-    margin-left: 10%;
+.mobile_stats_teams_input_score {
+    margin: 2% auto 1%;
 }
 
 .mobile_stats_teams_inputs_away {
     display: flex;
     flex-direction: row;
     margin-left: 10%;
-}
-
-.mobile_stats_date_button {
-    padding-left: 2%;
-    padding-bottom: 2%;
 }
 
 .mobile_stats_form {
@@ -111,6 +104,15 @@ h2 {
 }
 
 .mobile_buttons {
-    width: 65%;
-    margin: 3% auto;
+    display: flex;
+    justify-content: center;
+    gap: 3%;
+    margin-top: 3%;
+}
+
+.button_stack {
+    display: flex;
+    justify-content: center;
+    gap: 3%;
+    margin-top: 3%;
 }

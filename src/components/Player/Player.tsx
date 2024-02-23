@@ -7,9 +7,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-
 import { Radar } from "react-chartjs-2";
-
 import {
   Divider,
   Button,
@@ -30,14 +28,12 @@ import {
   Select,
   Input,
 } from "@chakra-ui/react";
-
 import { BrowserView, MobileView } from "react-device-detect";
+import { useEffect, useState } from "react";
+import crud from "@/utils/crud";
 
 import "./Player.scss";
 import "./Calendar.scss";
-import { useEffect, useState } from "react";
-import SelectTeam from "../Select/TeamSelect";
-import crud from "@/utils/crud";
 
 interface Team {
   id: number;

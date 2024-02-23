@@ -48,7 +48,7 @@ const PlayerHeader = () => {
       </BrowserView>
       <MobileView>
         <div className="mobile_header">
-          <a href="/">
+          <a href="/player">
             <h1>FootFinder</h1>
           </a>
           <div className="mobile_header_button">
