@@ -8,15 +8,16 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 
-import "../Header.scss";
 import {
-  EmailIcon,
   HamburgerIcon,
-  PlusSquareIcon,
+  SearchIcon,
+  SmallCloseIcon,
 } from "@chakra-ui/icons";
 
 import { useAppDispatch } from "@/components/hooks/redux";
 import { logout } from "@/components/store/reducers/user";
+
+import "../Header.scss";
 
 const ScoutHeader = () => {
 
@@ -45,7 +46,7 @@ const ScoutHeader = () => {
       </BrowserView>
       <MobileView>
         <div className="mobile_header">
-          <a href="/">
+          <a href="/scout">
             <h1>FootFinder</h1>
           </a>
           <div className="mobile_header_button">
@@ -58,13 +59,13 @@ const ScoutHeader = () => {
                 colorScheme="teal"
               />
               <MenuList>
-                <a href="/login">
-                <MenuItem icon={<EmailIcon />}>
-                  Se connecter
+                <a href="/scout/search">
+                <MenuItem icon={<SearchIcon />}>
+                  Recherche
                 </MenuItem></a>
-                <a href="/signin">
-                <MenuItem icon={<PlusSquareIcon />}>
-                  S'inscrire
+                <a href="/">
+                <MenuItem icon={<SmallCloseIcon />} onClick={handleDisconect}>
+                  Déconnexion
                 </MenuItem></a>
               </MenuList>
             </Menu>

@@ -7,9 +7,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-
 import { Radar } from "react-chartjs-2";
-
 import {
   Divider,
   Button,
@@ -25,18 +23,22 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
+  FormControl,
+  FormLabel,
+  Select,
+  Input,
 } from "@chakra-ui/react";
-
 import { BrowserView, MobileView } from "react-device-detect";
-
-import Calendar from "react-calendar";
+import { useEffect, useState } from "react";
+import crud from "@/utils/crud";
 
 import "./Player.scss";
 import "./Calendar.scss";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import SelectTeam from "../Select/TeamSelect";
-import crud from "@/utils/crud";
+
+interface Team {
+  id: number;
+  club_name: string;
+}
 
 ChartJS.register(
   RadialLinearScale,
@@ -47,80 +49,97 @@ ChartJS.register(
   Legend
 );
 
-/*
-interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onOpen: () => void;
-  children: void;
-}
-*/
-
 interface Stats {
-  assists:number;
-  goals_conceded:number;
-  red_card:number;
-  yellow_card:number;
-  stops:number;
-  goals_scored:number;
+  assists: number;
+  goals_conceded: number;
+  red_card: number;
+  yellow_card: number;
+  stops: number;
+  goals_scored: number;
 }
 
 interface Match {
-  date: string | number | Date ;
+  date: string | number | Date;
   home: {
     club_name: string;
     stadium_name: string;
-    adress:string;
-    zip_code:string;
-    city:string;
+    adress: string;
+    zip_code: string;
+    city: string;
   };
   away: {
     club_name: string;
-    adress:string;
-    zip_code:string;
-    city:string;
+    adress: string;
+    zip_code: string;
+    city: string;
   };
 }
 
-
-type ValuePiece = Date | null;
-type Value = ValuePiece | [ValuePiece, ValuePiece];
-
 const Player = () => {
+  const [teams, setTeams] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [value, onChange] = useState<Value>(new Date());
   const firstName = localStorage.getItem("firstname");
   const [stats, setStats] = useState<Stats>();
   const [match, setMatch] = useState<Match>();
   const id = localStorage.getItem("id");
-  
+
+  const [matchValues, setMatchValues] = useState({
+    homeTeam: 0,
+    awayTeam: 0,
+    date: "",
+  });
+
   const getAllStats = async () => {
-    const responses = await crud.get(["player", "stats"], [Number.parseInt(id!, 10)]);
+    const responses = await crud.get(
+      ["player", "stats"],
+      [Number.parseInt(id!, 10)]
+    );
     console.log(responses);
-    
     return setStats(responses.data);
-  }
+  };
+
   const getNextMatch = async () => {
-    const responses = await axios.get(`http://localhost:3000/player/${id}/match`);
-    const sortResponse = responses.data.sort(function(a : Match, b : Match) {
+
+    const responses = await crud.get(['player', 'match', 'stats'], [Number.parseInt(id!, 10)]);
+    
+     const sortResponse = responses.data.sort(function(a : Match, b : Match) {
       return (a.date as Date).getTime()  - (b.date as Date).getTime();
     });
     
     const today = Date.now();
     const nextMatch = sortResponse.filter(((match: { date: string | number | Date; }) => new Date(match.date).getTime() > today))
     return setMatch(nextMatch[0]);
-  }
+  };
 
-  useEffect(()=> {
+  const getAllTeams = async () => {
+    const response = await crud.get(["datas", "teams"], []);
+    return setTeams(response.data);
+  };
+
+  useEffect(() => {
     const fetchData = async () => {
       await getAllStats();
       await getNextMatch();
+      await getAllTeams();
     };
-    
     fetchData();
-    
   }, []);
-  
+
+  const addMatch = async () => {
+    const response = await crud.post(['player', 'match'], [Number.parseInt(id!, 10)], {...matchValues});
+    console.log(response.data);
+    return response.data
+  }
+
+  const handleChangeField =
+    (match: "homeTeam" | "awayTeam" | "date") => (value: any) => {
+      setMatchValues({ ...matchValues, [match]: value });
+    };
+
+  const handleSubmit = () => {
+    addMatch()
+  }
+
   const data = {
     labels: [
       "Passes décisives",
@@ -133,7 +152,14 @@ const Player = () => {
     datasets: [
       {
         label: "vos statistiques",
-        data: [stats?.assists, stats?.goals_scored, stats?.stops, stats?.yellow_card, stats?.red_card, stats?.goals_conceded],
+        data: [
+          stats?.assists,
+          stats?.goals_scored,
+          stats?.stops,
+          stats?.yellow_card,
+          stats?.red_card,
+          stats?.goals_conceded,
+        ],
         backgroundColor: "rgba(255, 99, 132, 0.2)",
         borderColor: "rgba(255, 99, 132, 1)",
         borderWidth: 1,
@@ -153,40 +179,90 @@ const Player = () => {
           <div className="player_infos">
             <div className="player_match">
               <h3>Prochain match: </h3>
-              <span>{new Date(match?.date as Date).toLocaleDateString('fr-FR', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}</span>
+              <span>
+                {new Date(match?.date as Date).toLocaleDateString("fr-FR", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </span>
               <div className="player_match_infos">
-                <h3>{match?.home.club_name} - {match?.away.club_name}</h3>
+                <h3>
+                  {match?.home.club_name} - {match?.away.club_name}
+                </h3>
                 <p>{match?.home.stadium_name}</p>
-                <p>{match?.home.adress}, {match?.home.zip_code} {match?.home.city}</p>
+                <p>
+                  {match?.home.adress}, {match?.home.zip_code}{" "}
+                  {match?.home.city}
+                </p>
                 <div className="player_match_button">
                   <Button colorScheme="teal" onClick={onOpen}>
-                    Modifier
+                    Ajouter un match
                   </Button>
                 </div>
                 <Modal isOpen={isOpen} onClose={onClose}>
-                  <ModalOverlay />
-                  <ModalContent>
-                    <ModalHeader>
-                      Modifier le match
-                    </ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody pb={6}>
-                      <Calendar
-                        onChange={onChange}
-                        showWeekNumbers
-                        value={value}
-                      />
-                      <SelectTeam label={"Équipe à domicile"}/>
-                      <SelectTeam label={"Équipe à l'extérieur"}/>
-                    </ModalBody>
+                  <form onSubmit={handleSubmit}>
+                    <ModalOverlay />
+                    <ModalContent>
+                      <ModalHeader>Ajouter un match</ModalHeader>
+                      <ModalCloseButton />
+                      <ModalBody pb={6}>
+                        <FormControl isRequired>
+                          <FormLabel>Date du match</FormLabel>
+                          <Input
+                            placeholder="Select Date and Time"
+                            size="md"
+                            type="date"
+                            value={matchValues.date}
+                            onChange={(e) =>
+                              handleChangeField("date")(e.target.value)
+                            }
+                          />
+                        </FormControl>
 
-                    <ModalFooter>
-                      <Button colorScheme="teal" mr={3}>
-                        Modifier
-                      </Button>
-                      <Button onClick={onClose}>Annuler</Button>
-                    </ModalFooter>
-                  </ModalContent>
+                        <FormControl mt={4} isRequired>
+                          <FormLabel>Equipe à domicile</FormLabel>
+                          <Select
+                            placeholder="-- équipe à domicile --"
+                            value={matchValues.homeTeam}
+                            onChange={(e) =>
+                              handleChangeField("homeTeam")(e.target.value)
+                            }
+                          >
+                            {teams?.map((team: Team) => (
+                              <option key={team.id} value={team.id}>
+                                {team.club_name}
+                              </option>
+                            ))}
+                          </Select>
+                        </FormControl>
+                        <FormControl mt={4} isRequired>
+                          <FormLabel>Equipe visiteur</FormLabel>
+                          <Select
+                            placeholder="-- équipe visiteur --"
+                            value={matchValues.awayTeam}
+                            onChange={(e) =>
+                              handleChangeField("awayTeam")(e.target.value)
+                            }
+                          >
+                            {teams?.map((team: Team) => (
+                              <option key={team.id} value={team.id}>
+                                {team.club_name}
+                              </option>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </ModalBody>
+
+                      <ModalFooter>
+                        <Button colorScheme="teal" mr={3} onClick={handleSubmit}>
+                          Ajouter
+                        </Button>
+                        <Button onClick={onClose}>Annuler</Button>
+                      </ModalFooter>
+                    </ModalContent>
+                  </form>
                 </Modal>
               </div>
             </div>
@@ -232,48 +308,95 @@ const Player = () => {
         </div>
       </BrowserView>
 
-
       <MobileView>
         <div className="player_name">
-          <h2>Bonjour, { firstName }</h2>
+          <h2>Bonjour, {firstName}</h2>
         </div>
         <Center>
           <Divider width="50%" />
         </Center>
         <div className="mobile_player_container">
-          <div className="player_infos">
+          <div className="mobile_player_infos">
             <div className="player_match">
-            <h3>Prochain match: </h3>
-              <span>{new Date(match?.date as Date).toLocaleDateString('fr-FR', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}</span>
-              <div className="player_match_infos">
-                <h3>{match?.home.club_name} - {match?.away.club_name}</h3>
+              <h3>Prochain match: </h3>
+              <span>
+                {new Date(match?.date as Date).toLocaleDateString("fr-FR", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </span>
+              <div className="mobile_player_match_infos">
+                <h3>
+                  {match?.home.club_name} - {match?.away.club_name}
+                </h3>
                 <p>{match?.home.stadium_name}</p>
-                <p>{match?.home.adress}, {match?.home.zip_code} {match?.home.city}</p>
+                <p>
+                  {match?.home.adress}, {match?.home.zip_code}{" "}
+                  {match?.home.city}
+                </p>
                 <div className="player_match_button">
                   <Button colorScheme="teal" onClick={onOpen}>
-                    Modifier
+                    Ajouter un match
                   </Button>
                 </div>
                 <Modal isOpen={isOpen} onClose={onClose}>
                   <ModalOverlay />
                   <ModalContent>
-                    <ModalHeader>
-                      Modifier le match
-                    </ModalHeader>
+                    <ModalHeader>Ajouter un match</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
-                      <Calendar
-                        onChange={onChange}
-                        showWeekNumbers
-                        value={value}
-                      />
-                      <SelectTeam label={"Équipe à domicile"}/>
-                      <SelectTeam label={"Équipe à l'extérieur"}/>
+                    <FormControl isRequired>
+                          <FormLabel>Date du match</FormLabel>
+                          <Input
+                            placeholder="Select Date and Time"
+                            size="md"
+                            type="date"
+                            value={matchValues.date}
+                            onChange={(e) =>
+                              handleChangeField("date")(e.target.value)
+                            }
+                          />
+                        </FormControl>
+
+                        <FormControl mt={4} isRequired>
+                          <FormLabel>Equipe à domicile</FormLabel>
+                          <Select
+                            placeholder="-- équipe à domicile --"
+                            value={matchValues.homeTeam}
+                            onChange={(e) =>
+                              handleChangeField("homeTeam")(e.target.value)
+                            }
+                          >
+                            {teams?.map((team: Team) => (
+                              <option key={team.id} value={team.id}>
+                                {team.club_name}
+                              </option>
+                            ))}
+                          </Select>
+                        </FormControl>
+                        <FormControl mt={4} isRequired>
+                          <FormLabel>Equipe visiteur</FormLabel>
+                          <Select
+                            placeholder="-- équipe visiteur --"
+                            value={matchValues.awayTeam}
+                            onChange={(e) =>
+                              handleChangeField("awayTeam")(e.target.value)
+                            }
+                          >
+                            {teams?.map((team: Team) => (
+                              <option key={team.id} value={team.id}>
+                                {team.club_name}
+                              </option>
+                            ))}
+                          </Select>
+                        </FormControl>
                     </ModalBody>
 
                     <ModalFooter>
-                      <Button colorScheme="teal" mr={3}>
-                        Modifier
+                      <Button onClick={handleSubmit} colorScheme="teal" mr={3}>
+                        Ajouter
                       </Button>
                       <Button onClick={onClose}>Annuler</Button>
                     </ModalFooter>

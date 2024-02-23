@@ -1,0 +1,45 @@
+.search_player_main {
+    width: 80%;
+    margin: auto;
+}
+
+.search_player_title {
+    margin: 2% auto 1% auto;
+    text-align: center;
+}
+
+.search_player_form {
+    width: 50%;
+    margin: auto auto 2% auto;
+}
+
+.search_player_results {
+    margin-bottom: 15%;
+}
+
+.search_player_results_container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2%;
+}
+
+.search_player_results_card {
+    width: 30%;
+    margin-top: 2%;
+}
+
+.mobile_search_player_results_card {
+    width: 100%;
+    margin-top: 3%;
+}
+
+.mobile_search_player_results_container {
+    padding-bottom: 15%;
+}
+
+.mobile_search_player_form {
+    width: 70%;
+    margin: 3% auto 3% auto;
+    text-align: center;
+}

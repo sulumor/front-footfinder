@@ -20,9 +20,9 @@ import App from "./components/App/App";
 import PlayerForScout from "./components/PlayerForScout/PlayerForScout";
 import CreatePlayer from "./components/CreatePlayer/CreatePlayer";
 import CreateScout from "./components/CreateScout/CreateScout";
+import SearchPlayer from "./components/Form/SearchPlayer";
 
 import store from "./components/store";
-import SearchPlayer from "./components/Form/SearchPlayer";
 
 const router = createBrowserRouter([
   {
@@ -42,8 +42,8 @@ const router = createBrowserRouter([
       { path: "/scout/create", element: <CreateScout />},
       { path: "/scout", element: <Scout /> },
       { path: "/player/me", element: <PlayerProfil /> },
-      { path: "/test", element: <Test /> },
       { path: "/scout/search", element : <SearchPlayer/> },
+      { path: "/test", element: <Test /> },
     ],
   },
 ]);

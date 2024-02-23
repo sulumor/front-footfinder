@@ -6,10 +6,10 @@ import {
   Select,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import "./CreateScout.scss";
+import crud from "@/utils/crud";
 
 const CreateScout = () => {
   const [teams, setTeams] = useState([]);
@@ -30,12 +30,7 @@ const CreateScout = () => {
     };
 
   const postPlayerInfos = async () => {
-    const response = await axios.post(
-      "http://localhost:3000/register/recruteur",
-      {
-        ...formValues,
-      }
-    );
+    const response = await crud.post(['register', 'recruteur'], [], {...formValues});
     console.log("requete create scout terminée");
     console.log(response.data);
     return response.data;
@@ -54,8 +49,8 @@ const CreateScout = () => {
   }
 
   const getAllTeams = async () => {
-    const responses = await axios.get(`http://localhost:3000/datas/teams`);
-    return setTeams(responses.data);
+    const response = await crud.get(['datas', 'teams'], []);
+    return setTeams(response.data);
   };
 
   useEffect(() => {

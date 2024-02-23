@@ -30,8 +30,8 @@ import Calendar from "react-calendar";
 import "./Stats.scss";
 import "./Calendar.scss";
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
-import axios from "axios";
 import { useParams } from "react-router-dom";
+import crud from "@/utils/crud";
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -59,7 +59,7 @@ const Stats = () => {
     }
   });
   const id = localStorage.getItem("id");
-  const {matchId} = useParams({id: true});
+  const { matchId } = useParams({ id: true });
 
   const [patchValues, setPatchValues] = useState({
     score: "",
@@ -103,8 +103,9 @@ const Stats = () => {
   }
 
   const updateMatchStats = async () => {
-    const response = await axios.patch(
-      `http://localhost:3000/player/${id}/match/${matchId}/stats`,
+    const response = await crud.update(
+      ["player", "match", "stats"],
+      [Number.parseInt(id!, 10), Number.parseInt(matchId!, 10)],
       { ...patchValues }
     );
     console.log("requete update match terminée");
@@ -129,6 +130,7 @@ const Stats = () => {
         <div className="stats_main">
           <div className="stats_container">
             <form onSubmit={handleSubmit}>
+
               <div className="stats_date">
                 <div className="stats_date_button" >
                   <Button colorScheme="teal" size="sm" onClick={onOpen}>
@@ -266,16 +268,20 @@ const Stats = () => {
                 </div>
               </div>
               <Divider />
-              <Stack direction="row" spacing={4}>
+              
+                <div className="button_stack">
+                  <div className="button_stack_cancel">
                 <a href="/player/match">
-                <Button
-                  rightIcon={<CloseIcon />}
-                  colorScheme="red"
-                  variant="solid"
-                >
-                  Annuler
-                </Button>
+                  <Button
+                    rightIcon={<CloseIcon />}
+                    colorScheme="red"
+                    variant="solid"
+                  >
+                    Annuler
+                  </Button>
                 </a>
+                  </div>
+                  <div className="button_stack_validate">
                 <Button
                   rightIcon={<CheckIcon />}
                   colorScheme="teal"
@@ -284,7 +290,9 @@ const Stats = () => {
                 >
                   Valider
                 </Button>
-              </Stack>
+                </div>
+                </div>
+              
             </form>
           </div>
         </div>
@@ -294,183 +302,139 @@ const Stats = () => {
         <h1>Modifiez vos statistiques</h1>
         <div className="stats_main">
           <div className="mobile_stats_container">
-            <div className="mobile_stats_date">
-              <div className="mobile_stats_date_button">
-                <Button colorScheme="teal" size="sm" onClick={onOpen}>
-                  Date du match
-                </Button>
-              </div>
-              <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
-                <ModalContent>
-                  <ModalHeader>Date</ModalHeader>
-                  <ModalCloseButton />
-                  <ModalBody>
-                    <Calendar
-                      onChange={onChange}
-                      showWeekNumbers
-                      value={value}
-                    />
-                  </ModalBody>
+            <form onSubmit={handleSubmit}>
+        
+              <div className="mobile_stats_teams">
+                <h2>Score</h2>
 
-                  <ModalFooter>
-                    <Button colorScheme="red" mr={3} onClick={onClose}>
-                      Fermer
-                    </Button>
-                    <Button colorScheme="teal">Valider</Button>
-                  </ModalFooter>
-                </ModalContent>
-              </Modal>
-            </div>
-            <Divider />
-            <div className="mobile_stats_teams">
-              <h2>Equipes</h2>
-
-              <div className="mobile_stats_teams_input_home">
-                <Input placeholder="Domicile" size="md" type="search" />
+                <div className="mobile_stats_teams_input_score">
                 <FormControl>
-                  <NumberInput maxW={20} defaultValue={0} max={50} min={0}>
-                    <NumberInputField />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
-                    </NumberInputStepper>
-                  </NumberInput>
-                </FormControl>
+                    <Input
+                      maxW={20}
+                      value={patchValues.score}
+                      onChange={(e) =>
+                        handleChangeField("score")(e.target.value)
+                      }
+                    ></Input>
+                  </FormControl>
+                </div>
               </div>
-              <div className="mobile_stats_teams_inputs_away">
-                <Input placeholder="Extérieur" size="md" type="search" />
-                <FormControl>
-                  <NumberInput maxW={20} defaultValue={0} max={50} min={0}>
-                    <NumberInputField />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
-                    </NumberInputStepper>
-                  </NumberInput>
-                </FormControl>
-              </div>
-            </div>
-            <Divider />
-            <div className="mobile_stats_form">
-              <h2>Statistiques</h2>
-              <div className="mobile_stats_form_both">
-                <div className="mobile_stats_form_left">
+              <Divider />
+              <div className="mobile_stats_form">
+                <h2>Statistiques</h2>
+                <div className="mobile_stats_form_both">
+                  <div className="mobile_stats_form_left">
                   <FormControl isRequired>
                     <FormLabel>Etat de forme</FormLabel>
                     <Select
                       maxW={200}
                       size="sm"
                       placeholder="--Etat de forme--"
+                      value={patchValues.fitness}
+                      onChange={(e) =>
+                        handleChangeField("fitness")(e.target.value)
+                      }
                     >
                       <option>En forme</option>
-                      <option>Absent</option>
+                      <option>absent</option>
+                      <option>blesse</option>
                     </Select>
                   </FormControl>
                   <FormControl>
                     <FormLabel>Minutes jouées</FormLabel>
-                    <NumberInput
+                    <Input
                       maxW={24}
-                      defaultValue={90}
                       size="sm"
                       max={120}
                       min={0}
-                    >
-                      <NumberInputField />
-                      <NumberInputStepper>
-                        <NumberIncrementStepper />
-                        <NumberDecrementStepper />
-                      </NumberInputStepper>
-                    </NumberInput>
+                      value={patchValues.minutes_played}
+                      onChange={(e) =>
+                        handleChangeField("minutes_played")(e.target.value)
+                      }
+                    ></Input>
                   </FormControl>
                   <FormControl>
                     <FormLabel>But(s) marqué(s)</FormLabel>
-                    <NumberInput
+                    <Input
                       maxW={20}
-                      defaultValue={0}
                       size="sm"
                       max={120}
                       min={0}
-                    >
-                      <NumberInputField />
-                      <NumberInputStepper>
-                        <NumberIncrementStepper />
-                        <NumberDecrementStepper />
-                      </NumberInputStepper>
-                    </NumberInput>
+                      value={patchValues.goals_scored}
+                      onChange={(e) =>
+                        handleChangeField("goals_scored")(e.target.value)
+                      }
+                    ></Input>
                   </FormControl>
-                </div>
-                <div className="mobile_stats_form_right">
+                  </div>
+                  <div className="mobile_stats_form_right">
                   <FormControl>
                     <FormLabel>Passe(s) décisive(s)</FormLabel>
-                    <NumberInput
+                    <Input
                       maxW={20}
-                      defaultValue={0}
                       size="sm"
                       max={120}
                       min={0}
-                    >
-                      <NumberInputField />
-                      <NumberInputStepper>
-                        <NumberIncrementStepper />
-                        <NumberDecrementStepper />
-                      </NumberInputStepper>
-                    </NumberInput>
+                      value={patchValues.assists}
+                      onChange={(e) =>
+                        handleChangeField("assists")(e.target.value)
+                      }
+                    ></Input>
                   </FormControl>
                   <FormControl>
                     <FormLabel>Carton(s) jaune(s)</FormLabel>
-                    <NumberInput
+                    <Input
                       maxW={20}
-                      defaultValue={0}
                       size="sm"
                       max={2}
                       min={0}
-                    >
-                      <NumberInputField />
-                      <NumberInputStepper>
-                        <NumberIncrementStepper />
-                        <NumberDecrementStepper />
-                      </NumberInputStepper>
-                    </NumberInput>
+                      value={patchValues.yellow_card}
+                      onChange={(e) =>
+                        handleChangeField("yellow_card")(e.target.value)
+                      }
+                    ></Input>
                   </FormControl>
                   <FormControl>
                     <FormLabel>Carton rouge</FormLabel>
-                    <NumberInput
+                    <Input
                       maxW={20}
-                      defaultValue={0}
                       size="sm"
                       max={1}
                       min={0}
-                    >
-                      <NumberInputField />
-                      <NumberInputStepper>
-                        <NumberIncrementStepper />
-                        <NumberDecrementStepper />
-                      </NumberInputStepper>
-                    </NumberInput>
+                      value={patchValues.red_card}
+                      onChange={(e) =>
+                        handleChangeField("red_card")(e.target.value)
+                      }
+                    ></Input>
                   </FormControl>
+                  </div>
                 </div>
               </div>
-            </div>
-            <Divider />
-            <div className="mobile_buttons">
-              <Stack direction="row" spacing={4}>
-                <Button
-                  rightIcon={<CloseIcon />}
-                  colorScheme="red"
-                  variant="solid"
-                >
-                  Annuler
-                </Button>
-                <Button
-                  rightIcon={<CheckIcon />}
-                  colorScheme="teal"
-                  variant="solid"
-                >
-                  Valider
-                </Button>
-              </Stack>
-            </div>
+              <Divider />
+              <div className="mobile_buttons">
+                <div className="mobile_button_cancel">
+                <a href="/player/match">
+                  <Button
+                    rightIcon={<CloseIcon />}
+                    colorScheme="red"
+                    variant="solid"
+                  >
+                    Annuler
+                  </Button>
+                  </a>
+                  </div>
+                  <div className="mobile_button_validate">
+                  <Button
+                    rightIcon={<CheckIcon />}
+                    colorScheme="teal"
+                    variant="solid"
+                    onClick={handleSubmit}
+                  >
+                    Valider
+                  </Button>
+                  </div>
+              </div>
+            </form>
           </div>
         </div>
       </MobileView>

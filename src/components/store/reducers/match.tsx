@@ -1,5 +1,5 @@
+import crud from "@/utils/crud";
 import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
-import axios from "axios";
 
 interface MatchState {
   match_id: number
@@ -12,9 +12,7 @@ export const initialState: MatchState = {
 export const getMatchId = createAsyncThunk<MatchState>(
   "ALLMATCH",
   async (id) => {
-    const response = await axios.get(
-      `http://localhost:3000/player/${id}/match`
-    );
+    const response = await crud.get(['player', 'match'], [Number.parseInt(id!, 10)]);
     console.log("requete allmatchs terminée");
     console.log(response.data);
     return response.data;

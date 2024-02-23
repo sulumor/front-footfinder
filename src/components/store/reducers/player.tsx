@@ -1,5 +1,5 @@
+import crud from "@/utils/crud";
 import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
-import axios from "axios";
 
 interface PlayerState {
   firstname: string;
@@ -34,7 +34,7 @@ export const initialState: PlayerState = {
 export const getPlayerInfos = createAsyncThunk<PlayerState>(
   "PLAYER",
   async (id) => {
-    const response = await axios.get(`http://localhost:3000/player/${id}`);
+    const response = await crud.get(['player'], [Number.parseInt(id!, 10)]);
     console.log("requete player terminée");
     console.log(response.data);
     return response.data;

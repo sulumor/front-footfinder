@@ -12,9 +12,10 @@ import {
 
 import "../Header.scss";
 import {
-  EmailIcon,
+  BellIcon,
+  CalendarIcon,
   HamburgerIcon,
-  PlusSquareIcon,
+  SmallCloseIcon,
 } from "@chakra-ui/icons";
 
 const PlayerHeader = () => {
@@ -37,7 +38,7 @@ const PlayerHeader = () => {
               <Button colorScheme="blue">Profil</Button>
             </a>
             <a href="/player/match">
-              <Button colorScheme="teal">Historique</Button>
+              <Button colorScheme="teal">Matchs</Button>
             </a>
             <a href="/">
               <Button colorScheme="red" onClick={handleDisconect}>Déconnexion</Button>
@@ -47,7 +48,7 @@ const PlayerHeader = () => {
       </BrowserView>
       <MobileView>
         <div className="mobile_header">
-          <a href="/">
+          <a href="/player">
             <h1>FootFinder</h1>
           </a>
           <div className="mobile_header_button">
@@ -60,14 +61,19 @@ const PlayerHeader = () => {
                 colorScheme="teal"
               />
               <MenuList>
-                <a href="/login">
-                <MenuItem icon={<EmailIcon />}>
-                  Se connecter
+                <a href="/player/me">
+                <MenuItem icon={<BellIcon />}>
+                  Profil
                 </MenuItem></a>
-                <a href="/signin">
-                <MenuItem icon={<PlusSquareIcon />}>
-                  S'inscrire
+                <a href="/player/match">
+                <MenuItem icon={<CalendarIcon />}>
+                  Matchs
                 </MenuItem></a>
+                <a href="/">
+                <MenuItem icon={<SmallCloseIcon />} onClick={handleDisconect}>
+                Déconnexion
+                </MenuItem>
+                </a>
               </MenuList>
             </Menu>
           </div>

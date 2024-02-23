@@ -9,6 +9,7 @@ interface Response {
 
 class Crud {
   private BASE_URL:string;
+
   private TOKEN: string | null;
 
   constructor(BASE_URL: string, TOKEN: string | null){

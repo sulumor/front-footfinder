@@ -95,7 +95,7 @@ const userReducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(tokenCheck,(state,_action)=>{
     state.logged = true;
-    state.role = localStorage.getItem("role")
+    state.role = localStorage.getItem("role");
   });
 });
 
