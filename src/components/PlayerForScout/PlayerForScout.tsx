@@ -1,74 +1,24 @@
 import {
-  Chart as ChartJS,
-  RadialLinearScale,
-  PointElement,
-  LineElement,
-  Filler,
-  Tooltip,
-  Legend,
-} from "chart.js";
-import { Radar } from "react-chartjs-2";
-import {
   Divider,
   Button,
   Avatar,
   Wrap,
   WrapItem,
   Center,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  FormControl,
-  FormLabel,
-  Input,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { BrowserView, MobileView } from "react-device-detect";
-import Calendar from "react-calendar";
-
-// import "../Player/Player.scss";
-import "./PlayerForScout.scss";
+import Chart from "@/components/Chart/Chart";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import crud from "@/utils/crud";
-import { Stats, Match, Player } from "@/@Types"; 
+import { Stats, Match, PlayerView } from "@/@Types"; 
 
-import "../Player/Player.scss";
+import "../../pages/Player/PlayerHome.scss";
 import "./PlayerForScout.scss";
 
-ChartJS.register(
-  RadialLinearScale,
-  PointElement,
-  LineElement,
-  Filler,
-  Tooltip,
-  Legend
-);
 
-interface PlayerInfos {
-  firstname: string;
-  lastname: string;
-  birth_date: string;
-  genre: string;
-  height: number;
-  weight: number;
-  position: string;
-  strong_foot: string;
-  nationality: string;
-}
-
-type ValuePiece = Date | null;
-type Value = ValuePiece | [ValuePiece, ValuePiece];
-
-const Player = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [value, onChange] = useState<Value>(new Date());
-  const firstName = localStorage.getItem("firstname");
-  const [infos, setInfos] = useState<PlayerInfos>();
+const PlayerForScout = () => {
+  const [infos, setInfos] = useState<PlayerView>();
   const [stats, setStats] = useState<Stats>();
   const [match, setMatch] = useState<Match>();
   const scoutId = localStorage.getItem("id");
@@ -92,7 +42,6 @@ const Player = () => {
 
   const getPlayerInfos = async () => {
     const responses = await crud.get(['scout', 'player'], [Number.parseInt(scoutId!, 10), Number.parseInt(id!, 10)]);
-
     console.log(responses.data);
     return setInfos(responses.data);
   };
@@ -113,32 +62,7 @@ const Player = () => {
     fetchData();
   }, []);
 
-  const data = {
-    labels: [
-      "Passes décisives",
-      "Buts marqués",
-      "Arrêts",
-      "Cartons jaunes",
-      "Cartons rouges",
-      "Buts concedés",
-    ],
-    datasets: [
-      {
-        label: "statistiques",
-        data: [
-          stats?.assists,
-          stats?.goals_scored,
-          stats?.stops,
-          stats?.yellow_card,
-          stats?.red_card,
-          stats?.goals_conceded,
-        ],
-        backgroundColor: "rgba(255, 99, 132, 0.2)",
-        borderColor: "rgba(255, 99, 132, 1)",
-        borderWidth: 1,
-      },
-    ],
-  };
+  console.log(infos)
 
   return (
     <>
@@ -211,7 +135,7 @@ const Player = () => {
             <Divider orientation="vertical" />
           </Center>
           <div className="player_data">
-            <Radar data={data} />
+            <Chart stats={stats} />
           </div>
         </div>
         <div className="player_infos_footer">
@@ -237,7 +161,9 @@ const Player = () => {
 
       <MobileView>
         <div className="player_name">
-          <h2>Bonjour, {firstName}</h2>
+          <h2>
+            Page de {infos?.firstname} {infos?.lastname}
+          </h2>
         </div>
         <Center>
           <Divider width="50%" />
@@ -246,7 +172,12 @@ const Player = () => {
           <div className="player_infos">
             <div className="player_match">
               <h3>Prochain match: </h3>
-              <span>Samedi 12 Janvier 2024</span>
+              <span>{new Date(match?.date as Date).toLocaleDateString("fr-FR", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}</span>
               <div className="player_match_infos">
                 <h3>
                   {match?.home.club_name}- {match?.away.club_name}
@@ -256,41 +187,6 @@ const Player = () => {
                   {match?.home.adress}, {match?.home.zip_code}{" "}
                   {match?.home.city}
                 </p>
-                <div className="player_match_button">
-                  <Button colorScheme="teal" onClick={onOpen}>
-                    Modifier
-                  </Button>
-                </div>
-                <Modal isOpen={isOpen} onClose={onClose}>
-                  <ModalOverlay />
-                  <ModalContent>
-                    <ModalHeader>Modifier le match</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody pb={6}>
-                      <Calendar
-                        onChange={onChange}
-                        showWeekNumbers
-                        value={value}
-                      />
-                      <FormControl>
-                        <FormLabel>Equipe à domicile</FormLabel>
-                        <Input />
-                      </FormControl>
-
-                      <FormControl mt={4}>
-                        <FormLabel>Equipe à l'extérieur</FormLabel>
-                        <Input />
-                      </FormControl>
-                    </ModalBody>
-
-                    <ModalFooter>
-                      <Button colorScheme="teal" mr={3}>
-                        Modifier
-                      </Button>
-                      <Button onClick={onClose}>Annuler</Button>
-                    </ModalFooter>
-                  </ModalContent>
-                </Modal>
               </div>
             </div>
             <Divider />
@@ -327,7 +223,7 @@ const Player = () => {
             </div>
           </div>
           <div className="mobile_player_data">
-            <Radar data={data} />
+            <Chart stats={stats} />
           </div>
         </div>
       </MobileView>
@@ -335,4 +231,4 @@ const Player = () => {
   );
 };
 
-export default Player;
+export default PlayerForScout;

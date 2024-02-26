@@ -34,7 +34,7 @@ const Chart = ( {stats} : {stats: Stats | undefined}) => {
       ],
       datasets: [
         {
-          label: "vos statistiques",
+          label: "statistiques",
           data: [
             stats?.assists,
             stats?.goals_scored,
