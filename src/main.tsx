@@ -7,11 +7,11 @@ import { createBrowserRouter } from "react-router-dom";
 
 import HomePage from "./pages/Home/HomePage";
 import ErrorPage from "@/components/Error/Error";
-import Player from "@/pages/Player/Player";
 import Match from "@/components/Match/Match";
 import Stats from "@/components/Stats/Stats";
 import ScoutHome from "./pages/Scout/ScoutHome";
-import PlayerProfil from "@/components/PlayerProfil/PlayerProfil";
+import PlayerHome from "@/pages/Player/PlayerHome";
+import PlayerProfil from "@/pages/Player/PlayerProfil";
 import App from "./components/App/App";
 import PlayerForScout from "./components/PlayerForScout/PlayerForScout";
 import LoginPage from "./pages/Login/LoginPage";
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
       { path: "/login", element: <LoginPage /> },
       { path: "/signin", element: <SigninPage /> },
       { path: "/notices", element: <NoticesPage /> },
-      { path: "/player", element: <Player /> },
+      { path: "/player", element: <PlayerHome /> },
       { path: "/player/:id", element: <PlayerForScout />},
       { path: "/player/match", element: <Match /> },
       { path: "/player/match/:matchId", element: <Stats /> },

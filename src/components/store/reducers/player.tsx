@@ -1,22 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { PlayerState } from "@/@Types";
 import crud from "@/utils/crud";
 import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
+import { UDPATE_PLAYER } from "../actions/player";
 
-interface PlayerState {
-  firstname: string;
-  lastname: string;
-  email: string;
-  position: string;
-  birth_date: string;
-  nationality: string;
-  avatar: string;
-  genre: string;
-  strong_foot: string;
-  number_of_matches_played: number;
-  height: number;
-  weight: number;
-}
 
 export const initialState: PlayerState = {
+  id: 0,
+  player_id: 0,
+  role: "",
   firstname: "",
   lastname: "",
   email: "",
@@ -28,12 +20,16 @@ export const initialState: PlayerState = {
   strong_foot: "",
   number_of_matches_played: 0,
   height: 0,
-  weight: 0
+  weight: 0,
+  scouts: [],
+  teams: [],
+  count: 0
 };
 
+const id = localStorage.getItem("id");
 export const getPlayerInfos = createAsyncThunk<PlayerState>(
   "PLAYER",
-  async (id) => {
+  async () => {
     const response = await crud.get(['player'], [Number.parseInt(id!, 10)]);
     return response.data;
   }
@@ -53,10 +49,15 @@ const playerReducer = createReducer(initialState, (builder) => {
     state.number_of_matches_played = action.payload.number_of_matches_played;
     state.height = action.payload.height;
     state.weight = action.payload.weight;
+    state.scouts = action.payload.scouts;
+    state.teams = action.payload.teams;
   });
   builder.addCase(getPlayerInfos.rejected, (_state, action) => {
     console.log("Une erreur est survenue:", action.error.message);
   });
+  builder.addCase(UDPATE_PLAYER, (state, _action) => {
+    state.count = state.count +1;
+  })
 });
 
 export default playerReducer;
