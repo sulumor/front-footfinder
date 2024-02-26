@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosResponse } from 'axios'
-import { createPathWithMultipleOptions } from './functions';
+import { createPathWithMultipleOptions } from './functions'
+import { backURL } from './constantes';
 
 interface Response {
   data: AxiosResponse<any>['data'];
@@ -9,8 +10,12 @@ interface Response {
 
 class Crud {
   private BASE_URL:string;
-  constructor(BASE_URL: string){
+
+  private TOKEN: string | null;
+
+  constructor(BASE_URL: string, TOKEN: string | null){
     this.BASE_URL = BASE_URL;
+    this.TOKEN = TOKEN; 
   }
  
   async get(options:string[], ids:number[]) : Promise<Response> {
@@ -18,7 +23,7 @@ class Crud {
     const res = await axios.get(`${this.BASE_URL}/${path}`, {
       headers: {
         'Content-Type': 'application/json', 
-        Authorization: `Bearer...Token` /* Ajout du token JWT */
+        Authorization: `Bearer ${this.TOKEN}`, 
       }
     });
     return {data : res.data, status: res.status}
@@ -27,7 +32,7 @@ class Crud {
   async post(
     options: string[],
     ids: number[], 
-    body: { [k: string]: string | number | boolean | [] | undefined | null }
+    body: { [k: string]: string | number | boolean | Date | [] | "En forme" | "absent" | "blessé" |  undefined | null }
   ): Promise<Response> {
     const path:string = createPathWithMultipleOptions(options, ids);
     const res = await axios.post(
@@ -38,7 +43,7 @@ class Crud {
       {
         headers: {
           'content-type': 'application/json',
-          Authorization: `Bearer...Token` /* Ajout du token JWT */,
+          Authorization: `Bearer ${this.TOKEN}`,
         },
       }
     );
@@ -59,7 +64,7 @@ class Crud {
       {
         headers: {
           'content-type': 'application/json',
-          Authorization: `Bearer...Token` /* Ajout du token JWT */,
+          Authorization: `Bearer ${this.TOKEN}`,
         },
       }
     );
@@ -71,7 +76,7 @@ class Crud {
       const path:string = createPathWithMultipleOptions(options, ids);
       const res = await axios.delete(`${this.BASE_URL}/${path}`, {
       headers: {
-        Authorization: `Bearer...Token`/* Ajout du token JWT */,
+        Authorization: `Bearer ${this.TOKEN}`,
       },
     });
     return { data: res.data, status: res.status };
@@ -79,4 +84,4 @@ class Crud {
 
 }
 
-export default new Crud('test');
+export default new Crud(backURL, localStorage.getItem("token"));

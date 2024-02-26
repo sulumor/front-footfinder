@@ -2,9 +2,8 @@
     position: fixed;
     bottom: 0;
     width: 100%;
+    height: 12%;
     background-color: #EDF2F4;
-    padding: 2%;
-    display: flex;
     justify-content: space-around;
     border-radius: 10px 10px 0px 0px;
     display: flex;
@@ -15,14 +14,27 @@
     display: flex;
     gap: 20px;
     justify-content: center;
-    margin-bottom: 2%;
+    margin-top: -3.5%;
 }
 
 .footer_legals {
-    margin-bottom: -2%;
     text-align: center;
 }
 
 a {
     font-size: 0.8em;
+}
+
+.mobile_footer_socials {
+    display: flex;
+    gap: 2%;
+    justify-content: center;
+}
+
+.mobile_footer_legals {
+    text-align: center;
+}
+
+.chakra-button {
+    margin-top: -5%
 }
