@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Text,
   IconButton,
@@ -45,7 +46,7 @@ const ScoutInfos = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res: any = await dispatch(getScoutInfos(id));
+      const res = await dispatch(getScoutInfos(id));
       setPatchValues({ ...patchValues, firstname: res.payload.firstname });
       patchValues.firstname = res.payload.firstname;
       patchValues.lastname = res.payload.lastname;

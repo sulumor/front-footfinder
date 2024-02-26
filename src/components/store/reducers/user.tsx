@@ -11,17 +11,14 @@ import Cookies from 'js-cookie';
 export const initialState: UserState = {
   logged: false,
   role: "",
-  id: null,
+  id: 0,
   firstname: "",
   email: ""
 };
 
-export const login = createAsyncThunk<{
-  token: { jwt: string };   
-  data: any; 
-}>(
+export const login = createAsyncThunk(
   "LOGIN",
-  async (formValues) => {
+  async (formValues : {email:string;password:string;role:string}) => {
     const response = await axios.post(
       "http://localhost:3000/login",
       formValues 
@@ -31,9 +28,16 @@ export const login = createAsyncThunk<{
   }
 );
 
-export const signin = createAsyncThunk<UserState>(
+export const signin = createAsyncThunk(
   "SIGNIN",
-  async (formValues) => {
+  async (formValues : {
+    role: string;
+    firstname: string;
+    lastname: string;
+    email: string;
+    password: string;
+    confirmedPassword: string;
+}) => {
     const response = await axios.post(
       "http://localhost:3000/register",
       formValues 
@@ -79,7 +83,7 @@ const userReducer = createReducer(initialState, (builder) => {
     localStorage.removeItem("role");
     Cookies.remove('token');
   });
-  builder.addCase(tokenCheck,(state: UserState,_action)=>{
+  builder.addCase(tokenCheck,(state: UserState,)=>{
     state.logged = true;
     state.role = localStorage.getItem("role");
   });
