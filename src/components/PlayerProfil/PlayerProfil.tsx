@@ -87,7 +87,7 @@ const PlayerProfil = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await dispatch(getPlayerInfos(id));
+      const res = await dispatch(getPlayerInfos());
 
       setPatchValues({...patchValues, firstname:(res.payload as PlayerPatch).firstname});
       patchValues.firstname = (res.payload as PlayerPatch).firstname;

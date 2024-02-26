@@ -16,9 +16,9 @@ export const initialState: ScoutState = {
     count: 0,
 };
 
-export const getScoutInfos = createAsyncThunk<ScoutState>(
+export const getScoutInfos = createAsyncThunk(
   "SCOUT",
-  async (id) => {
+  async (id : string | null) => {
     const response = await crud.get(['scout'], [Number.parseInt(id!, 10)]);
     return response.data;
   }
@@ -31,15 +31,15 @@ const scoutReducer = createReducer(initialState, (builder) => {
     state.email = action.payload.email;
     state.club = action.payload.club;
     state.city = action.payload.city;
-    state.players = action.payload.players.length
+    state.players = action.payload.players.length;
   });
   builder.addCase(getScoutInfos.rejected, (_state, action) => {
     console.log("Une erreur est survenue:", action.error.message);
   });
-  builder.addCase(UNFOLLOW, (state, _action) => {
+  builder.addCase(UNFOLLOW, (state) => {
     state.players = state.players -1;
   });
-  builder.addCase(UDPATE_SCOUT, (state, _action) => {
+  builder.addCase(UDPATE_SCOUT, (state) => {
     state.count = state.count +1;
   })
 });
