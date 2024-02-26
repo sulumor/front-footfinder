@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosResponse } from 'axios'
 import { createPathWithMultipleOptions } from './functions'
+import { backURL } from './constantes';
 
 interface Response {
   data: AxiosResponse<any>['data'];
@@ -83,4 +84,4 @@ class Crud {
 
 }
 
-export default new Crud('http://localhost:3000', localStorage.getItem("token"));
+export default new Crud(backURL, localStorage.getItem("token"));
