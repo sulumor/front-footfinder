@@ -7,8 +7,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 import HomePage from "./pages/Home/HomePage";
 import ErrorPage from "@/components/Error/Error";
-import Match from "@/components/Match/Match";
-import Stats from "@/components/Stats/Stats";
+import Match from "@/pages/Player/Match";
 import ScoutHome from "./pages/Scout/ScoutHome";
 import PlayerHome from "@/pages/Player/PlayerHome";
 import PlayerProfil from "@/pages/Player/PlayerProfil";
@@ -36,7 +35,6 @@ const router = createBrowserRouter([
       { path: "/player", element: <PlayerHome /> },
       { path: "/player/:id", element: <PlayerForScout />},
       { path: "/player/match", element: <Match /> },
-      { path: "/player/match/:matchId", element: <Stats /> },
       { path: "/player/create", element: <SigninPlayer /> },
       { path: "/scout/create", element: <SigninScout />},
       { path: "/scout", element: <ScoutHome /> },

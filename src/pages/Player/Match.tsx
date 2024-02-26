@@ -13,23 +13,22 @@ import { useEffect, useState } from "react";
 import crud from "@/utils/crud";
 import { Match as MatchType } from "@/@Types";
 import { sortByAsc, sortByDesc } from "@/utils/functions";
-import PastMatchesTab from "./PastMatchesTab";
-import FutureMatchesTab from "./FutureMatchesTab";
+import PastMatchesTab from "../../components/Match/PastMatchesTab";
+import FutureMatchesTab from "../../components/Match/FutureMatchesTab";
 
 const Match = () => {
 
-  const [data, setData] = useState<MatchType[]>([]);
+  const [matches, setMatches] = useState<MatchType[]>([]);
   let pastMatches: MatchType[] = [];
   let futureMatches: MatchType[] = [];
   const id : string | null = localStorage.getItem("id");
   
   const getAllMatchs = async () => {
     const response = await crud.get(['player', 'match', 'stats'], [Number.parseInt(id!, 10)]);
-    return setData(response.data);
+    return setMatches(response.data);
   };
   
-
-  data.forEach((match: MatchType) => {
+  matches.forEach((match: MatchType) => {
     if (new Date(match.date) < new Date()) {
       pastMatches.push(match);
     } else {
@@ -45,11 +44,10 @@ const Match = () => {
     };
     fetchData();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [matches]);
 
   return (
     <>
-      
         <div className= { isMobile ? "mobile_card_container": "matches_main"} >
           <Tabs variant='soft-rounded' colorScheme='green'>
             <TabList>
