@@ -1,10 +1,11 @@
 import { Avatar, Wrap, WrapItem } from "@chakra-ui/react";
 import { ScoutView } from "@/@Types";
+import { isMobile } from "react-device-detect";
 
 const FollowByScouts = ({scouts} : { scouts:ScoutView[]}) => {
   return (
-    <div className="player_follow">
-      <h3>Je suis suivi par</h3> <span>{scouts.length} recruteurs:</span>
+    <div className={isMobile ? "mobile_player_follow" : "player_follow"}>
+      <h3>Suivi par</h3> <span>{scouts.length} recruteurs:</span>
       <div>
         <Wrap>
           <WrapItem >

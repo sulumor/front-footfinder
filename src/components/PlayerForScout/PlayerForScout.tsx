@@ -1,12 +1,10 @@
 import {
   Divider,
   Button,
-  Avatar,
-  Wrap,
-  WrapItem,
   Center,
 } from "@chakra-ui/react";
-import { BrowserView, MobileView } from "react-device-detect";
+import { isMobile } from "react-device-detect";
+import FollowByScouts from "@/components/Card/FollowByScouts";
 
 import Chart from "@/components/Chart/Chart";
 import { useEffect, useState } from "react";
@@ -27,7 +25,6 @@ const PlayerForScout = () => {
 
   const getAllStats = async () => {
     const responses = await crud.get(['scout', 'player', 'stats'], [Number.parseInt(scoutId!, 10), Number.parseInt(id!, 10)]);   
-    console.log(responses.data);
     return setStats(responses.data);
   };
   
@@ -43,13 +40,11 @@ const PlayerForScout = () => {
 
   const getPlayerInfos = async () => {
     const responses = await crud.get(['scout', 'player'], [Number.parseInt(scoutId!, 10), Number.parseInt(id!, 10)]);
-    console.log(responses.data);
     return setInfos(responses.data);
   };
 
   const addPlayerFollow = async () => {
     const responses = await crud.post(['scout', 'player'], [Number.parseInt(scoutId!, 10), Number.parseInt(id!, 10)], {});
-    console.log(responses.data);
     return responses.data;
   };
 
@@ -63,11 +58,9 @@ const PlayerForScout = () => {
     fetchData();
   }, []);
 
-  console.log(infos)
-
   return (
     <>
-      <BrowserView>
+      
         <div className="player_name">
           <h2>
             Page de {infos?.firstname} {infos?.lastname}
@@ -76,7 +69,7 @@ const PlayerForScout = () => {
         <Center>
           <Divider width="50%" />
         </Center>
-        <div className="player_container">
+        <div className={isMobile ? "mobile_player_container" : "player_container"}>
           <div className="player_infos">
             <div className="player_match">
               <h3>Prochain match: </h3>
@@ -100,42 +93,12 @@ const PlayerForScout = () => {
               </div>
             </div>
             <Divider />
-            <div className="player_follow">
-              <h3>{infos?.firstname} {infos?.lastname} est suivi par</h3> <span>3 recruteurs:</span>
-              <div className="player_follow_pics">
-                <Wrap>
-                  <WrapItem>
-                    <a href="#">
-                      <Avatar
-                        name="Dan Abrahmov"
-                        src="https://bit.ly/dan-abramov"
-                      />
-                    </a>
-                  </WrapItem>
-                  <WrapItem>
-                    <a href="#">
-                      <Avatar
-                        name="Kola Tioluwani"
-                        src="https://bit.ly/tioluwani-kolawole"
-                      />
-                    </a>
-                  </WrapItem>
-                  <WrapItem>
-                    <a href="#">
-                      <Avatar
-                        name="Kent Dodds"
-                        src="https://bit.ly/kent-c-dodds"
-                      />
-                    </a>
-                  </WrapItem>
-                </Wrap>
-              </div>
-            </div>
+           {infos?.scouts && <FollowByScouts scouts={infos?.scouts}/>}
           </div>
-          <Center>
+          {isMobile ? null : <Center>
             <Divider orientation="vertical" />
-          </Center>
-          <div className="player_data">
+          </Center>}
+          <div className={isMobile ? "mobile_player_data" : "player_data"}>
             <Chart stats={stats} />
           </div>
         </div>
@@ -158,76 +121,6 @@ const PlayerForScout = () => {
           <Button colorScheme="teal" onClick={addPlayerFollow}>Suivre le joueur</Button>
           </div>
         </div>
-      </BrowserView>
-
-      <MobileView>
-        <div className="player_name">
-          <h2>
-            Page de {infos?.firstname} {infos?.lastname}
-          </h2>
-        </div>
-        <Center>
-          <Divider width="50%" />
-        </Center>
-        <div className="mobile_player_container">
-          <div className="player_infos">
-            <div className="player_match">
-              <h3>Prochain match: </h3>
-              <span>{new Date(match?.date as Date).toLocaleDateString("fr-FR", {
-                  weekday: "long",
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}</span>
-              <div className="player_match_infos">
-                <h3>
-                  {match?.home.club_name}- {match?.away.club_name}
-                </h3>
-                <p>{match?.home.stadium_name}</p>
-                <p>
-                  {match?.home.adress}, {match?.home.zip_code}{" "}
-                  {match?.home.city}
-                </p>
-              </div>
-            </div>
-            <Divider />
-            <div className="player_follow">
-              <h3>Je suis suivi par</h3> <span>3 recruteurs:</span>
-              <div className="player_follow_pics">
-                <Wrap>
-                  <WrapItem>
-                    <a href="#">
-                      <Avatar
-                        name="Dan Abrahmov"
-                        src="https://bit.ly/dan-abramov"
-                      />
-                    </a>
-                  </WrapItem>
-                  <WrapItem>
-                    <a href="#">
-                      <Avatar
-                        name="Kola Tioluwani"
-                        src="https://bit.ly/tioluwani-kolawole"
-                      />
-                    </a>
-                  </WrapItem>
-                  <WrapItem>
-                    <a href="#">
-                      <Avatar
-                        name="Kent Dodds"
-                        src="https://bit.ly/kent-c-dodds"
-                      />
-                    </a>
-                  </WrapItem>
-                </Wrap>
-              </div>
-            </div>
-          </div>
-          <div className="mobile_player_data">
-            <Chart stats={stats} />
-          </div>
-        </div>
-      </MobileView>
     </>
   );
 };

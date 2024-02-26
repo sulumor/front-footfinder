@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Input, InputGroup, InputRightElement, Button, FormControl, Select } from "@chakra-ui/react";
-import { BrowserView, MobileView } from "react-device-detect";
+import { isMobile } from "react-device-detect";
 import "./Login.scss";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useAppDispatch } from "../hooks/redux";
@@ -33,12 +33,10 @@ const Login = () => {
   };
 
   return (
-    <>
-      <BrowserView>
         <form onSubmit={handleSubmit}>
-          <div className="login_container">
-            <div className="input_container">
-              <div className="login_input">
+          <div className={isMobile ? "mobile_login_container" : "login_container"}>
+            <div className={isMobile ? "mobile_input_container" : "input_container"}>
+              <div className={isMobile ? "mobile_login_input" : "login_input"}>
                 <Input
                   width="auto"
                   htmlSize={24}
@@ -48,8 +46,8 @@ const Login = () => {
                   size="sm"
                 />
               </div>
-              <div className="login_input">
-                <div className="login_password">
+              <div className={isMobile ? "mobile_login_input" : "login_input"}>
+                <div className={isMobile ? "mobile_login_password" : "login_password"}>
                   <InputGroup size="sm">
                     <Input
                       width="auto"
@@ -84,7 +82,7 @@ const Login = () => {
                       </Select>
                     </FormControl>
               </div>
-              <div className="login_button">
+              <div className={isMobile ? "mobile_login_button" : "login_button"}>
                 <Button colorScheme="teal" onClick={handleSubmit}>
                   Se connecter
                 </Button>
@@ -94,69 +92,6 @@ const Login = () => {
             </div>
           </div>
         </form>
-      </BrowserView>
-
-      <MobileView>
-        <form>
-          <div className="mobile_login_container">
-            <div className="mobile_input_container">
-              <div className="mobile_login_input">
-                <Input
-                  htmlSize={20}
-                  width="auto"
-                  value={formValues.email}
-                  onChange={(e) => handleChangeField("email")(e.target.value)}
-                  placeholder="Email"
-                  size="sm"
-                />
-              </div>
-              <div className="mobile_login_input">
-                <div className="mobile_login_password">
-                  <InputGroup size="sm">
-                    <Input
-                      htmlSize={9}
-                      width="auto"
-                      pr="8rem"
-                      value={formValues.password}
-                      onChange={(e) =>
-                        handleChangeField("password")(e.target.value)
-                      }
-                      type={show ? "text" : "password"}
-                      placeholder="Mot de passe"
-                    />
-
-                    <InputRightElement width="4.5rem">
-                      <Button h="2rem" size="sm" onClick={handleClick}>
-                        {show ? <ViewOffIcon /> : <ViewIcon />}
-                      </Button>
-                    </InputRightElement>
-                  </InputGroup>
-                </div>
-                <FormControl mt={4}>
-                      <Select
-                        placeholder="--Role--"
-                        value={formValues.role}
-                        onChange={(e) =>
-                          handleChangeField("role")(e.target.value)
-                        }
-                      >
-                        <option>joueur</option>
-                        <option>recruteur</option>
-                      </Select>
-                    </FormControl>
-              </div>
-              <div className="mobile_login_button">
-                <Button colorScheme="teal" onClick={handleSubmit}>
-                  Se connecter
-                </Button>
-              </div>
-              <p>scout:</p>
-              <p>nicolas.dupon@mail.io X346Dc5V7kfYmv!</p>
-            </div>
-          </div>
-        </form>
-      </MobileView>
-    </>
   );
 };
 
