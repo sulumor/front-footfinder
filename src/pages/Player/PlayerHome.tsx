@@ -36,7 +36,7 @@ const Player = () => {
   useEffect(() => {
     const fetchData = async () => {
       await getAllStats();
-      await dispatch(getPlayerInfos());
+      await dispatch(getPlayerInfos(id));
     };
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps

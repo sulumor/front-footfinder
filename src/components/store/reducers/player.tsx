@@ -26,10 +26,9 @@ export const initialState: PlayerState = {
   count: 0
 };
 
-const id = localStorage.getItem("id");
-export const getPlayerInfos = createAsyncThunk<PlayerState>(
+export const getPlayerInfos = createAsyncThunk(
   "PLAYER",
-  async () => {
+  async (id:string | null) => {
     const response = await crud.get(['player'], [Number.parseInt(id!, 10)]);
     return response.data;
   }

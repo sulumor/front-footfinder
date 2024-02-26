@@ -15,6 +15,7 @@ import { PlayerPatch } from "@/@Types";
 
 const PlayerProfil = () => {
   const dispatch = useAppDispatch();
+  const id = localStorage.getItem("id");
   const lastName : string = useAppSelector((state) => state.player.lastname);
   const firstName : string = useAppSelector((state) => state.player.firstname);
   const position: string = useAppSelector((state) => state.player.position);
@@ -34,7 +35,7 @@ const PlayerProfil = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-       await dispatch(getPlayerInfos());
+       await dispatch(getPlayerInfos(id));
     };
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps

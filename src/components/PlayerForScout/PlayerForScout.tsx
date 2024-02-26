@@ -24,7 +24,7 @@ const PlayerForScout = () => {
   const { id } = useParams();
 
   const getAllStats = async () => {
-    const responses = await crud.get(['scout', 'player', 'stats'], [Number.parseInt(scoutId!, 10), Number.parseInt(id!, 10)]);   
+    const responses = await crud.get(['scout', 'player', 'stats'], [Number.parseInt(scoutId!, 10), Number.parseInt(id!, 10)]);       
     return setStats(responses.data);
   };
   
@@ -56,11 +56,11 @@ const PlayerForScout = () => {
     };
 
     fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
-      
         <div className="player_name">
           <h2>
             Page de {infos?.firstname} {infos?.lastname}
