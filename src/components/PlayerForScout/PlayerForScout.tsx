@@ -30,14 +30,13 @@ import {
 import { BrowserView, MobileView } from "react-device-detect";
 import Calendar from "react-calendar";
 
-// import "../Player/Player.scss";
+
 import "./PlayerForScout.scss";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import crud from "@/utils/crud";
-import { Stats, Match, Player } from "@/@Types"; 
+import { Stats, Match } from "@/@Types"; 
 
-import "../Player/Player.scss";
 import "./PlayerForScout.scss";
 
 ChartJS.register(
@@ -64,7 +63,7 @@ interface PlayerInfos {
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-const Player = () => {
+const PlayerForScout = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [value, onChange] = useState<Value>(new Date());
   const firstName = localStorage.getItem("firstname");
@@ -335,4 +334,4 @@ const Player = () => {
   );
 };
 
-export default Player;
+export default PlayerForScout;
