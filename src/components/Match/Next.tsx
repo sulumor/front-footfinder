@@ -1,6 +1,5 @@
 import { Match } from "@/@Types";
 import { useEffect, useState } from "react";
-import AddMatchButton from "../Button/addMatch";
 import crud from "@/utils/crud";
 import "./Next.scss";
 
@@ -47,7 +46,6 @@ const NextMatch = () => {
           {match?.home.adress}, {match?.home.zip_code}{" "}
           {match?.home.city}
         </p>
-        <AddMatchButton/>
       </div>
     </div>
   );

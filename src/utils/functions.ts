@@ -6,3 +6,7 @@ export function createPathWithMultipleOptions(options:string[], ids: number[]) :
     }
   return path;
 }
+
+export function sortByAsc(datas) {
+  
+}

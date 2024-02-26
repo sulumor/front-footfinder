@@ -35,7 +35,7 @@ import { BrowserView, MobileView } from "react-device-detect";
 
 import Calendar from "react-calendar";
 
-import "../Player/Player.scss";
+// import "../Player/Player.scss";
 import "./PlayerForScout.scss";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";

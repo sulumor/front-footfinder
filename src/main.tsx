@@ -10,11 +10,11 @@ import Login from "@/components/Login/Login";
 import Home from "@/components/Home/Home";
 import Signin from "@/components/Signin/Signin";
 import Notices from "@/components/Notices/Notices";
-import Player from "@/pages/Player/Player";
+import PlayerHome from "@/pages/Player/PlayerHome";
 import Match from "@/components/Match/Match";
 import Stats from "@/components/Stats/Stats";
 import Scout from "@/components/Scout/Scout";
-import PlayerProfil from "@/components/PlayerProfil/PlayerProfil";
+import PlayerProfil from "@/pages/Player/PlayerProfil";
 import App from "./components/App/App";
 import PlayerForScout from "./components/PlayerForScout/PlayerForScout";
 import CreatePlayer from "./components/CreatePlayer/CreatePlayer";
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
       { path: "/login", element: <Login /> },
       { path: "/signin", element: <Signin /> },
       { path: "/notices", element: <Notices /> },
-      { path: "/player", element: <Player /> },
+      { path: "/player", element: <PlayerHome /> },
       { path: "/player/:id", element: <PlayerForScout />},
       { path: "/player/match", element: <Match /> },
       { path: "/player/match/:matchId", element: <Stats /> },

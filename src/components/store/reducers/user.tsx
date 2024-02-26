@@ -64,7 +64,7 @@ const userReducer = createReducer(initialState, (builder) => {
     state.role = action.payload.role;
     state.id = action.payload.id;
     localStorage.setItem("email", action.payload.email)
-    localStorage.setItem("id", action.payload.id);
+    localStorage.setItem("id", `${action.payload.id}` );
     localStorage.setItem("logged", "true");
     localStorage.setItem("role", action.payload.role);
     localStorage.setItem("firstname", action.payload.firstname);
