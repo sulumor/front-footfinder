@@ -2,6 +2,7 @@ import { Match } from "@/@Types";
 import { useEffect, useState } from "react";
 import crud from "@/utils/crud";
 import "./Next.scss";
+import { sortByAsc } from "@/utils/functions";
 
 const NextMatch = () => {
   const id : string | null = localStorage.getItem("id");
@@ -9,13 +10,9 @@ const NextMatch = () => {
 
   const getNextMatch : () => Promise<void> = async () => {
     const responses  = await crud.get(['player', 'match', 'stats'], [Number.parseInt(id!, 10)]);
-    const sortResponse : Match[] = responses.data.sort(function(a : Match, b : Match) {
-      
-      return new Date(a.date).getTime()  - new Date(b.date).getTime();
-    });
-    
+        
     const today : Date = new Date();
-    const nextMatch : Match[] = sortResponse.filter(((match: Match) => new Date(match.date) > today))
+    const nextMatch : Match[] = sortByAsc(responses.data).filter(((match: Match) => new Date(match.date) > today))
     return setMatch(nextMatch[0]);
   };
 

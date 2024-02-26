@@ -7,6 +7,7 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { BrowserView, MobileView } from "react-device-detect";
+
 import Chart from "@/components/Chart/Chart";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";

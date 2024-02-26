@@ -8,17 +8,20 @@ import crud from "@/utils/crud";
 
 import "./PlayerHome.scss";
 
-import { Stats } from "@/@Types";
+import { ScoutView, Stats } from "@/@Types";
 import NextMatch from "@/components/Match/Next";
 import Chart from "@/components/Chart/Chart";
 import AddMatchButton from "@/components/Button/addMatch";
 import FollowByScouts from "@/components/Card/FollowByScouts";
-import { useAppSelector } from "@/components/hooks/redux";
+import { useAppDispatch, useAppSelector } from "@/components/hooks/redux";
+import { getPlayerInfos } from "@/components/store/reducers/player";
 
 
 const Player = () => {
+  const dispatch = useAppDispatch();
   const id : string | null = localStorage.getItem("id");
   const firstName : string = useAppSelector((state) => state.player.firstname);
+  const scouts : ScoutView[] = useAppSelector((state) => state.player.scouts);
   const [stats, setStats] = useState<Stats>();
 
 
@@ -33,6 +36,7 @@ const Player = () => {
   useEffect(() => {
     const fetchData = async () => {
       await getAllStats();
+      await dispatch(getPlayerInfos());
     };
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,7 +55,7 @@ const Player = () => {
           <NextMatch/>
           <AddMatchButton/>
           <Divider />
-          <FollowByScouts/>
+          <FollowByScouts scouts={scouts}/>
         </div>
         <Center>
           <Divider orientation={isMobile ? "horizontal": "vertical"} />

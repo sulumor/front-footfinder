@@ -1,53 +1,18 @@
-.card_main {
-    text-align: center;
-}
-
-.card_container {
-    width: 90%;
-    margin:  2% auto 0%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-}
-
-.card_left {
-    width: 45%;
-}
-
-.card_right {
-    width: 45%;
-}
-
-h1 {
-    text-align: center;
-}
-
 .chakra-card.css-3p9pj0 {
     margin-bottom: 2%;
 }
 
-.match_button {
-    margin-top: -5%;
-    padding-bottom: 8%;
-}
 
 .mobile_card_container {
+    text-align: center;
     width: 99%;
     margin: 3% auto 0%;
-}
-
-.card_container_cards {
-    width: 45%;
 }
 
 .mobile_match_button {
     margin-top: -3%;
     padding-bottom: 25%;
-}
-
-p {
-    color: rgb(88, 88, 88);
+    text-align: center;
 }
 
 .tab_panels_title {
@@ -66,8 +31,4 @@ p {
     width: 100%;
     justify-content: center;
     margin-bottom: 2%;
-}
-
-.mobile_card_container_cards {
-    padding-bottom: 2%;
 }
