@@ -3,23 +3,23 @@ import { Provider } from "react-redux";
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
-
 import { createBrowserRouter } from "react-router-dom";
+
+import HomePage from "./pages/Home/HomePage";
 import ErrorPage from "@/components/Error/Error";
-import Login from "@/components/Login/Login";
-import Home from "@/components/Home/Home";
-import Signin from "@/components/Signin/Signin";
-import Notices from "@/components/Notices/Notices";
 import Player from "@/pages/Player/Player";
 import Match from "@/components/Match/Match";
 import Stats from "@/components/Stats/Stats";
-import Scout from "@/components/Scout/Scout";
+import ScoutHome from "./pages/Scout/ScoutHome";
 import PlayerProfil from "@/components/PlayerProfil/PlayerProfil";
 import App from "./components/App/App";
 import PlayerForScout from "./components/PlayerForScout/PlayerForScout";
-import CreatePlayer from "./components/CreatePlayer/CreatePlayer";
-import CreateScout from "./components/CreateScout/CreateScout";
-import SearchPlayer from "./components/Form/SearchPlayer";
+import LoginPage from "./pages/Login/LoginPage";
+import SigninPage from "./pages/Signin/SigninPage";
+import SigninPlayer from "./pages/Signin/SigninPlayer";
+import SigninScout from "./pages/Signin/SigninScout";
+import NoticesPage from "./pages/Notices/NoticesPage";
+import SearchPage from "./pages/Scout/SearchPage";
 
 import store from "./components/store";
 
@@ -29,19 +29,19 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <Home /> },
-      { path: "/login", element: <Login /> },
-      { path: "/signin", element: <Signin /> },
-      { path: "/notices", element: <Notices /> },
+      { index: true, element: <HomePage /> },
+      { path: "/login", element: <LoginPage /> },
+      { path: "/signin", element: <SigninPage /> },
+      { path: "/notices", element: <NoticesPage /> },
       { path: "/player", element: <Player /> },
       { path: "/player/:id", element: <PlayerForScout />},
       { path: "/player/match", element: <Match /> },
       { path: "/player/match/:matchId", element: <Stats /> },
-      { path: "/player/create", element: <CreatePlayer /> },
-      { path: "/scout/create", element: <CreateScout />},
-      { path: "/scout", element: <Scout /> },
+      { path: "/player/create", element: <SigninPlayer /> },
+      { path: "/scout/create", element: <SigninScout />},
+      { path: "/scout", element: <ScoutHome /> },
       { path: "/player/me", element: <PlayerProfil /> },
-      { path: "/scout/search", element : <SearchPlayer/> },
+      { path: "/scout/search", element : <SearchPage/> },
     ],
   },
 ]);

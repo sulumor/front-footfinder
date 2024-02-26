@@ -1,5 +1,4 @@
 import {
-
   Chart as ChartJS,
   RadialLinearScale,
   PointElement,
@@ -8,9 +7,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-
 import { Radar } from "react-chartjs-2";
-
 import {
   Divider,
   Button,
@@ -30,16 +27,15 @@ import {
   Input,
   useDisclosure,
 } from "@chakra-ui/react";
-
 import { BrowserView, MobileView } from "react-device-detect";
-
 import Calendar from "react-calendar";
-
-import "../Player/Player.scss";
-import "./PlayerForScout.scss";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import crud from "@/utils/crud";
+import { Stats, Match, Player } from "@/@Types"; 
+
+import "../Player/Player.scss";
+import "./PlayerForScout.scss";
 
 ChartJS.register(
   RadialLinearScale,
@@ -49,32 +45,6 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
-interface Stats {
-  assists: number;
-  goals_conceded: number;
-  red_card: number;
-  yellow_card: number;
-  stops: number;
-  goals_scored: number;
-}
-
-interface Match {
-  date: string | number | Date;
-  home: {
-    club_name: string;
-    stadium_name: string;
-    adress: string;
-    zip_code: string;
-    city: string;
-  };
-  away: {
-    club_name: string;
-    adress: string;
-    zip_code: string;
-    city: string;
-  };
-}
 
 interface PlayerInfos {
   firstname: string;
