@@ -51,7 +51,7 @@ const Chart = ( {stats} : {stats: Stats | undefined}) => {
     };
 
     return (
-      <div className={isMobile ? "player_data_mobile": "player_data"}>
+      <div className={ isMobile ? "player_data_mobile": "player_data"}>
         <Radar data={data} />
       </div>
     );

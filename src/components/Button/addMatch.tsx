@@ -48,7 +48,7 @@ const AddMatchButton = () => {
   return (
     <>
       <div className="player_match_button">
-        <Button colorScheme="teal" onClick={onOpen}>
+        <Button colorScheme="teal" onClick={onOpen} mb={2}>
           Ajouter un match
         </Button>
       </div>
