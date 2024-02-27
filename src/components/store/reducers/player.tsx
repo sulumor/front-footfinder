@@ -50,6 +50,7 @@ const playerReducer = createReducer(initialState, (builder) => {
     state.weight = action.payload.weight;
     state.scouts = action.payload.scouts;
     state.teams = action.payload.teams;
+    state.role = action.payload.role;
   });
   builder.addCase(getPlayerInfos.rejected, (_state, action) => {
     console.log("Une erreur est survenue:", action.error.message);
