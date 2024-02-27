@@ -42,6 +42,8 @@ export const signin = createAsyncThunk(
       "http://localhost:3000/register",
       formValues 
     );
+    console.log(response.data);
+    
     return response.data;
   }
 );
@@ -67,7 +69,6 @@ const userReducer = createReducer(initialState, (builder) => {
     state.logged = true;
     state.role = action.payload.role;
     state.id = action.payload.id;
-    localStorage.setItem("email", action.payload.email)
     localStorage.setItem("id", `${action.payload.id}` );
     localStorage.setItem("logged", "true");
     localStorage.setItem("role", action.payload.role);
