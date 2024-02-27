@@ -42,6 +42,8 @@ export const signin = createAsyncThunk(
       "http://localhost:3000/register",
       formValues 
     );
+    console.log(response.data);
+    
     return response.data;
   }
 );
@@ -67,11 +69,11 @@ const userReducer = createReducer(initialState, (builder) => {
     state.logged = true;
     state.role = action.payload.role;
     state.id = action.payload.id;
-    localStorage.setItem("email", action.payload.email)
     localStorage.setItem("id", `${action.payload.id}` );
     localStorage.setItem("logged", "true");
     localStorage.setItem("role", action.payload.role);
     localStorage.setItem("firstname", action.payload.firstname);
+    localStorage.setItem("token", action.payload.token.jwt);
   });
   builder.addCase(signin.rejected, (_state, action) => {
     console.log("Une erreur est survenue:", action.error.message);

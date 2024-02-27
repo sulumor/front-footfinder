@@ -7,6 +7,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie';
 
 import "./CreateScout.scss";
 import crud from "@/utils/crud";
@@ -31,6 +32,8 @@ const CreateScout = () => {
 
   const postPlayerInfos = async () => {
     const response = await crud.post(['register', 'recruteur'], [], {...formValues});
+    Cookies.set('token', response.data.token.jwt);
+    localStorage.setItem('token', response.data.token.jwt);
     return response.data;
   };
 

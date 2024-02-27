@@ -11,6 +11,7 @@ import { isMobile } from "react-device-detect";
 import crud from "@/utils/crud";
 
 import "./CreatePlayer.scss";
+import Cookies from "js-cookie";
 
 const CreatePlayer = () => {
 
@@ -49,6 +50,8 @@ const CreatePlayer = () => {
 
   const postPlayerInfos = async () => {
     const response = await crud.post(['register', 'joueur'], [], {...formValues});
+    Cookies.set("token", response.data.token.jwt);
+    localStorage.setItem("token", response.data.token.jwt);
     return response.data;
   };
 

@@ -10,7 +10,8 @@ const NextMatch = () => {
 
   const getNextMatch : () => Promise<void> = async () => {
     const responses  = await crud.get(['player', 'match', 'stats'], [Number.parseInt(id!, 10)]);
-        
+    console.log(responses);
+    
     const today : Date = new Date();
     const nextMatch : Match[] = sortByAsc(responses.data).filter(((match: Match) => new Date(match.date) > today))
     return setMatch(nextMatch[0]);
