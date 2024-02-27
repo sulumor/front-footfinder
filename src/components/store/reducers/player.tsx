@@ -2,7 +2,7 @@
 import { PlayerState } from "@/@Types";
 import crud from "@/utils/crud";
 import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
-import { UDPATE_PLAYER } from "../actions/player";
+import { UDPATE_PLAYER, UPDATE_MATCH } from "../actions/player";
 
 
 export const initialState: PlayerState = {
@@ -56,6 +56,9 @@ const playerReducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(UDPATE_PLAYER, (state, _action) => {
     state.count = state.count +1;
+  });
+  builder.addCase(UPDATE_MATCH, (state, _action) => {
+    state.count = state.count -1;
   })
 });
 
