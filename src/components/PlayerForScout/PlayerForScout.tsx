@@ -8,7 +8,7 @@ import FollowByScouts from "@/components/Card/FollowByScouts";
 
 import Chart from "@/components/Chart/Chart";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import crud from "@/utils/crud";
 import { Stats, Match, PlayerView } from "@/@Types"; 
 
@@ -20,6 +20,7 @@ const PlayerForScout = () => {
   const [infos, setInfos] = useState<PlayerView>();
   const [stats, setStats] = useState<Stats>();
   const [match, setMatch] = useState<Match>();
+  const navigate = useNavigate();
   const scoutId = localStorage.getItem("id");
   const { id } = useParams();
 
@@ -44,9 +45,16 @@ const PlayerForScout = () => {
   };
 
   const addPlayerFollow = async () => {
-    const responses = await crud.post(['scout', 'player'], [Number.parseInt(scoutId!, 10), Number.parseInt(id!, 10)], {});
-    return responses.data;
+    const response = await crud.post(['scout', 'player'], [Number.parseInt(scoutId!, 10), Number.parseInt(id!, 10)], {});
+    return response;
   };
+
+  const handleClick = async () => {
+    const response = await addPlayerFollow();
+    if(response.status === 200){
+      navigate("/scout");
+    } 
+  } 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -118,7 +126,7 @@ const PlayerForScout = () => {
             <p>Nationalité: {infos?.nationality}</p>
           </div>
           <div className="player_add_button">
-          <Button colorScheme="teal" onClick={addPlayerFollow}>Suivre le joueur</Button>
+          <Button colorScheme="teal" onClick={handleClick}>Suivre le joueur</Button>
           </div>
         </div>
     </>

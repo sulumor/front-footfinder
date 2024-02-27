@@ -4,8 +4,10 @@ import { Card, CardBody, CardFooter, CardHeader, Heading, TabPanel, Text } from 
 
 import "./FutureMatchesTab.scss";
 import { isMobile } from "react-device-detect";
+import DeleteMatchButton from "../Button/DeleteMatch";
 
 const FutureMatchesTab = ({matches} : { matches: Match[]}) => {
+
   return (
     <TabPanel>
       <div className={isMobile ? "mobile_card_main" : "card_main"}>
@@ -21,6 +23,7 @@ const FutureMatchesTab = ({matches} : { matches: Match[]}) => {
                       <Text>{match.home.club_name} {match.score} {match.away.club_name}</Text>
                       <Text color={match.fitness == "En forme" ? "green" : "red"}>{match.fitness}</Text>
                     </CardBody>
+                    <DeleteMatchButton matchId={match.match_id}/>
                     <CardFooter/>
                   </Card>
                 </div>
