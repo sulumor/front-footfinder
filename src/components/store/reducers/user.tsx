@@ -20,7 +20,7 @@ export const login = createAsyncThunk(
   "LOGIN",
   async (formValues : {email:string;password:string;role:string}) => {
     const response = await axios.post(
-      "http://localhost:3000/login",
+      "https://back-footfinder.onrender.com/login",
       formValues 
     );
     Cookies.set('token', response.data.token.jwt);
@@ -39,7 +39,7 @@ export const signin = createAsyncThunk(
     confirmedPassword: string;
 }) => {
     const response = await axios.post(
-      "http://localhost:3000/register",
+      "https://back-footfinder.onrender.com/register",
       formValues 
     );
     return response.data;

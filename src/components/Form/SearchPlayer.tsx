@@ -23,7 +23,7 @@ const SearchPlayer = () => {
     };
 
   const handleSubmit = async () => {
-    const responses = await axios.get(`http://localhost:3000/scout/search`, {
+    const responses = await axios.get(`https://back-footfinder.onrender.com/scout/search`, {
       params: patchValues,
       headers: {
         "Content-Type": "application/json",
