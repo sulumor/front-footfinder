@@ -1,5 +1,5 @@
 .container {
-    margin-top: 5%;
+    margin-top: 2%;
     width: 100%;
     text-align: center;
     justify-content: center;
@@ -9,7 +9,7 @@
 }
 
 .container_article {
-    margin-top: 5%
+    margin-top: 2%
 }
 
 .mobile_container {
@@ -24,4 +24,20 @@
 
 .mobile_container_article {
     margin-top: 5%
+}
+
+.container_duo {
+    display: flex;
+    width: 80%;
+    justify-content: space-around;
+    margin: 3% auto;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin: 2% auto;
+}
+
+h3 {
+    margin: 1% auto;
 }

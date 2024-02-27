@@ -15,10 +15,17 @@
     margin: 1% auto;
 }
 
+.player_data {
+    width: 40%;
+    margin: auto;
+}
+
 .player_infos {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    width: 30%;
+    margin: auto;
 }
 
 .mobile_player_container {
