@@ -127,8 +127,8 @@ const CreatePlayer = () => {
               value={formValues.strong_foot}
               onChange={(e) => handleChangeField("strong_foot")(e.target.value)}
             >
-              <option>droit</option>
-              <option>gauche</option>
+              <option>Droit</option>
+              <option>Gauche</option>
             </Select>
           </FormControl>
           <FormControl mt={4} isRequired>

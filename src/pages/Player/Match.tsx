@@ -48,7 +48,13 @@ const Match = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count]);
 
-  console.log(matches);
+  useEffect(() => {
+    const fetchData = async () => {
+      await getAllMatchs();
+    };
+    fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [matches]);
   
   return (
     <>
