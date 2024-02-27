@@ -106,9 +106,7 @@ const PlayerForScout = () => {
           {isMobile ? null : <Center>
             <Divider orientation="vertical" />
           </Center>}
-          <div className={isMobile ? "mobile_player_data" : "player_data"}>
             <Chart stats={stats} />
-          </div>
         </div>
         <div className="player_infos_footer">
           <div className="player_infos_footer_title">
