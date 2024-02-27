@@ -23,7 +23,7 @@ const FutureMatchesTab = ({matches} : { matches: Match[]}) => {
                       <Text>{match.home.club_name} {match.score} {match.away.club_name}</Text>
                       <Text color={match.fitness == "En forme" ? "green" : "red"}>{match.fitness}</Text>
                     </CardBody>
-                    <DeleteMatchButton matchId={match.match_id}/>
+                    <DeleteMatchButton matchId={`${match.match_id}`}/>
                     <CardFooter/>
                   </Card>
                 </div>
