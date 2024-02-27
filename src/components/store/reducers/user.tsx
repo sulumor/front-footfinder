@@ -42,6 +42,8 @@ export const signin = createAsyncThunk(
       "http://localhost:3000/register",
       formValues 
     );
+    console.log(response.data);
+    
     return response.data;
   }
 );
