@@ -5,9 +5,11 @@ import { Box, Button, Divider, Flex, FormControl, FormLabel, Modal, ModalBody, M
 import { useState } from "react";
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import crud from "@/utils/crud";
-import { useAppSelector } from "../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { playerUpdate } from "../store/actions/player";
 
 const UpdateMatch  = ({match}: {match:Match}) => {
+  const dispatch = useAppDispatch();
   const position: string = useAppSelector((state) => state.player.position);
   const id = localStorage.getItem("id");
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -54,6 +56,7 @@ const UpdateMatch  = ({match}: {match:Match}) => {
     [Number.parseInt(id!, 10), match.match_id],
     { ...data });
     if (responses.status === 201) {
+      dispatch(playerUpdate());
       onClose();
     }
   }

@@ -39,7 +39,7 @@ const Player = () => {
       await dispatch(getPlayerInfos(id));
     };
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, []);
   
   return (

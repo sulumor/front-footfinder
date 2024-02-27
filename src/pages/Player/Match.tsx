@@ -15,12 +15,14 @@ import { Match as MatchType } from "@/@Types";
 import { sortByAsc, sortByDesc } from "@/utils/functions";
 import PastMatchesTab from "../../components/Match/PastMatchesTab";
 import FutureMatchesTab from "../../components/Match/FutureMatchesTab";
+import { useAppSelector } from "@/components/hooks/redux";
 
 const Match = () => {
 
   const [matches, setMatches] = useState<MatchType[]>([]);
   let pastMatches: MatchType[] = [];
   let futureMatches: MatchType[] = [];
+  const count : number = useAppSelector((state) => state.player.count); 
   const id : string | null = localStorage.getItem("id");
   
   const getAllMatchs = async () => {
@@ -44,8 +46,10 @@ const Match = () => {
     };
     fetchData();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [matches]);
+  }, [count]);
 
+  console.log(matches);
+  
   return (
     <>
         <div className= { isMobile ? "mobile_card_container": "matches_main"} >
