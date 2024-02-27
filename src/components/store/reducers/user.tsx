@@ -13,12 +13,15 @@ export const initialState: UserState = {
   role: "",
   id: 0,
   firstname: "",
-  email: ""
+  email: "",
+  pwd:"",
 };
 
 export const login = createAsyncThunk(
   "LOGIN",
   async (formValues : {email:string;password:string;role:string}) => {
+    console.log(formValues);
+    
     const response = await axios.post(
       "http://localhost:3000/login",
       formValues 
@@ -42,8 +45,7 @@ export const signin = createAsyncThunk(
       "http://localhost:3000/register",
       formValues 
     );
-    console.log(response.data);
-    
+    console.log(response.data)   
     return response.data;
   }
 );
@@ -67,13 +69,13 @@ const userReducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(signin.fulfilled, (state, action) => {
     state.logged = true;
-    state.role = action.payload.role;
-    state.id = action.payload.id;
-    localStorage.setItem("id", `${action.payload.id}` );
+    state.role = action.payload.user.role;
+    state.id = action.payload.user.id;
+    state.pwd = action.payload.pwd;
+    localStorage.setItem("id", `${action.payload.user.id}` );
     localStorage.setItem("logged", "true");
-    localStorage.setItem("role", action.payload.role);
-    localStorage.setItem("firstname", action.payload.firstname);
-    localStorage.setItem("token", action.payload.token.jwt);
+    localStorage.setItem("role", action.payload.user.role);
+    localStorage.setItem("firstname", action.payload.user.firstname);
   });
   builder.addCase(signin.rejected, (_state, action) => {
     console.log("Une erreur est survenue:", action.error.message);

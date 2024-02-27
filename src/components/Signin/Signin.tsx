@@ -50,6 +50,8 @@ const Signin = () => {
 
   const handleSubmit = async () => {
     await dispatch(signin(formValues));
+    console.log(localStorage.getItem("role"));
+    
     if (localStorage.getItem("role") == "joueur") {
       navigate("/player/create");
     } else if (localStorage.getItem("role") == "recruteur") {

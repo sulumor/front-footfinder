@@ -23,6 +23,7 @@ export interface ScoutView {
 }
 
 export interface UserState {
+    pwd:string;
     logged: boolean;
     role: string | null;
     id: number;
