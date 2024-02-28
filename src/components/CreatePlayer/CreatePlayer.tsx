@@ -11,12 +11,14 @@ import { isMobile } from "react-device-detect";
 import crud from "@/utils/crud";
 
 import "./CreatePlayer.scss";
-import Cookies from "js-cookie";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { login } from "../store/reducers/user";
 
 const CreatePlayer = () => {
 
-    const navigate = useNavigate();
-
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const pwd : string = useAppSelector((state) => state.user.pwd);
   const [formValues, setFormValues] = useState({
     id: localStorage.getItem("id"),
     email: localStorage.getItem("email"),
@@ -49,9 +51,15 @@ const CreatePlayer = () => {
     };
 
   const postPlayerInfos = async () => {
-    const response = await crud.post(['register', 'joueur'], [], {...formValues});
-    Cookies.set("token", response.data.token.jwt);
-    localStorage.setItem("token", response.data.token.jwt);
+    const response = await crud.post(['register', 'joueur'], [], {...formValues}); 
+    console.log(response);
+       
+    const formV : {email:string;password:string;role:string} = {
+      "email": response.data.person.email,
+      "password": pwd,
+      "role": response.data.person.role
+    };
+    await dispatch(login(formV))
     return response.data;
   };
 
