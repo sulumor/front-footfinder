@@ -11,6 +11,7 @@ import { login } from "../store/reducers/user";
 import "./CreateScout.scss";
 import crud from "@/utils/crud";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import axios from "axios";
 
 const CreateScout = () => {
   const [teams, setTeams] = useState([]);
@@ -32,7 +33,7 @@ const CreateScout = () => {
     };
 
   const postPlayerInfos = async () => {
-    const response = await crud.post(['register', 'recruteur'], [], {...formValues});
+    const response = await axios.post("http://localhost:3000/register/recruteur", {...formValues});
     const formV : {email:string;password:string;role:string} = {
       "email": response.data.person.email,
       "password": pwd,

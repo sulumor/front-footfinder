@@ -17,12 +17,14 @@ import {
   HamburgerIcon,
   SmallCloseIcon,
 } from "@chakra-ui/icons";
+import axios from "axios";
 
 const PlayerHeader = () => {
 
     const dispatch = useAppDispatch();
 
-    const handleDisconect = () => {;
+    const handleDisconect = async () => {
+        await axios.delete("http://localhost:3000/refresh_token");
         dispatch(logout());
       };
 

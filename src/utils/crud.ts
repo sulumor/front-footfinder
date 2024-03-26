@@ -8,14 +8,13 @@ interface Response {
   status?: AxiosResponse<any>['status'];
 }
 
+axios.defaults.withCredentials = true;
+
 class Crud {
   private BASE_URL:string;
 
-  private TOKEN: string | null;
-
-  constructor(BASE_URL: string, TOKEN: string | null){
+  constructor(BASE_URL: string){
     this.BASE_URL = BASE_URL;
-    this.TOKEN = TOKEN; 
   }
  
   async get(options:string[], ids:number[]) : Promise<Response> {
@@ -23,7 +22,7 @@ class Crud {
     const res = await axios.get(`${this.BASE_URL}/${path}`, {
       headers: {
         'Content-Type': 'application/json', 
-        Authorization: `Bearer ${this.TOKEN}`, 
+        Authorization: `Bearer ${await this.token()}`, 
       }
     });
     return {data : res.data, status: res.status}
@@ -43,7 +42,7 @@ class Crud {
       {
         headers: {
           'content-type': 'application/json',
-          Authorization: `Bearer ${this.TOKEN}`,
+          Authorization: `Bearer ${await this.token()}`,
         },
       }
     );
@@ -64,7 +63,7 @@ class Crud {
       {
         headers: {
           'content-type': 'application/json',
-          Authorization: `Bearer ${this.TOKEN}`,
+          Authorization: `Bearer ${await this.token()}`,
         },
       }
     );
@@ -76,12 +75,17 @@ class Crud {
       const path:string = createPathWithMultipleOptions(options, ids);
       const res = await axios.delete(`${this.BASE_URL}/${path}`, {
       headers: {
-        Authorization: `Bearer ${this.TOKEN}`,
+        Authorization: `Bearer ${await this.token()}`,
       },
     });
     return { data: res.data, status: res.status };
   }
 
+  async token() {
+    const response = await axios.get(`${this.BASE_URL}/refresh_token`);
+    return response.data.accessToken;
+  }
+
 }
 
-export default new Crud(backURL, localStorage.getItem("token"));
+export default new Crud(backURL);
