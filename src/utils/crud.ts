@@ -81,6 +81,18 @@ class Crud {
     return { data: res.data, status: res.status };
   }
 
+  async search(options: string[], params:any): Promise<Response>{
+    const path: string = createPathWithMultipleOptions(options, []);       
+    const res = await axios.get(`${this.BASE_URL}/${path}`, {
+      params: params,
+      headers: {
+        'Content-Type': 'application/json', 
+        Authorization: `Bearer ${await this.token()}`, 
+      }
+    });
+    return {data : res.data, status: res.status}
+  }
+
   async token() {
     const response = await axios.get(`${this.BASE_URL}/refresh_token`);
     return response.data.accessToken;

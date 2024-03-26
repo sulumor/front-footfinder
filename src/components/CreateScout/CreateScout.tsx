@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../store/reducers/user";
 import "./CreateScout.scss";
-import crud from "@/utils/crud";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import axios from "axios";
 
@@ -56,7 +55,7 @@ const CreateScout = () => {
   }
 
   const getAllTeams = async () => {
-    const response = await crud.get(['datas', 'teams'], []);
+    const response = await axios.get(`http://localhost:3000/datas/teams`);
     return setTeams(response.data);
   };
 
