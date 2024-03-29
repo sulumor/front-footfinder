@@ -86,6 +86,7 @@ const userReducer = createReducer(initialState, (builder) => {
     localStorage.removeItem("role");
     localStorage.removeItem("logged");
     localStorage.removeItem("firstname");
+    localStorage.removeItem("email");
   });
   builder.addCase(tokenCheck,(state: UserState,)=>{
     state.logged = true;

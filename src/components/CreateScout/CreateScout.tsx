@@ -31,7 +31,7 @@ const CreateScout = () => {
       setFormValues({ ...formValues, [user]: value });
     };
 
-  const postPlayerInfos = async () => {
+  const postScoutInfos = async () => {
     const response = await axios.post("http://localhost:3000/register/recruteur", {...formValues});
     const formV : {email:string;password:string;role:string} = {
       "email": response.data.person.email,
@@ -39,12 +39,12 @@ const CreateScout = () => {
       "role": response.data.person.role
     };
     await dispatch(login(formV))
-    return response.data;
+    return response;
   };
 
-  const handleSubmit = () => {
-    postPlayerInfos();
-    if (formValues.city.length > 1) {
+  const handleSubmit = async () => {
+    const res = await postScoutInfos();
+    if (res.status === 201) {
       navigate("/scout");
     }
   };

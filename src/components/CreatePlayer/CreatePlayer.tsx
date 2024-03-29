@@ -59,14 +59,15 @@ const CreatePlayer = () => {
       "role": response.data.person.role
     };
     await dispatch(login(formV))
-    return response.data;
+    return response;
   };
 
-  const handleSubmit = () => {
-    postPlayerInfos();
-    if (formValues.birth_date.length >= 1) {
-        navigate("/player");
-    }
+  const handleSubmit = async () => {
+    const res = await postPlayerInfos();
+   if (res.status === 201) {
+    navigate("/player");
+   }
+    
   };
 
   return (
