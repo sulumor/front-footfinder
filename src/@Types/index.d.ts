@@ -27,8 +27,8 @@ export interface UserState {
     logged: boolean;
     role?: "joueur" | "recruteur" | string | null;
     id?: string | number;
-    firstname: string
-    email: string
+    firstname: string;
+    email: string;
 }
 
 // ----------------Type Player ----------
