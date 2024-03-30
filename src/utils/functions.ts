@@ -1,4 +1,6 @@
 import { Match } from "@/@Types";
+import { jwtDecode } from "jwt-decode";
+import crud from "./crud";
 
 export function createPathWithMultipleOptions(options:string[], ids: number[]) : string{
   let path : string = '';
@@ -33,4 +35,8 @@ export function formatDate (date : string | Date) {
   }
 
   return new Date(date as Date).toLocaleDateString("fr-FR", options)
+}
+
+export async function checkToken(){
+  if (localStorage.getItem("token") !== null && (jwtDecode(localStorage.getItem("token")).exp) < Math.floor(Date.now() / 1000) ) await crud.token();
 }

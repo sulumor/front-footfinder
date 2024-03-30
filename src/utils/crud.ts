@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosResponse } from 'axios'
-import { createPathWithMultipleOptions } from './functions'
+import { checkToken, createPathWithMultipleOptions } from './functions'
 import { backURL } from './constantes';
 
 interface Response {
@@ -18,13 +18,17 @@ class Crud {
   }
  
   async get(options:string[], ids:number[]) : Promise<Response> {
+       
+    await checkToken();
+    
     const path: string = createPathWithMultipleOptions(options, ids);       
     const res = await axios.get(`${this.BASE_URL}/${path}`, {
       headers: {
         'Content-Type': 'application/json', 
-        Authorization: `Bearer ${await this.token()}`, 
+        Authorization: `Bearer ${localStorage.getItem("token")}`, 
       }
     });
+        
     return {data : res.data, status: res.status}
   }
 
@@ -33,6 +37,7 @@ class Crud {
     ids: number[], 
     body: { [k: string]: string | number | boolean | Date | [] | "En forme" | "absent" | "blessé" |  undefined | null }
   ): Promise<Response> {
+    await checkToken();
     const path:string = createPathWithMultipleOptions(options, ids);
     const res = await axios.post(
       `${this.BASE_URL}/${path}`,
@@ -42,7 +47,7 @@ class Crud {
       {
         headers: {
           'content-type': 'application/json',
-          Authorization: `Bearer ${await this.token()}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }
     );
@@ -54,6 +59,7 @@ class Crud {
     ids: number[],
     body: { [k: string]: string | number | boolean | any[] }
   ): Promise<Response> {
+    await checkToken();
     const path:string = createPathWithMultipleOptions(options, ids);
     const res = await axios.patch(
       `${this.BASE_URL}/${path}`,
@@ -63,7 +69,7 @@ class Crud {
       {
         headers: {
           'content-type': 'application/json',
-          Authorization: `Bearer ${await this.token()}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }
     );
@@ -72,22 +78,24 @@ class Crud {
   
   async delete(options: string[],
     ids: number[],): Promise<Response> {
+      await checkToken();
       const path:string = createPathWithMultipleOptions(options, ids);
       const res = await axios.delete(`${this.BASE_URL}/${path}`, {
       headers: {
-        Authorization: `Bearer ${await this.token()}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
     return { data: res.data, status: res.status };
   }
 
   async search(options: string[], params:any): Promise<Response>{
+    await checkToken();
     const path: string = createPathWithMultipleOptions(options, []);       
     const res = await axios.get(`${this.BASE_URL}/${path}`, {
       params: params,
       headers: {
         'Content-Type': 'application/json', 
-        Authorization: `Bearer ${await this.token()}`, 
+        Authorization: `Bearer ${localStorage.getItem("token")}`, 
       }
     });
     return {data : res.data, status: res.status}
@@ -95,7 +103,7 @@ class Crud {
 
   async token() {
     const response = await axios.get(`${this.BASE_URL}/refresh_token`);
-    return response.data.accessToken;
+    localStorage.setItem("token", response.data.accessToken)
   }
 
 }

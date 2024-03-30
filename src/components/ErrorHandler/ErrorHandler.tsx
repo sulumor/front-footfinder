@@ -4,7 +4,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Box, Text } from '@chakra-ui/react'
   
 import { clearError } from '../store/actions/error';
   

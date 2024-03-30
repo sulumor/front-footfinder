@@ -24,9 +24,7 @@ export const login = createAsyncThunk(
       "http://localhost:3000/login",
       formValues 
     );
-    const user: JwtPayload = jwtDecode(response.data.accessToken);
-    
-    return user;
+    return response.data.accessToken;
   }
 );
 
@@ -53,14 +51,15 @@ export const tokenCheck = createAction("TOKEN_CHECK");
 
 const userReducer = createReducer(initialState, (builder) => {
   builder.addCase(login.fulfilled, (state, action) => {
+    const user: JwtPayload = jwtDecode(action.payload);
     state.logged = true;
-    state.role = action.payload.role;
-    state.id = action.payload.id;
-    localStorage.setItem("id", action.payload.id as unknown as string);
+    state.role = user.role;
+    state.id = user.id;
+    localStorage.setItem("id", user.id as unknown as string);
     localStorage.setItem("logged", "true");
-    localStorage.setItem("role", action.payload.role);
-    localStorage.setItem("token", action.payload.jwt);
-    localStorage.setItem("firstname", action.payload.firstname);
+    localStorage.setItem("role", user.role);
+    localStorage.setItem("token", action.payload);
+    localStorage.setItem("firstname", user.firstname);
   });
   builder.addCase(login.rejected, (_state, action) => {
     console.log("Une erreur est survenue:", action.error.message);
