@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
 import { useEffect } from "react";
-import { tokenCheck } from "../store/reducers/user";
+import { tokenCheck } from "./Redux-store/Redux-reducers/user";
 
 
-import Footer from "../Footer/Footer";
-import Header from "../Header/Header";
-import { useAppDispatch } from "../hooks/redux";
+import Footer from "./components/Footer/Footer";
+import Header from "./components/Header/Header";
+import { useAppDispatch } from "./hooks/redux";
 // import ErrorHandler from "../ErrorHandler/ErrorHandler";
 
 const App = () => {

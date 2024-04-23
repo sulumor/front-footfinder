@@ -13,8 +13,8 @@ import NextMatch from "@/components/Match/Next";
 import Chart from "@/components/Chart/Chart";
 import AddMatchButton from "@/components/Button/addMatch";
 import FollowByScouts from "@/components/Card/FollowByScouts";
-import { useAppDispatch, useAppSelector } from "@/components/hooks/redux";
-import { getPlayerInfos } from "@/components/store/reducers/player";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { getPlayerInfos } from "@/Redux-store/Redux-reducers/player";
 
 
 const Player = () => {

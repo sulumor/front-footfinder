@@ -5,7 +5,7 @@ import { isMobile } from "react-device-detect";
 
 import "./PastMatchesTab.scss";
 import UpdateMatch from "../Button/UpdateMatch";
-import { useAppSelector } from "../hooks/redux";
+import { useAppSelector } from "../../hooks/redux";
 
 const PastMatchesTab = ({matches} : { matches: Match[]}) => {  
   const position: string = useAppSelector((state) => state.player.position);

@@ -7,9 +7,9 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../store/reducers/user";
+import { login } from "../../Redux-store/Redux-reducers/user";
 import "./CreateScout.scss";
-import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import axios from "axios";
 
 const CreateScout = () => {

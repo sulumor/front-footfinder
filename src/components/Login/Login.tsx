@@ -3,8 +3,8 @@ import { Input, InputGroup, InputRightElement, Button, FormControl, Select } fro
 import { isMobile } from "react-device-detect";
 import "./Login.scss";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { useAppDispatch } from "../hooks/redux";
-import { login } from "../store/reducers/user";
+import { useAppDispatch } from "../../hooks/redux";
+import { login } from "../../Redux-store/Redux-reducers/user";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {

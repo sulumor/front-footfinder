@@ -9,8 +9,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { isMobile } from "react-device-detect";
 import "./CreatePlayer.scss";
-import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { login } from "../store/reducers/user";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { login } from "../../Redux-store/Redux-reducers/user";
 import axios from "axios";
 
 const CreatePlayer = () => {

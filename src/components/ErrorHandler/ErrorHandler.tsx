@@ -5,7 +5,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
   
-import { clearError } from '../store/actions/error';
+import { clearError } from '../../Redux-store/Redux-actions/error';
   
 class ErrorHandler extends React.Component<Readonly<any>>{
     static propTypes: { error: PropTypes.Requireable<object>; clearError: PropTypes.Requireable<(...args: any[]) => any>; };

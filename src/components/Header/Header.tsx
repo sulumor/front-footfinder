@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import GuestHeader from "./Headers/GuestHeader";
 import PlayerHeader from "./Headers/PlayerHeader";
 import ScoutHeader from "./Headers/ScoutHeader";
-import { useAppSelector } from "../hooks/redux";
+import { useAppSelector } from "../../hooks/redux";
 
 const Header = () => {
 

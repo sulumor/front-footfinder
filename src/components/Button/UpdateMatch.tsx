@@ -5,8 +5,8 @@ import { Box, Button, Divider, Flex, FormControl, FormLabel, Modal, ModalBody, M
 import { useState } from "react";
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import crud from "@/utils/crud";
-import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { playerUpdate } from "../store/actions/player";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { playerUpdate } from "../../Redux-store/Redux-actions/player";
 
 const UpdateMatch  = ({match}: {match:Match}) => {
   const dispatch = useAppDispatch();

@@ -4,7 +4,7 @@ import {
   createReducer,
 } from "@reduxjs/toolkit";
 import {ScoutState} from "@/@Types";
-import { UDPATE_SCOUT, UNFOLLOW } from "../actions/scout";
+import { UDPATE_SCOUT, UNFOLLOW } from "../Redux-actions/scout";
 
 export const initialState: ScoutState = {
     firstname: "",

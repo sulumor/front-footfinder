@@ -20,8 +20,8 @@ import {
 } from "@chakra-ui/react";
 import { BrowserView, MobileView } from "react-device-detect";
 import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { getPlayerInfos } from "../store/reducers/player";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { getPlayerInfos } from "../../Redux-store/Redux-reducers/player";
 import crud from "@/utils/crud";
 
 import "./PlayerProfil.scss";

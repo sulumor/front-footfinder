@@ -1,6 +1,6 @@
 import { BrowserView, MobileView } from "react-device-detect";
-import { useAppDispatch } from "@/components/hooks/redux";
-import { logout } from "@/components/store/reducers/user";
+import { useAppDispatch } from "@/hooks/redux";
+import { logout } from "@/Redux-store/Redux-reducers/user";
 import {
   Button,
   Menu,

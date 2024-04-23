@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import reducer from './reducers';
+import reducer from './Redux-reducers';
 // import { loadErrors } from "./actions/error";
 import axios from 'axios';
 

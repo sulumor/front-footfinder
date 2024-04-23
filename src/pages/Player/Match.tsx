@@ -15,7 +15,7 @@ import { Match as MatchType } from "@/@Types";
 import { sortByAsc, sortByDesc } from "@/utils/functions";
 import PastMatchesTab from "../../components/Match/PastMatchesTab";
 import FutureMatchesTab from "../../components/Match/FutureMatchesTab";
-import { useAppSelector } from "@/components/hooks/redux";
+import { useAppSelector } from "@/hooks/redux";
 
 const Match = () => {
 

@@ -2,7 +2,7 @@
 import { PlayerState } from "@/@Types";
 import crud from "@/utils/crud";
 import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
-import { UDPATE_PLAYER, UPDATE_MATCH } from "../actions/player";
+import { UDPATE_PLAYER, UPDATE_MATCH } from "../Redux-actions/player";
 
 
 export const initialState: PlayerState = {

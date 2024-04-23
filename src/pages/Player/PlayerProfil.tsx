@@ -7,8 +7,8 @@ import {
 } from "@chakra-ui/react";
 import { BrowserView, MobileView } from "react-device-detect";
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../components/hooks/redux";
-import { getPlayerInfos } from "../../components/store/reducers/player";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { getPlayerInfos } from "../../Redux-store/Redux-reducers/player";
 import "./PlayerProfil.scss";
 import UpdatePlayerProfilButton from "@/components/Button/updatePlayerProfil";
 import { PlayerPatch } from "@/@Types";

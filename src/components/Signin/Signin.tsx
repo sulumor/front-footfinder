@@ -17,9 +17,9 @@ import { isMobile, BrowserView, MobileView } from "react-device-detect";
 
 import "./Signin.scss";
 import { useState } from "react";
-import { signin } from "../store/reducers/user";
+import { signin } from "../../Redux-store/Redux-reducers/user";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../hooks/redux";
+import { useAppDispatch } from "../../hooks/redux";
 
 const Signin = () => {
   const navigate = useNavigate();
