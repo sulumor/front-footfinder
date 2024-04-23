@@ -9,7 +9,7 @@ import { UserState } from "@/@Types";
 
 export const initialState: UserState = {
   logged: false,
-  role: "",
+  role: undefined,
   id: 0,
   firstname: "",
   email: "",
@@ -51,13 +51,13 @@ export const tokenCheck = createAction("TOKEN_CHECK");
 
 const userReducer = createReducer(initialState, (builder) => {
   builder.addCase(login.fulfilled, (state, action) => {
-    const user: JwtPayload = jwtDecode(action.payload);
+    const user: JwtPayload & UserState = jwtDecode(action.payload);
     state.logged = true;
     state.role = user.role;
     state.id = user.id;
     localStorage.setItem("id", user.id as unknown as string);
     localStorage.setItem("logged", "true");
-    localStorage.setItem("role", user.role);
+    localStorage.setItem("role", user.role!);
     localStorage.setItem("token", action.payload);
     localStorage.setItem("firstname", user.firstname);
   });
@@ -89,7 +89,7 @@ const userReducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(tokenCheck,(state: UserState,)=>{
     state.logged = true;
-    state.role = localStorage.getItem("role");
+    state.role = localStorage.getItem("role") || undefined;
   });
 });
 

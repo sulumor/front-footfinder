@@ -7,7 +7,8 @@ import { connect } from 'react-redux';
   
 import { clearError } from '../store/actions/error';
   
-class ErrorHandler extends React.Component{
+class ErrorHandler extends React.Component<Readonly<any>>{
+    static propTypes: { error: PropTypes.Requireable<object>; clearError: PropTypes.Requireable<(...args: any[]) => any>; };
     constructor(props : any){
         super(props);
   
@@ -29,9 +30,9 @@ class ErrorHandler extends React.Component{
         this.setState({showError: false});
     }
   
-    render() {
-        return this.state.showError && alert(`Attention : ${this.props.error.response.data.error}`)
-    }
+    // render() {
+        // return this.state.showError && alert(`Attention : ${this.props.error.response.data.error}`)
+    // }
 }
   
 ErrorHandler.propTypes = {

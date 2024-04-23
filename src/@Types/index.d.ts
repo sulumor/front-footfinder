@@ -25,7 +25,7 @@ export interface ScoutView {
 export interface UserState {
     pwd:string;
     logged: boolean;
-    role?: "joueur" | "recruteur" | string | null;
+    role?: string;
     id?: string | number;
     firstname: string;
     email: string;

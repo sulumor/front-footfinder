@@ -1,5 +1,5 @@
 import { Match } from "@/@Types";
-import { jwtDecode } from "jwt-decode";
+import { JwtPayload, jwtDecode } from "jwt-decode";
 import crud from "./crud";
 
 export function createPathWithMultipleOptions(options:string[], ids: number[]) : string{
@@ -38,5 +38,9 @@ export function formatDate (date : string | Date) {
 }
 
 export async function checkToken(){
-  if (localStorage.getItem("token") !== null && (jwtDecode(localStorage.getItem("token")).exp) < Math.floor(Date.now() / 1000) ) await crud.token();
+  const token = localStorage.getItem("token");
+  const decoded : JwtPayload = jwtDecode<JwtPayload>(token || '');
+  
+  if (token !== null && (decoded.exp)! < Math.floor(Date.now() / 1000) ) await crud.token();
+  
 }
