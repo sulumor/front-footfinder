@@ -1,1 +1,0 @@
-export const backURL = "https://back-footfinder.onrender.com"
