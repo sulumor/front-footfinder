@@ -81,7 +81,6 @@ const PlayerProfil = () => {
     const response = await crud.update(["player"], [Number.parseInt(id!, 10)], {
       ...patchValues,
     });
-    console.log("requete update player terminée");
     return response.data;
   };
 

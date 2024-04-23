@@ -9,8 +9,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../store/reducers/user";
 import "./CreateScout.scss";
-import crud from "@/utils/crud";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import axios from "axios";
 
 const CreateScout = () => {
   const [teams, setTeams] = useState([]);
@@ -31,20 +31,20 @@ const CreateScout = () => {
       setFormValues({ ...formValues, [user]: value });
     };
 
-  const postPlayerInfos = async () => {
-    const response = await crud.post(['register', 'recruteur'], [], {...formValues});
+  const postScoutInfos = async () => {
+    const response = await axios.post("http://localhost:3000/register/recruteur", {...formValues});
     const formV : {email:string;password:string;role:string} = {
       "email": response.data.person.email,
       "password": pwd,
       "role": response.data.person.role
     };
     await dispatch(login(formV))
-    return response.data;
+    return response;
   };
 
-  const handleSubmit = () => {
-    postPlayerInfos();
-    if (formValues.city.length > 1) {
+  const handleSubmit = async () => {
+    const res = await postScoutInfos();
+    if (res.status === 201) {
       navigate("/scout");
     }
   };
@@ -55,7 +55,7 @@ const CreateScout = () => {
   }
 
   const getAllTeams = async () => {
-    const response = await crud.get(['datas', 'teams'], []);
+    const response = await axios.get(`http://localhost:3000/datas/teams`);
     return setTeams(response.data);
   };
 

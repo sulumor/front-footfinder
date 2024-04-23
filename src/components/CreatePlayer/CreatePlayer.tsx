@@ -8,11 +8,10 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { isMobile } from "react-device-detect";
-import crud from "@/utils/crud";
-
 import "./CreatePlayer.scss";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { login } from "../store/reducers/user";
+import axios from "axios";
 
 const CreatePlayer = () => {
 
@@ -51,23 +50,24 @@ const CreatePlayer = () => {
     };
 
   const postPlayerInfos = async () => {
-    const response = await crud.post(['register', 'joueur'], [], {...formValues}); 
-    console.log(response);
-       
+    
+    const response = await axios.post("http://localhost:3000/register/joueur", {...formValues}); 
+          
     const formV : {email:string;password:string;role:string} = {
       "email": response.data.person.email,
       "password": pwd,
       "role": response.data.person.role
     };
     await dispatch(login(formV))
-    return response.data;
+    return response;
   };
 
-  const handleSubmit = () => {
-    postPlayerInfos();
-    if (formValues.birth_date.length >= 1) {
-        navigate("/player");
-    }
+  const handleSubmit = async () => {
+    const res = await postPlayerInfos();
+   if (res.status === 201) {
+    navigate("/player");
+   }
+    
   };
 
   return (

@@ -3,12 +3,12 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { isMobile } from "react-device-detect";
-import axios from "axios";
 import { useEffect, useState } from "react";
 
 import "./SearchPlayer.scss";
 import { Player } from "@/@Types";
 import SearchResults from "./SearchResults/SearchResults";
+import crud from "@/utils/crud";
 
 
 
@@ -23,13 +23,9 @@ const SearchPlayer = () => {
     };
 
   const handleSubmit = async () => {
-    const responses = await axios.get(`https://back-footfinder.onrender.com/scout/search`, {
-      params: patchValues,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
+
+    const responses = await crud.search(["scout", "search"], patchValues);
+    
     setPlayers(responses.data);
   };
 
