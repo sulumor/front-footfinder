@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosResponse } from 'axios'
 import { checkToken, createPathWithMultipleOptions } from './functions'
-import { backURL } from './constantes';
 
 interface Response {
   data: AxiosResponse<any>['data'];
@@ -108,4 +107,4 @@ class Crud {
 
 }
 
-export default new Crud(backURL);
+export default new Crud(import.meta.env.VITE_BACK);

@@ -21,7 +21,7 @@ export const login = createAsyncThunk(
   "LOGIN",
   async (formValues : {email:string;password:string;role:string}) => {   
     const response = await axios.post(
-      "https://back-footfinder.onrender.com/login",
+      `${import.meta.env.VITE_BACK}/login`,
       formValues 
     );
     return response.data.accessToken;
@@ -39,7 +39,7 @@ export const signin = createAsyncThunk(
     confirmedPassword: string;
 }) => {
     const response = await axios.post(
-      "https://back-footfinder.onrender.com/register",
+      `${import.meta.env.VITE_BACK}/register`,
       formValues 
     );   
     return response.data;
