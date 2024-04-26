@@ -18,9 +18,9 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { scoutUpdate } from "../../Redux-store/Redux-actions/scout";
+import { scoutUpdate } from "../../redux/Redux-actions/scout";
 import { useAppDispatch } from "../../hooks/redux";
-import { getScoutInfos } from "../../Redux-store/Redux-reducers/scout";
+import { getScoutInfos } from "../../redux/Redux-reducers/scout";
 
 const UpdateScoutButton = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();

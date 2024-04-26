@@ -2,7 +2,7 @@ import { PlayerPatch } from "@/@Types";
 import crud from "@/utils/crud";
 import { Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { playerUpdate } from "../../Redux-store/Redux-actions/player";
+import { playerUpdate } from "../../redux/Redux-actions/player";
 import { useAppDispatch } from "../../hooks/redux";
 import "./updatePlayerProfil.scss";
 

@@ -8,7 +8,7 @@ import {
 import { BrowserView, MobileView } from "react-device-detect";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { getPlayerInfos } from "../../Redux-store/Redux-reducers/player";
+import { getPlayerInfos } from "../../redux/Redux-reducers/player";
 import "./PlayerProfil.scss";
 import UpdatePlayerProfilButton from "@/components/Button/updatePlayerProfil";
 import { PlayerPatch } from "@/@Types";

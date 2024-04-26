@@ -14,7 +14,7 @@ import Chart from "@/components/Chart/Chart";
 import AddMatchButton from "@/components/Button/addMatch";
 import FollowByScouts from "@/components/Card/FollowByScouts";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { getPlayerInfos } from "@/Redux-store/Redux-reducers/player";
+import { getPlayerInfos } from "@/redux/Redux-reducers/player";
 
 
 const Player = () => {

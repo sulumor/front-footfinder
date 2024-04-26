@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { getScoutInfos } from "@/Redux-store/Redux-reducers/scout";
+import { getScoutInfos } from "@/redux/Redux-reducers/scout";
 import UpdateScoutButton  from "@/components/Button/updateScoutProfil"
 
 const ScoutInfos = () => {

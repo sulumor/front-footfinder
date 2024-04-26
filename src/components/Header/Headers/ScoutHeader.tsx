@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/icons";
 
 import { useAppDispatch } from "@/hooks/redux";
-import { logout } from "@/Redux-store/Redux-reducers/user";
+import { logout } from "@/redux/Redux-reducers/user";
 
 import "../Header.scss";
 

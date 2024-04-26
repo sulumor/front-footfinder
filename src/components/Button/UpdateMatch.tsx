@@ -6,7 +6,7 @@ import { useState } from "react";
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import crud from "@/utils/crud";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { playerUpdate } from "../../Redux-store/Redux-actions/player";
+import { playerUpdate } from "../../redux/Redux-actions/player";
 
 const UpdateMatch  = ({match}: {match:Match}) => {
   const dispatch = useAppDispatch();

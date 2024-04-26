@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { useEffect } from "react";
-import { tokenCheck } from "./Redux-store/Redux-reducers/user";
+import { tokenCheck } from "./redux/Redux-reducers/user";
 
 
 import Footer from "./components/Footer/Footer";

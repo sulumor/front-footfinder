@@ -5,7 +5,7 @@ import { RouterProvider } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import { router } from "./router";
 
-import store from "./Redux-store";
+import store from "./redux";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

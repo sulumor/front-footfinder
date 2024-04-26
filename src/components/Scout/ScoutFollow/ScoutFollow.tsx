@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { scoutUnfollow } from "@/Redux-store/Redux-actions/scout";
+import { scoutUnfollow } from "@/redux/Redux-actions/scout";
 import crud from "@/utils/crud";
 import {
   Avatar,

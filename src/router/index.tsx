@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import HomePage from "@/pages/Home/HomePage";
-import ErrorPage from "@/components/Error/Error";
+import ErrorPage from "@/pages/Error/Error";
 import Match from "@/pages/Player/Match";
 import ScoutHome from "@/pages/Scout/ScoutHome";
 import PlayerHome from "@/pages/Player/PlayerHome";

@@ -1,7 +1,7 @@
 import crud from "@/utils/crud";
 import { Button } from "@chakra-ui/react";
 import { useAppDispatch } from "../../hooks/redux";
-import { updateMatch } from "../../Redux-store/Redux-actions/player";
+import { updateMatch } from "../../redux/Redux-actions/player";
 
 const DeleteMatchButton = ({ matchId }: { matchId: string }) => {
   const id: string | null = localStorage.getItem("id");
