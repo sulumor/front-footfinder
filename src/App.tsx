@@ -6,6 +6,7 @@ import { tokenCheck } from "./redux/Redux-reducers/user";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import { useAppDispatch } from "./hooks/redux";
+import { Box } from "@chakra-ui/react";
 // import ErrorHandler from "../ErrorHandler/ErrorHandler";
 
 const App = () => {
@@ -19,12 +20,12 @@ const App = () => {
       }, []);
 
     return (
-        <div className="app">
+        <Box className="app" h="100vh">
             <Header />
             {/* <ErrorHandler/> */}
             <Outlet />
             <Footer />
-        </div>
+        </Box>
     )
 };
 
