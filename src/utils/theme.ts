@@ -94,9 +94,9 @@ const theme = extendTheme({
       color: colors.danger,
     },
     navBar: {
-      fontSize: '1rem',
+      fontSize: '1.4rem',
       fontWeight: '600',
-      cursor: 'pointer',
+      cursor: 'pointer'
     },
     navBarMobile: {
       fontSize: '1.5rem',
@@ -194,7 +194,7 @@ const theme = extendTheme({
         },
         inverse: {
           color: colors.redEvo,
-          background: colors.white,
+          background: colors.lightGrey,
         },
       },
     },

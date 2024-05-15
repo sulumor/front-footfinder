@@ -2,7 +2,7 @@ import { Text, Flex, Heading, Spacer, Box, Card, CardHeader, CardBody } from "@c
 
 const HomePage = () => {
     return (
-      <Box h="80%" p={10}>
+      <Box h="100%" p={10}>
         <Heading as="h1" variant="h1">Bienvenue sur FootFinder</Heading>
         
         <Flex wrap="wrap"  gap="1rem" mt="1.5rem">
