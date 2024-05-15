@@ -114,7 +114,7 @@ const theme = extendTheme({
       fontSize: '1.4375rem',
       fontWeight: '400',
       lineHeight: '1.9481rem',
-      color: '#F9F9F9',
+      color: colors.redEvo,
     },
     mainText: {
       fontSize: '1.15rem',
@@ -181,11 +181,12 @@ const theme = extendTheme({
           fontWeight: '600',
           fontSize: '1rem',
         },
-        redEvoDisable: {
+        redEvoDisabled: {
           background: 'rgba(230, 55, 87, 0.4)',
           color: colors.white,
           fontWeight: '600',
           fontSize: '1rem',
+          cursor: 'not-allowed',
         },
         ghost: {
           color: colors.redEvo,

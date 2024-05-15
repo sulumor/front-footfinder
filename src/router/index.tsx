@@ -7,7 +7,7 @@ import ScoutHome from "@/pages/Scout/ScoutHome";
 import PlayerHome from "@/pages/Player/PlayerHome";
 import PlayerProfil from "@/pages/Player/PlayerProfil";
 import PlayerForScout from "@/components/PlayerForScout/PlayerForScout";
-import LoginPage from "@/pages/Login/LoginPage";
+import { Login } from "@/pages/Auth/Login";
 import SigninPage from "@/pages/Signin/SigninPage";
 import SigninPlayer from "@/pages/Signin/SigninPlayer";
 import SigninScout from "@/pages/Signin/SigninScout";
@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <Home /> },
-      { path: "/login", element: <LoginPage /> },
+      { path: "/login", element: <Login /> },
       { path: "/signin", element: <SigninPage /> },
       { path: "/notices", element: <NoticesPage /> },
       
