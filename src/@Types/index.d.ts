@@ -31,6 +31,11 @@ export interface UserState {
     email: string;
 }
 
+export interface Login {
+  email: string;
+  password: string;
+}
+
 // ----------------Type Player ----------
 export interface Stats {
   assists: number;

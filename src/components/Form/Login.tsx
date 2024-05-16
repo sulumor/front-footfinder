@@ -1,3 +1,4 @@
+import { Login as LoginType} from "@/@Types";
 import { useAppDispatch } from "@/hooks/redux";
 import { login } from "@/redux/Redux-reducers/user";
 import { validateEmail, validatePassword } from "@/utils/validation";
@@ -7,35 +8,33 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const LoginForm = () : JSX.Element => {
-  const [show, setShow] = useState(false);
-    const handleClick = () => setShow(!show);
-    const navigate = useNavigate();
-    const dispatch = useAppDispatch();
-  
-    const [formValues, setFormValues] = useState({
-      email: "jean.dujardin@mail.io",
-      password: "yjjk8E676a9JQZ!",
-      role: "joueur"
-    });
-  
-    const handleChangeField = (user: "email" | "password" | "role") => (value: string) : void =>  {
-      setFormValues({ ...formValues, [user]: value });
-    };
+  const [show, setShow] = useState<boolean>(false);
+  const handleClick : () => void = () => setShow(!show);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const [formValues, setFormValues] = useState<LoginType>({
+    email: "jean.dujardin@mail.io",
+    password: "yjjk8E676a9JQZ!",
+  });
 
-    const setEnableButton = () : boolean => {
-      const isValidPassword = validatePassword(formValues.password)
-      const isValidEmail = validateEmail(formValues.email)
-      return isValidEmail && isValidPassword
+  const handleChangeField = (user: "email" | "password") => (value: string) : void =>  {
+    setFormValues({ ...formValues, [user]: value });
+  };
+
+  const setEnableButton = () : boolean => {
+    const isValidPassword : boolean = validatePassword(formValues.password)
+    const isValidEmail : boolean = validateEmail(formValues.email)
+    return isValidEmail && isValidPassword
+  }
+
+  const handleSubmit = async () => {
+    await dispatch(login(formValues));
+    if (localStorage.getItem("role") == "joueur") {
+      navigate("/player");
+    } else if (localStorage.getItem("role") == "recruteur") {
+      navigate("/scout");
     }
-  
-    const handleSubmit = async () => {
-      await dispatch(login(formValues));
-      if (localStorage.getItem("role") == "joueur") {
-        navigate("/player");
-      } else if (localStorage.getItem("role") == "recruteur") {
-        navigate("/scout");
-      }
-    }
+  }
 
   return (
     <Flex w="80%" m="0 auto" justifyContent="center">

@@ -42,7 +42,7 @@ export const GuestNavbar = () => {
                   </NavLink>
                 </MenuItem>
                 <MenuItem>
-                  <NavLink to="/signin">
+                  <NavLink to="/signup">
                     <Button variant="inverse">S'inscrire</Button>
                   </NavLink>
                 </MenuItem>
@@ -63,7 +63,7 @@ export const GuestNavbar = () => {
         <NavLink to="/login">
           <Button variant="redEvo">Se connecter</Button>
         </NavLink>
-        <NavLink to="/signin">
+        <NavLink to="/signup">
           <Button variant="inverse">S'inscrire</Button>
         </NavLink>
       </Flex>      

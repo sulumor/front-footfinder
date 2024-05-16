@@ -5,7 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 import { JwtPayload, jwtDecode } from "jwt-decode";
-import { UserState } from "@/@Types";
+import { Login, UserState } from "@/@Types";
 
 export const initialState: UserState = {
   logged: false,
@@ -19,7 +19,7 @@ export const initialState: UserState = {
 
 export const login = createAsyncThunk(
   "LOGIN",
-  async (formValues : {email:string;password:string;role:string}) => {   
+  async (formValues : Login) => {   
     const response = await axios.post(
       `${import.meta.env.VITE_BACK}/login`,
       formValues 
