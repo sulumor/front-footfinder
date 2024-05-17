@@ -6,7 +6,7 @@ import {
   TabPanels,
 } from "@chakra-ui/react";
 
-import { isMobile} from "react-device-detect";
+import { isMobile } from "react-device-detect";
 
 import "./Match.scss";
 import { useEffect, useState } from "react";
@@ -17,19 +17,18 @@ import PastMatchesTab from "../../components/Match/PastMatchesTab";
 import FutureMatchesTab from "../../components/Match/FutureMatchesTab";
 import { useAppSelector } from "@/hooks/redux";
 
-const Match = () => {
-
+function Match() {
   const [matches, setMatches] = useState<MatchType[]>([]);
   let pastMatches: MatchType[] = [];
   let futureMatches: MatchType[] = [];
-  const count : number = useAppSelector((state) => state.player.count); 
+  const count : number = useAppSelector((state) => state.player.count);
   const id : string | null = localStorage.getItem("id");
-  
+
   const getAllMatchs = async () => {
-    const response = await crud.get(['player', 'match', 'stats'], [Number.parseInt(id!, 10)]);
+    const response = await crud.get(["player", "match", "stats"], [Number.parseInt(id!, 10)]);
     return setMatches(response.data);
   };
-  
+
   matches.forEach((match: MatchType) => {
     if (new Date(match.date) < new Date()) {
       pastMatches.push(match);
@@ -40,37 +39,39 @@ const Match = () => {
 
   pastMatches = sortByDesc(pastMatches);
   futureMatches = sortByAsc(futureMatches);
- useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       await getAllMatchs();
     };
     fetchData();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count]);
-  
+
   return (
     <>
-        <div className= { isMobile ? "mobile_card_container": "matches_main"} >
-          <Tabs variant='soft-rounded' colorScheme='green'>
-            <TabList>
-              <div className= { isMobile ? "mobile_tab_panels_title" : "tab_panels_title"} >
+      <div className={isMobile ? "mobile_card_container": "matches_main"}>
+        <Tabs variant="soft-rounded" colorScheme="green">
+          <TabList>
+            <div className={isMobile ? "mobile_tab_panels_title" : "tab_panels_title"}>
               <Tab>Historique</Tab>
               <Tab>A venir</Tab>
-              </div>
-            </TabList>
-            <TabPanels>
-              <PastMatchesTab matches ={pastMatches}/>
-              <FutureMatchesTab matches = {futureMatches}/>
-            </TabPanels>
-          </Tabs>
-        </div>
-        {isMobile ? 
-        <div className="mobile_match_button">
-          <Button colorScheme="teal">Voir plus de matchs</Button>
-        </div> 
-        : ''}
+            </div>
+          </TabList>
+          <TabPanels>
+            <PastMatchesTab matches={pastMatches} />
+            <FutureMatchesTab matches={futureMatches} />
+          </TabPanels>
+        </Tabs>
+      </div>
+      {isMobile
+        ? (
+          <div className="mobile_match_button">
+            <Button colorScheme="teal">Voir plus de matchs</Button>
+          </div>
+        )
+        : ""}
     </>
   );
-};
+}
 
 export default Match;

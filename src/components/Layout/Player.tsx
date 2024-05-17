@@ -1,17 +1,17 @@
 import { Box } from "@chakra-ui/react";
-import { PlayerNavbar } from "../Navbar/Player";
 import { Outlet } from "react-router-dom";
+import { PlayerNavbar } from "../Navbar/Player";
 import Footer from "../Footer/Footer";
 import { colors } from "@/utils/theme";
 
-export const PlayerLayout = (): JSX.Element => {
+export function PlayerLayout(): JSX.Element {
   return (
     <Box h="100vh">
-      <PlayerNavbar/>
+      <PlayerNavbar />
       <Box backgroundColor={colors.lightGrey} minH="80vh">
-        <Outlet/>
+        <Outlet />
       </Box>
-      <Footer/>
+      <Footer />
     </Box>
-  )
+  );
 }

@@ -9,7 +9,7 @@ const reducer: any = {
   player: playerReducer,
   scout: scoutReducer,
   match: matchReducer,
-  error: error
-}
+  error,
+};
 
 export default reducer;

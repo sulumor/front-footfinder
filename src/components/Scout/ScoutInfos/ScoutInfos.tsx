@@ -8,9 +8,9 @@ import {
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { getScoutInfos } from "@/redux/Redux-reducers/scout";
-import UpdateScoutButton  from "@/components/Button/updateScoutProfil"
+import UpdateScoutButton from "@/components/Button/updateScoutProfil"
 
-const ScoutInfos = () => {
+function ScoutInfos() {
   const id = localStorage.getItem("id");
   const dispatch = useAppDispatch();
 
@@ -20,13 +20,13 @@ const ScoutInfos = () => {
   const city = useAppSelector((state) => state.scout.city);
   const count = useAppSelector((state) => state.scout.count);
 
-   const [patchValues, setPatchValues] = useState({
+  const [patchValues, setPatchValues] = useState({
     firstname: "",
     lastname: "",
     email: "",
     club: "",
     city: "",
-  }); 
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,29 +42,37 @@ const ScoutInfos = () => {
   }, [count]);
 
   return (
-        <div className="sprofil_container">
-          <Flex>
-            <Avatar
-              size="2xl"
-              name={lastName}
-              src="https://bit.ly/dan-abramov"
-            />
-            <Box ml="4">
-              <div className="scout_box_left">
-                <Text fontWeight="bold" fontSize="2xl">
-                  {firstName} {lastName}
-                </Text>
-                <Text fontSize="xl">Recruteur</Text>
-                <div className="scout_box_right">
-                  <Text fontSize="xl">Ville: {city}</Text>
-                  <Text fontSize="xl">Club: {club}</Text>
-                </div>
-                <UpdateScoutButton />
-              </div>
-            </Box>
-          </Flex>
-        </div>
+    <div className="sprofil_container">
+      <Flex>
+        <Avatar
+          size="2xl"
+          name={lastName}
+          src="https://bit.ly/dan-abramov"
+        />
+        <Box ml="4">
+          <div className="scout_box_left">
+            <Text fontWeight="bold" fontSize="2xl">
+              {firstName}
+              {" "}
+              {lastName}
+            </Text>
+            <Text fontSize="xl">Recruteur</Text>
+            <div className="scout_box_right">
+              <Text fontSize="xl">
+                Ville:
+                {city}
+              </Text>
+              <Text fontSize="xl">
+                Club:
+                {club}
+              </Text>
+            </div>
+            <UpdateScoutButton />
+          </div>
+        </Box>
+      </Flex>
+    </div>
   );
-};
+}
 
 export default ScoutInfos;

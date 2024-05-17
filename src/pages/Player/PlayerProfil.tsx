@@ -13,7 +13,7 @@ import "./PlayerProfil.scss";
 import UpdatePlayerProfilButton from "@/components/Button/updatePlayerProfil";
 import { PlayerPatch } from "@/@Types";
 
-const PlayerProfil = () => {
+function PlayerProfil() {
   const dispatch = useAppDispatch();
   const id = localStorage.getItem("id");
   const lastName : string = useAppSelector((state) => state.player.lastname);
@@ -23,7 +23,7 @@ const PlayerProfil = () => {
   const country: string = useAppSelector((state) => state.player.nationality);
   const foot : string = useAppSelector((state) => state.player.strong_foot);
   const matches: number = useAppSelector(
-    (state) => state.player.number_of_matches_played
+    (state) => state.player.number_of_matches_played,
   );
   const birthday : string | Date = useAppSelector((state) => state.player.birth_date);
   const genre : string = useAppSelector((state) => state.player.genre);
@@ -31,11 +31,13 @@ const PlayerProfil = () => {
   const weight: number = useAppSelector((state) => state.player.weight);
   const count : number = useAppSelector((state) => state.player.count);
 
-  const player : PlayerPatch = { lastname: lastName, firstname: firstName, position, email, nationality: country, strong_foot:foot, height, weight};
+  const player : PlayerPatch = {
+    lastname: lastName, firstname: firstName, position, email, nationality: country, strong_foot: foot, height, weight,
+  };
 
   useEffect(() => {
     const fetchData = async () => {
-       await dispatch(getPlayerInfos(id));
+      await dispatch(getPlayerInfos(id));
     };
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -64,7 +66,7 @@ const PlayerProfil = () => {
                 <div className="profil_title_position">
                   <Text fontSize="xl">{position}</Text>
                 </div>
-                
+
               </Box>
             </Flex>
           </div>
@@ -76,13 +78,19 @@ const PlayerProfil = () => {
               </div>
               <div className="profil_container_left_infos">
                 <p>
-                  Prénom : <span>{firstName}</span>
+                  Prénom :
+                  {" "}
+                  <span>{firstName}</span>
                 </p>
                 <p>
-                  Nom : <span>{lastName}</span>
+                  Nom :
+                  {" "}
+                  <span>{lastName}</span>
                 </p>
                 <p>
-                  Email : <span>{email}</span>
+                  Email :
+                  {" "}
+                  <span>{email}</span>
                 </p>
               </div>
             </div>
@@ -92,7 +100,8 @@ const PlayerProfil = () => {
               </div>
               <div className="profil_container_right_infos">
                 <p>
-                  Date de naissance :{" "}
+                  Date de naissance :
+                  {" "}
                   <span>
                     {new Date(birthday).toLocaleDateString("fr-FR", {
                       year: "numeric",
@@ -102,30 +111,48 @@ const PlayerProfil = () => {
                   </span>
                 </p>
                 <p>
-                  Nationnalité : <span>{country}</span>
+                  Nationnalité :
+                  {" "}
+                  <span>{country}</span>
                 </p>
                 <p>
-                  Genre : <span>{genre}</span>
+                  Genre :
+                  {" "}
+                  <span>{genre}</span>
                 </p>
                 <p>
-                  Taille : <span>{height}</span> cm
+                  Taille :
+                  {" "}
+                  <span>{height}</span>
+                  {" "}
+                  cm
                 </p>
                 <p>
-                  Poids : <span>{weight}</span> kg
+                  Poids :
+                  {" "}
+                  <span>{weight}</span>
+                  {" "}
+                  kg
                 </p>
                 <p>
-                  Pied fort : <span>{foot}</span>
+                  Pied fort :
+                  {" "}
+                  <span>{foot}</span>
                 </p>
                 <p>
-                  Position : <span>{position}</span>
+                  Position :
+                  {" "}
+                  <span>{position}</span>
                 </p>
                 <p>
-                  Nombre de match joué(s) : <span>{matches}</span>
+                  Nombre de match joué(s) :
+                  {" "}
+                  <span>{matches}</span>
                 </p>
               </div>
             </div>
           </div>
-          <UpdatePlayerProfilButton player={player}/>
+          <UpdatePlayerProfilButton player={player} />
         </div>
       </BrowserView>
       <MobileView>
@@ -160,13 +187,19 @@ const PlayerProfil = () => {
               </div>
               <div className="profil_container_left_infos">
                 <p>
-                  Prénom : <span>{firstName}</span>
+                  Prénom :
+                  {" "}
+                  <span>{firstName}</span>
                 </p>
                 <p>
-                  Nom : <span>{lastName}</span>
+                  Nom :
+                  {" "}
+                  <span>{lastName}</span>
                 </p>
                 <p>
-                  Email : <span>{email}</span>
+                  Email :
+                  {" "}
+                  <span>{email}</span>
                 </p>
               </div>
             </div>
@@ -176,7 +209,8 @@ const PlayerProfil = () => {
               </div>
               <div className="profil_container_right_infos">
                 <p>
-                  Date de naissance :{" "}
+                  Date de naissance :
+                  {" "}
                   <span>
                     {new Date(birthday).toLocaleDateString("fr-FR", {
                       year: "numeric",
@@ -186,34 +220,52 @@ const PlayerProfil = () => {
                   </span>
                 </p>
                 <p>
-                  Nationnalité : <span>{country}</span>
+                  Nationnalité :
+                  {" "}
+                  <span>{country}</span>
                 </p>
                 <p>
-                  Genre : <span>{genre}</span>
+                  Genre :
+                  {" "}
+                  <span>{genre}</span>
                 </p>
                 <p>
-                  Taille : <span>{height}</span> cm
+                  Taille :
+                  {" "}
+                  <span>{height}</span>
+                  {" "}
+                  cm
                 </p>
                 <p>
-                  Poids : <span>{weight}</span> kg
+                  Poids :
+                  {" "}
+                  <span>{weight}</span>
+                  {" "}
+                  kg
                 </p>
                 <p>
-                  Pied fort : <span>{foot}</span>
+                  Pied fort :
+                  {" "}
+                  <span>{foot}</span>
                 </p>
                 <p>
-                  Position : <span>{position}</span>
+                  Position :
+                  {" "}
+                  <span>{position}</span>
                 </p>
                 <p>
-                  Nombre de match joué(s) : <span>{matches}</span>
+                  Nombre de match joué(s) :
+                  {" "}
+                  <span>{matches}</span>
                 </p>
               </div>
             </div>
           </div>
-          <UpdatePlayerProfilButton player={player}/>
+          <UpdatePlayerProfilButton player={player} />
         </div>
       </MobileView>
     </>
   );
-};
+}
 
 export default PlayerProfil;

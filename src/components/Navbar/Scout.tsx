@@ -16,19 +16,11 @@ import {
   HamburgerIcon,
 } from "@chakra-ui/icons";
 
-import { useAppDispatch } from "@/hooks/redux";
-import { logout } from "@/redux/Redux-reducers/user";
 import { NavLink } from "react-router-dom";
 
+import { LogoutBtn } from "../Button";
 
-export const ScoutNavbar = (): JSX.Element => {
-
-  const dispatch = useAppDispatch();
-
-  const handleDisconect = () => {
-    dispatch(logout());
-  };
-
+export function ScoutNavbar(): JSX.Element {
   return isMobile ? (
     <Flex h="10vh" w="100%" align="center" justify="space-between" px="1rem">
       <NavLink to="/scout">
@@ -53,9 +45,7 @@ export const ScoutNavbar = (): JSX.Element => {
                   </NavLink>
                 </MenuItem>
                 <MenuItem>
-                  <NavLink to="/">
-                    <Button variant="inverse" onClick={handleDisconect}>Déconnexion</Button>
-                  </NavLink>
+                  <LogoutBtn />
                 </MenuItem>
               </MenuList>
             </>
@@ -74,11 +64,8 @@ export const ScoutNavbar = (): JSX.Element => {
         <NavLink to="/scout/search">
           <Button variant="redEvo">Recherche</Button>
         </NavLink>
-        <NavLink to="/">
-          <Button variant="inverse" onClick={handleDisconect}>Déconnexion</Button>
-        </NavLink>
-      </Flex> 
-    </Flex>     
-  )
-};
-
+        <LogoutBtn />
+      </Flex>
+    </Flex>
+  );
+}

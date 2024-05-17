@@ -27,7 +27,7 @@ import crud from "@/utils/crud";
 import "./PlayerProfil.scss";
 import { PlayerPatch } from "@/@Types";
 
-const PlayerProfil = () => {
+function PlayerProfil() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useAppDispatch();
   const id : string | null = localStorage.getItem("id");
@@ -39,7 +39,7 @@ const PlayerProfil = () => {
   const country: string = useAppSelector((state) => state.player.nationality);
   const foot : string = useAppSelector((state) => state.player.strong_foot);
   const matches: number = useAppSelector(
-    (state) => state.player.number_of_matches_played
+    (state) => state.player.number_of_matches_played,
   );
   const birthday : string | Date = useAppSelector((state) => state.player.birth_date);
   const genre : string = useAppSelector((state) => state.player.genre);
@@ -57,21 +57,19 @@ const PlayerProfil = () => {
     weight: "",
   });
 
-  const handleChangeField =
-    (
-      player:
-        | "firstname"
-        | "lastname"
-        | "email"
-        | "position"
-        | "nationality"
-        | "strong_foot"
-        | "height"
-        | "weight"
-    ) =>
-    (value: string | number) => {
-      setPatchValues({ ...patchValues, [player]: value });
-    };
+  const handleChangeField = (
+    player:
+    | "firstname"
+    | "lastname"
+    | "email"
+    | "position"
+    | "nationality"
+    | "strong_foot"
+    | "height"
+    | "weight"
+  ) => (value: string | number) => {
+    setPatchValues({ ...patchValues, [player]: value });
+  };
 
   const handleSubmit = () => {
     updatePlayerInfos();
@@ -88,10 +86,10 @@ const PlayerProfil = () => {
     const fetchData = async () => {
       const res = await dispatch(getPlayerInfos(id));
 
-      setPatchValues({...patchValues, firstname:(res.payload as PlayerPatch).firstname});
+      setPatchValues({ ...patchValues, firstname: (res.payload as PlayerPatch).firstname });
       patchValues.firstname = (res.payload as PlayerPatch).firstname;
-      patchValues.lastname= (res.payload as PlayerPatch).lastname;
-      patchValues.email= (res.payload as PlayerPatch).email;
+      patchValues.lastname = (res.payload as PlayerPatch).lastname;
+      patchValues.email = (res.payload as PlayerPatch).email;
       patchValues.position = (res.payload as PlayerPatch).position;
       patchValues.nationality = (res.payload as PlayerPatch).nationality;
       patchValues.strong_foot = (res.payload as PlayerPatch).strong_foot;
@@ -135,9 +133,7 @@ const PlayerProfil = () => {
                           <FormLabel>Prénom</FormLabel>
                           <Input
                             value={patchValues.firstname}
-                            onChange={(e) =>
-                              handleChangeField("firstname")(e.target.value)
-                            }
+                            onChange={(e) => handleChangeField("firstname")(e.target.value)}
                           />
                         </FormControl>
 
@@ -145,9 +141,7 @@ const PlayerProfil = () => {
                           <FormLabel>Nom</FormLabel>
                           <Input
                             value={patchValues.lastname}
-                            onChange={(e) =>
-                              handleChangeField("lastname")(e.target.value)
-                            }
+                            onChange={(e) => handleChangeField("lastname")(e.target.value)}
                           />
                         </FormControl>
 
@@ -155,9 +149,7 @@ const PlayerProfil = () => {
                           <FormLabel>Email</FormLabel>
                           <Input
                             value={patchValues.email}
-                            onChange={(e) =>
-                              handleChangeField("email")(e.target.value)
-                            }
+                            onChange={(e) => handleChangeField("email")(e.target.value)}
                           />
                         </FormControl>
 
@@ -165,9 +157,7 @@ const PlayerProfil = () => {
                           <FormLabel>Nationalité</FormLabel>
                           <Input
                             value={patchValues.nationality}
-                            onChange={(e) =>
-                              handleChangeField("nationality")(e.target.value)
-                            }
+                            onChange={(e) => handleChangeField("nationality")(e.target.value)}
                           />
                         </FormControl>
 
@@ -175,9 +165,7 @@ const PlayerProfil = () => {
                           <FormLabel>Position</FormLabel>
                           <Select
                             value={patchValues.position}
-                            onChange={(e) =>
-                              handleChangeField("position")(e.target.value)
-                            }
+                            onChange={(e) => handleChangeField("position")(e.target.value)}
                           >
                             <option>Gardien</option>
                             <option>Libéro</option>
@@ -201,9 +189,7 @@ const PlayerProfil = () => {
                           <FormLabel>Taille (en cm)</FormLabel>
                           <Input
                             value={patchValues.height}
-                            onChange={(e) =>
-                              handleChangeField("height")(e.target.value)
-                            }
+                            onChange={(e) => handleChangeField("height")(e.target.value)}
                           />
                         </FormControl>
 
@@ -211,9 +197,7 @@ const PlayerProfil = () => {
                           <FormLabel>Poids (en kg)</FormLabel>
                           <Input
                             value={patchValues.weight}
-                            onChange={(e) =>
-                              handleChangeField("weight")(e.target.value)
-                            }
+                            onChange={(e) => handleChangeField("weight")(e.target.value)}
                           />
                         </FormControl>
 
@@ -222,9 +206,7 @@ const PlayerProfil = () => {
                           <Select
                             placeholder="--Choix du pied--"
                             value={patchValues.strong_foot}
-                            onChange={(e) =>
-                              handleChangeField("strong_foot")(e.target.value)
-                            }
+                            onChange={(e) => handleChangeField("strong_foot")(e.target.value)}
                           >
                             <option>Droit</option>
                             <option>Gauche</option>
@@ -261,13 +243,19 @@ const PlayerProfil = () => {
               </div>
               <div className="profil_container_left_infos">
                 <p>
-                  Prénom : <span>{firstName}</span>
+                  Prénom :
+                  {" "}
+                  <span>{firstName}</span>
                 </p>
                 <p>
-                  Nom : <span>{lastName}</span>
+                  Nom :
+                  {" "}
+                  <span>{lastName}</span>
                 </p>
                 <p>
-                  Email : <span>{email}</span>
+                  Email :
+                  {" "}
+                  <span>{email}</span>
                 </p>
               </div>
             </div>
@@ -277,7 +265,8 @@ const PlayerProfil = () => {
               </div>
               <div className="profil_container_right_infos">
                 <p>
-                  Date de naissance :{" "}
+                  Date de naissance :
+                  {" "}
                   <span>
                     {new Date(birthday).toLocaleDateString("fr-FR", {
                       year: "numeric",
@@ -287,25 +276,43 @@ const PlayerProfil = () => {
                   </span>
                 </p>
                 <p>
-                  Nationnalité : <span>{country}</span>
+                  Nationnalité :
+                  {" "}
+                  <span>{country}</span>
                 </p>
                 <p>
-                  Genre : <span>{genre}</span>
+                  Genre :
+                  {" "}
+                  <span>{genre}</span>
                 </p>
                 <p>
-                  Taille : <span>{height}</span> cm
+                  Taille :
+                  {" "}
+                  <span>{height}</span>
+                  {" "}
+                  cm
                 </p>
                 <p>
-                  Poids : <span>{weight}</span> kg
+                  Poids :
+                  {" "}
+                  <span>{weight}</span>
+                  {" "}
+                  kg
                 </p>
                 <p>
-                  Pied fort : <span>{foot}</span>
+                  Pied fort :
+                  {" "}
+                  <span>{foot}</span>
                 </p>
                 <p>
-                  Position : <span>{position}</span>
+                  Position :
+                  {" "}
+                  <span>{position}</span>
                 </p>
                 <p>
-                  Nombre de match joué(s) : <span>{matches}</span>
+                  Nombre de match joué(s) :
+                  {" "}
+                  <span>{matches}</span>
                 </p>
               </div>
             </div>
@@ -349,9 +356,7 @@ const PlayerProfil = () => {
                           <FormLabel>Prénom</FormLabel>
                           <Input
                             value={patchValues.firstname}
-                            onChange={(e) =>
-                              handleChangeField("firstname")(e.target.value)
-                            }
+                            onChange={(e) => handleChangeField("firstname")(e.target.value)}
                           />
                         </FormControl>
 
@@ -359,9 +364,7 @@ const PlayerProfil = () => {
                           <FormLabel>Nom</FormLabel>
                           <Input
                             value={patchValues.lastname}
-                            onChange={(e) =>
-                              handleChangeField("lastname")(e.target.value)
-                            }
+                            onChange={(e) => handleChangeField("lastname")(e.target.value)}
                           />
                         </FormControl>
 
@@ -369,9 +372,7 @@ const PlayerProfil = () => {
                           <FormLabel>Email</FormLabel>
                           <Input
                             value={patchValues.email}
-                            onChange={(e) =>
-                              handleChangeField("email")(e.target.value)
-                            }
+                            onChange={(e) => handleChangeField("email")(e.target.value)}
                           />
                         </FormControl>
 
@@ -379,9 +380,7 @@ const PlayerProfil = () => {
                           <FormLabel>Nationalité</FormLabel>
                           <Input
                             value={patchValues.nationality}
-                            onChange={(e) =>
-                              handleChangeField("nationality")(e.target.value)
-                            }
+                            onChange={(e) => handleChangeField("nationality")(e.target.value)}
                           />
                         </FormControl>
 
@@ -389,9 +388,7 @@ const PlayerProfil = () => {
                           <FormLabel>Position</FormLabel>
                           <Select
                             value={patchValues.position}
-                            onChange={(e) =>
-                              handleChangeField("position")(e.target.value)
-                            }
+                            onChange={(e) => handleChangeField("position")(e.target.value)}
                           >
                             <option>Gardien</option>
                             <option>Libéro</option>
@@ -415,9 +412,7 @@ const PlayerProfil = () => {
                           <FormLabel>Taille (en cm)</FormLabel>
                           <Input
                             value={patchValues.height}
-                            onChange={(e) =>
-                              handleChangeField("height")(e.target.value)
-                            }
+                            onChange={(e) => handleChangeField("height")(e.target.value)}
                           />
                         </FormControl>
 
@@ -425,9 +420,7 @@ const PlayerProfil = () => {
                           <FormLabel>Poids (en kg)</FormLabel>
                           <Input
                             value={patchValues.weight}
-                            onChange={(e) =>
-                              handleChangeField("weight")(e.target.value)
-                            }
+                            onChange={(e) => handleChangeField("weight")(e.target.value)}
                           />
                         </FormControl>
 
@@ -436,9 +429,7 @@ const PlayerProfil = () => {
                           <Select
                             placeholder="--Choix du pied--"
                             value={patchValues.strong_foot}
-                            onChange={(e) =>
-                              handleChangeField("strong_foot")(e.target.value)
-                            }
+                            onChange={(e) => handleChangeField("strong_foot")(e.target.value)}
                           >
                             <option>Droit</option>
                             <option>Gauche</option>
@@ -475,13 +466,19 @@ const PlayerProfil = () => {
               </div>
               <div className="profil_container_left_infos">
                 <p>
-                  Prénom : <span>{firstName}</span>
+                  Prénom :
+                  {" "}
+                  <span>{firstName}</span>
                 </p>
                 <p>
-                  Nom : <span>{lastName}</span>
+                  Nom :
+                  {" "}
+                  <span>{lastName}</span>
                 </p>
                 <p>
-                  Email : <span>{email}</span>
+                  Email :
+                  {" "}
+                  <span>{email}</span>
                 </p>
               </div>
             </div>
@@ -491,7 +488,8 @@ const PlayerProfil = () => {
               </div>
               <div className="profil_container_right_infos">
                 <p>
-                  Date de naissance :{" "}
+                  Date de naissance :
+                  {" "}
                   <span>
                     {new Date(birthday).toLocaleDateString("fr-FR", {
                       year: "numeric",
@@ -501,25 +499,43 @@ const PlayerProfil = () => {
                   </span>
                 </p>
                 <p>
-                  Nationnalité : <span>{country}</span>
+                  Nationnalité :
+                  {" "}
+                  <span>{country}</span>
                 </p>
                 <p>
-                  Genre : <span>{genre}</span>
+                  Genre :
+                  {" "}
+                  <span>{genre}</span>
                 </p>
                 <p>
-                  Taille : <span>{height}</span> cm
+                  Taille :
+                  {" "}
+                  <span>{height}</span>
+                  {" "}
+                  cm
                 </p>
                 <p>
-                  Poids : <span>{weight}</span> kg
+                  Poids :
+                  {" "}
+                  <span>{weight}</span>
+                  {" "}
+                  kg
                 </p>
                 <p>
-                  Pied fort : <span>{foot}</span>
+                  Pied fort :
+                  {" "}
+                  <span>{foot}</span>
                 </p>
                 <p>
-                  Position : <span>{position}</span>
+                  Position :
+                  {" "}
+                  <span>{position}</span>
                 </p>
                 <p>
-                  Nombre de match joué(s) : <span>{matches}</span>
+                  Nombre de match joué(s) :
+                  {" "}
+                  <span>{matches}</span>
                 </p>
               </div>
             </div>
@@ -533,6 +549,6 @@ const PlayerProfil = () => {
       </MobileView>
     </>
   );
-};
+}
 
 export default PlayerProfil;

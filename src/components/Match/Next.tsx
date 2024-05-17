@@ -1,18 +1,18 @@
-import { Match } from "@/@Types";
 import { useEffect, useState } from "react";
+import { Match } from "@/@Types";
 import crud from "@/utils/crud";
 import "./Next.scss";
 import { sortByAsc } from "@/utils/functions";
 
-const NextMatch = () => {
+function NextMatch() {
   const id : string | null = localStorage.getItem("id");
   const [match, setMatch] = useState<Match>();
 
   const getNextMatch : () => Promise<void> = async () => {
-    const responses  = await crud.get(['player', 'match', 'stats'], [Number.parseInt(id!, 10)]);
-      
+    const responses = await crud.get(["player", "match", "stats"], [Number.parseInt(id!, 10)]);
+
     const today : Date = new Date();
-    const nextMatch : Match[] = sortByAsc(responses.data).filter(((match: Match) => new Date(match.date) > today))
+    const nextMatch : Match[] = sortByAsc(responses.data).filter(((match: Match) => new Date(match.date) > today));
     return setMatch(nextMatch[0]);
   };
 
@@ -36,11 +36,17 @@ const NextMatch = () => {
       </span>
       <div className="player_match_infos">
         <h3>
-          {match?.home.club_name} - {match?.away.club_name}
+          {match?.home.club_name}
+          {" "}
+          -
+          {match?.away.club_name}
         </h3>
         <p>{match?.home.stadium_name}</p>
         <p>
-          {match?.home.adress}, {match?.home.zip_code}{" "}
+          {match?.home.adress}
+          ,
+          {match?.home.zip_code}
+          {" "}
           {match?.home.city}
         </p>
       </div>

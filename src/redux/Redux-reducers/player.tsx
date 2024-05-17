@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
 import { PlayerState } from "@/@Types";
 import crud from "@/utils/crud";
-import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
 import { UDPATE_PLAYER, UPDATE_MATCH } from "../Redux-actions/player";
-
 
 export const initialState: PlayerState = {
   id: 0,
@@ -23,15 +22,15 @@ export const initialState: PlayerState = {
   weight: 0,
   scouts: [],
   teams: [],
-  count: 0
+  count: 0,
 };
 
 export const getPlayerInfos = createAsyncThunk(
   "PLAYER",
   async (id:string | null) => {
-    const response = await crud.get(['player'], [Number.parseInt(id!, 10)]);
+    const response = await crud.get(["player"], [Number.parseInt(id!, 10)]);
     return response.data;
-  }
+  },
 );
 
 const playerReducer = createReducer(initialState, (builder) => {
@@ -56,11 +55,11 @@ const playerReducer = createReducer(initialState, (builder) => {
     console.log("Une erreur est survenue:", action.error.message);
   });
   builder.addCase(UDPATE_PLAYER, (state, _action) => {
-    state.count = state.count +1;
+    state.count += 1;
   });
   builder.addCase(UPDATE_MATCH, (state, _action) => {
-    state.count = state.count -1;
-  })
+    state.count -= 1;
+  });
 });
 
 export default playerReducer;

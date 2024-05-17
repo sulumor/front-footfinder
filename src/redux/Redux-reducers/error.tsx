@@ -6,12 +6,12 @@ const initialState = {};
 
 export default (state = initialState, action: { type: string; error: any; }) => {
   if (action.type === RESPONSE_ERROR) {
-    return {...state, ...action.error};
+    return { ...state, ...action.error };
   }
 
-  if(action.type === CLEAR_ERROR) {
+  if (action.type === CLEAR_ERROR) {
     return initialState;
   }
-  
+
   return state;
-}
+};

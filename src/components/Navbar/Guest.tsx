@@ -17,7 +17,7 @@ import {
 } from "@chakra-ui/icons";
 import { NavLink } from "react-router-dom";
 
-export const GuestNavbar = () => {
+export function GuestNavbar() {
   return isMobile ? (
     <Flex h="10vh" w="100%" align="center" justify="space-between" px="1rem">
       <NavLink to="/">
@@ -27,14 +27,14 @@ export const GuestNavbar = () => {
       </NavLink>
       <Center>
         <Menu>
-          {({isOpen}) => (
+          {({ isOpen }) => (
             <>
               <MenuButton
                 isActive={isOpen}
                 as={IconButton}
                 aria-label="Options"
-                icon={isOpen ? <CloseIcon/>: <HamburgerIcon />}
-                />
+                icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+              />
               <MenuList>
                 <MenuItem>
                   <NavLink to="/login">
@@ -52,7 +52,7 @@ export const GuestNavbar = () => {
         </Menu>
       </Center>
     </Flex>
-  ) : (  
+  ) : (
     <Flex h="10vh" w="100%" align="center" justify="space-between" px="1rem">
       <NavLink to="/">
         <Text textStyle="navBar">
@@ -66,8 +66,7 @@ export const GuestNavbar = () => {
         <NavLink to="/signup">
           <Button variant="inverse">S'inscrire</Button>
         </NavLink>
-      </Flex>      
+      </Flex>
     </Flex>
-  )
-};
-
+  );
+}

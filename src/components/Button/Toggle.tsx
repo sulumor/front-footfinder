@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useBoolean, Box, Flex } from '@chakra-ui/react';
-import { colors } from '@/utils/theme';
+import { useBoolean, Box, Flex } from "@chakra-ui/react";
+import { colors } from "@/utils/theme";
 
 export function ToggleBtn({ setJob }: { setJob: any }): JSX.Element {
   const [property, setProperty] = useBoolean();
@@ -18,9 +18,9 @@ export function ToggleBtn({ setJob }: { setJob: any }): JSX.Element {
         w="50%"
         textStyle="h4"
         color={colors.white}
-        p={{ base: '0.9rem', lg: '1rem 2rem' }}
+        p={{ base: "0.9rem", lg: "1rem 2rem" }}
         textAlign="center"
-        bg={property ? colors.redEvo : ''}
+        bg={property ? colors.redEvo : ""}
       >
         Joueur
       </Box>
@@ -29,10 +29,10 @@ export function ToggleBtn({ setJob }: { setJob: any }): JSX.Element {
         onClick={() => ChangeProperty(property)}
         textAlign="center"
         textStyle="h4"
-        p={{ base: '0.9rem', lg: '1rem 2rem' }}
+        p={{ base: "0.9rem", lg: "1rem 2rem" }}
         color={colors.white}
         w="50%"
-        bg={property ? '' : colors.redEvo}
+        bg={property ? "" : colors.redEvo}
       >
         Manager
       </Box>

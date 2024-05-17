@@ -1,16 +1,15 @@
-
 export interface ScoutState {
-    firstname: string,
-    lastname: string,
-    email: string,
-    club: string,
-    city: string,
-    players: number,
-    count: number,
+  firstname: string,
+  lastname: string,
+  email: string,
+  club: string,
+  city: string,
+  players: number,
+  count: number,
 }
 
 export interface ScoutView {
-  id:number;  
+  id:number;
   scout_id: number;
   role:string;
   firstname: string;
@@ -23,12 +22,12 @@ export interface ScoutView {
 }
 
 export interface UserState {
-    pwd:string;
-    logged: boolean;
-    role?: string;
-    id?: string | number;
-    firstname: string;
-    email: string;
+  pwd:string;
+  logged: boolean;
+  role?: string;
+  id?: string | number;
+  firstname: string;
+  email: string;
 }
 
 export interface Login {
@@ -63,7 +62,7 @@ export interface Match {
   id: number;
   match_id: number;
   score: string;
-  date: string | Date ; 
+  date: string | Date ;
   assists: number;
   goals_conceded: number;
   red_card: number;
@@ -81,7 +80,6 @@ export interface setMatch {
   awayTeam: number;
   date: string | Date;
 }
-
 
 export interface Player {
   id: number | string;

@@ -1,7 +1,7 @@
 import { Center, Text } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 
-const Footer = () : JSX.Element => {
+function Footer(): JSX.Element {
   return (
     <Center w="100%" h="10vh" backgroundColor="white">
       <NavLink to="/notices">
@@ -9,6 +9,6 @@ const Footer = () : JSX.Element => {
       </NavLink>
     </Center>
   );
-};
+}
 
 export default Footer;

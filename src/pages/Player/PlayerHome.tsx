@@ -13,22 +13,17 @@ import NextMatch from "@/components/Match/Next";
 import Chart from "@/components/Chart/Chart";
 import AddMatchButton from "@/components/Button/addMatch";
 import FollowByScouts from "@/components/Card/FollowByScouts";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { getPlayerInfos } from "@/redux/Redux-reducers/player";
 
+import { useAuth } from "@/context/Auth";
 
-const Player = () => {
-  const dispatch = useAppDispatch();
-  const id : string | null = localStorage.getItem("id");
-  const firstName : string = useAppSelector((state) => state.player.firstname);
-  const scouts : ScoutView[] = useAppSelector((state) => state.player.scouts);
+function Player(): JSX.Element {
+  const { user } = useAuth();
   const [stats, setStats] = useState<Stats>();
-
 
   const getAllStats : () => Promise<void> = async () => {
     const responses = await crud.get(
       ["player", "stats"],
-      [Number.parseInt(id!, 10)]
+      [Number.parseInt(user.id, 10)],
     );
     return setStats(responses.data);
   };
@@ -36,34 +31,35 @@ const Player = () => {
   useEffect(() => {
     const fetchData = async () => {
       await getAllStats();
-      await dispatch(getPlayerInfos(id));
     };
     fetchData();
-    
   }, []);
-  
+
   return (
     <>
       <div className="player_name">
-        <h2>Bonjour, {firstName}</h2>
+        <h2>
+          Bonjour,
+          {user.firstname}
+        </h2>
       </div>
       <Center>
         <Divider width="50%" />
       </Center>
-      <div className={isMobile ? "mobile_player_container" : "player_container"}>
+      {/* <div className={isMobile ? "mobile_player_container" : "player_container"}>
         <div className={isMobile ? "mobile_player_infos" : "player_infos"} >
           <NextMatch/>
           <AddMatchButton/>
           <Divider />
-          <FollowByScouts scouts={scouts}/>
+          <FollowByScouts scouts={[]}/>
         </div>
         <Center>
           <Divider orientation={isMobile ? "horizontal": "vertical"} />
         </Center>
         <Chart stats={stats}/>
-      </div>
+      </div> */}
     </>
   );
-};
+}
 
 export default Player;

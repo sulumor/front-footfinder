@@ -24,27 +24,27 @@ export const router = createBrowserRouter([
       { path: "/login", element: <Login /> },
       { path: "/signup", element: <Signup /> },
       { path: "/notices", element: <NoticesPage /> },
-      
+
     ],
   },
   {
-    path:"/player",
-    element: <PlayerLayout/>,
+    path: "/player",
+    element: <PlayerLayout />,
     children: [
-      {index: true, element: <PlayerHome />},
-      { path: "/player/:id", element: <PlayerForScout />},
+      { index: true, element: <PlayerHome /> },
+      { path: "/player/:id", element: <PlayerForScout /> },
       { path: "/player/match", element: <Match /> },
       { path: "/player/create", element: <SigninPlayer /> },
       { path: "/player/me", element: <PlayerProfil /> },
     ],
   },
   {
-    path:"/scout",
-    element: <ScoutLayout/>,
+    path: "/scout",
+    element: <ScoutLayout />,
     children: [
-      {index: true, element: <ScoutHome />},
-      { path: "/scout/create", element: <SigninScout />},
-      { path: "/scout/search", element : <SearchPage/> },
+      { index: true, element: <ScoutHome /> },
+      { path: "/scout/create", element: <SigninScout /> },
+      { path: "/scout/search", element: <SearchPage /> },
     ],
-  }
+  },
 ]);

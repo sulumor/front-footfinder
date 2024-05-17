@@ -9,12 +9,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { isMobile } from "react-device-detect";
 import "./CreatePlayer.scss";
+import axios from "axios";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { login } from "../../redux/Redux-reducers/user";
-import axios from "axios";
 
-const SigninPlayer = () => {
- 
+function SigninPlayer() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const pwd : string = useAppSelector((state) => state.user.pwd);
@@ -31,43 +30,39 @@ const SigninPlayer = () => {
     position: "",
   });
 
-  const handleChangeField =
-    (
-      user:
-        | "id"
-        | "email"
-        | "role"
-        | "birth_date"
-        | "nationality"
-        | "genre"
-        | "height"
-        | "weight"
-        | "strong_foot"
-        | "position"
-    ) =>
-    (value: string | number) => {
-      setFormValues({ ...formValues, [user]: value });
-    };
+  const handleChangeField = (
+    user:
+    | "id"
+    | "email"
+    | "role"
+    | "birth_date"
+    | "nationality"
+    | "genre"
+    | "height"
+    | "weight"
+    | "strong_foot"
+    | "position"
+  ) => (value: string | number) => {
+    setFormValues({ ...formValues, [user]: value });
+  };
 
   const postPlayerInfos = async () => {
-    
-    const response = await axios.post("http://localhost:3000/register/joueur", {...formValues}); 
-          
-    const formV : {email:string;password:string;role:string} = {
-      "email": response.data.person.email,
-      "password": pwd,
-      "role": response.data.person.role
+    const response = await axios.post("http://localhost:3000/register/joueur", { ...formValues });
+
+    const formV : { email:string;password:string;role:string } = {
+      email: response.data.person.email,
+      password: pwd,
+      role: response.data.person.role,
     };
-    await dispatch(login(formV))
+    await dispatch(login(formV));
     return response;
   };
 
   const handleSubmit = async () => {
     const res = await postPlayerInfos();
-   if (res.status === 201) {
-    navigate("/player");
-   }
-    
+    if (res.status === 201) {
+      navigate("/player");
+    }
   };
 
   return (
@@ -173,6 +168,6 @@ const SigninPlayer = () => {
       </div>
     </div>
   );
-};
+}
 
 export default SigninPlayer;

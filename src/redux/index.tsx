@@ -1,7 +1,7 @@
-import { configureStore } from '@reduxjs/toolkit';
-import reducer from './Redux-reducers';
+import { configureStore } from "@reduxjs/toolkit";
+import axios from "axios";
+import reducer from "./Redux-reducers";
 // import { loadErrors } from "./actions/error";
-import axios from 'axios';
 
 const store = configureStore({
   reducer,
@@ -13,10 +13,8 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 axios.interceptors.response.use(
-  function(response) {
-    return response;
-  },
-  // function (error) {   
+  (response) => response,
+  // function (error) {
   //   store.dispatch(loadErrors(error));
   //   return Promise.reject(error);
   // }

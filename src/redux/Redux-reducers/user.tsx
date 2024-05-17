@@ -13,19 +13,18 @@ export const initialState: UserState = {
   id: 0,
   firstname: "",
   email: "",
-  pwd:"",
+  pwd: "",
 };
-
 
 export const login = createAsyncThunk(
   "LOGIN",
-  async (formValues : Login) => {   
+  async (formValues : Login) => {
     const response = await axios.post(
       `${import.meta.env.VITE_BACK}/login`,
-      formValues 
+      formValues,
     );
     return response.data.accessToken;
-  }
+  },
 );
 
 export const signin = createAsyncThunk(
@@ -37,13 +36,13 @@ export const signin = createAsyncThunk(
     email: string;
     password: string;
     confirmedPassword: string;
-}) => {
+  }) => {
     const response = await axios.post(
       `${import.meta.env.VITE_BACK}/register`,
-      formValues 
-    );   
+      formValues,
+    );
     return response.data;
-  }
+  },
 );
 
 export const logout = createAction("LOGOUT");
@@ -69,7 +68,7 @@ const userReducer = createReducer(initialState, (builder) => {
     state.role = action.payload.user.role;
     state.id = action.payload.user.id;
     state.pwd = action.payload.pwd;
-    localStorage.setItem("id", `${action.payload.user.id}` );
+    localStorage.setItem("id", `${action.payload.user.id}`);
     localStorage.setItem("logged", "true");
     localStorage.setItem("role", action.payload.user.role);
     localStorage.setItem("firstname", action.payload.user.firstname);
@@ -79,7 +78,7 @@ const userReducer = createReducer(initialState, (builder) => {
     console.log("Une erreur est survenue:", action.error.message);
   });
   builder.addCase(logout, (state) => {
-    state.logged = false; 
+    state.logged = false;
     localStorage.removeItem("id");
     localStorage.removeItem("token");
     localStorage.removeItem("role");
@@ -87,7 +86,7 @@ const userReducer = createReducer(initialState, (builder) => {
     localStorage.removeItem("firstname");
     localStorage.removeItem("email");
   });
-  builder.addCase(tokenCheck,(state: UserState,)=>{
+  builder.addCase(tokenCheck, (state: UserState) => {
     state.logged = true;
     state.role = localStorage.getItem("role") || undefined;
   });

@@ -1,4 +1,3 @@
-import crud from "@/utils/crud";
 import { EditIcon } from "@chakra-ui/icons";
 import {
   Modal,
@@ -18,11 +17,12 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import crud from "@/utils/crud";
 import { scoutUpdate } from "../../redux/Redux-actions/scout";
 import { useAppDispatch } from "../../hooks/redux";
 import { getScoutInfos } from "../../redux/Redux-reducers/scout";
 
-const UpdateScoutButton = () => {
+function UpdateScoutButton() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const id = localStorage.getItem("id");
   const dispatch = useAppDispatch();
@@ -35,11 +35,9 @@ const UpdateScoutButton = () => {
     city: "",
   });
 
-  const handleChangeField =
-    (scout: "firstname" | "lastname" | "email" | "club" | "city") =>
-    (value: string) => {
-      setPatchValues({ ...patchValues, [scout]: value });
-    };
+  const handleChangeField = (scout: "firstname" | "lastname" | "email" | "club" | "city") => (value: string) => {
+    setPatchValues({ ...patchValues, [scout]: value });
+  };
 
   const handleSubmit = () => {
     updateScoutInfos();
@@ -50,9 +48,9 @@ const UpdateScoutButton = () => {
       ...patchValues,
     });
     if (response.status === 201) {
-        dispatch(scoutUpdate());
-        onClose();
-      } 
+      dispatch(scoutUpdate());
+      onClose();
+    }
     return response.data;
   };
 
@@ -88,9 +86,7 @@ const UpdateScoutButton = () => {
                 <FormLabel>Prénom</FormLabel>
                 <Input
                   value={patchValues.firstname}
-                  onChange={(e) =>
-                    handleChangeField("firstname")(e.target.value)
-                  }
+                  onChange={(e) => handleChangeField("firstname")(e.target.value)}
                 />
               </FormControl>
 
@@ -98,9 +94,7 @@ const UpdateScoutButton = () => {
                 <FormLabel>Nom</FormLabel>
                 <Input
                   value={patchValues.lastname}
-                  onChange={(e) =>
-                    handleChangeField("lastname")(e.target.value)
-                  }
+                  onChange={(e) => handleChangeField("lastname")(e.target.value)}
                 />
               </FormControl>
 
@@ -145,6 +139,6 @@ const UpdateScoutButton = () => {
       </Modal>
     </>
   );
-};
+}
 
 export default UpdateScoutButton;
