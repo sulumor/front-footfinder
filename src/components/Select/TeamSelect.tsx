@@ -1,13 +1,13 @@
 import { FormControl, FormLabel, Select } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import crud from "@/utils/crud";
 
 interface Team {
-  id:number;
-  club_name:string;
+  id: number;
+  club_name: string;
 }
 
-function SelectTeam({ label }:{ label:string }) {
+function SelectTeam({ label, placeholder, value, onChange, required }: { label: string; placeholder: string; value: string | number; onChange: React.ChangeEventHandler; required?: boolean }) {
   const [teams, setTeams] = useState([]);
 
   const getAllTeams = async () => {
@@ -22,13 +22,13 @@ function SelectTeam({ label }:{ label:string }) {
     fetchData();
   }, []);
 
-  console.log(teams);
-
   return (
-    <FormControl mt={4}>
-      <FormLabel>{label}</FormLabel>
-      <Select placeholder=" Sélectionner une équipe">
-        {teams?.map((team:Team) => <option value={team.id}>{team.club_name}</option>)}
+    <FormControl py={4} isRequired = { required }>
+      <FormLabel variant="h6">
+        {label}
+      </FormLabel>
+      <Select placeholder={placeholder} value={value} onChange={onChange}>
+        {teams?.map((team: Team) => <option key={team.id} value={team.id}>{team.club_name}</option>)}
       </Select>
     </FormControl>
   );

@@ -20,7 +20,7 @@ import { LogoutBtn } from "../Button";
 
 export function PlayerNavbar(): JSX.Element {
   return isMobile ? (
-    <Flex h="10vh" w="100%" align="center" justify="space-between" px="1rem">
+    <Flex h="10vh" minH="4.375rem" w="100%" align="center" justify="space-between" px="1rem">
       <NavLink to="/player">
         <Text textStyle="navBar">
           FootFinder
@@ -59,7 +59,7 @@ export function PlayerNavbar(): JSX.Element {
     </Flex>
 
   ) : (
-    <Flex h="10vh" w="100%" align="center" justify="space-between" px="1rem">
+    <Flex h="10vh" minH="4.375rem" w="100%" align="center" justify="space-between" px="1rem">
       <NavLink to="/player">
         <Text textStyle="navBar">
           FootFinder

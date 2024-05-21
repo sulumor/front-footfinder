@@ -8,10 +8,13 @@ import {
   Legend,
 } from "chart.js";
 import { Radar } from "react-chartjs-2";
-import { isMobile } from "react-device-detect";
 import { Stats } from "@/@Types";
+import { Box } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import crud from "@/utils/crud";
+import { useAuth } from "@/context/Auth";
 
-function Chart({ stats } : { stats: Stats | undefined }) {
+function Chart() {
   ChartJS.register(
     RadialLinearScale,
     PointElement,
@@ -20,6 +23,15 @@ function Chart({ stats } : { stats: Stats | undefined }) {
     Tooltip,
     Legend,
   );
+  const [stats, setStats] = useState<Stats>();
+  const { user } = useAuth();
+  const getAllStats : () => Promise<void> = async () => {
+    const responses = await crud.get(
+      ["player", "stats"],
+      [user?.id],
+    );
+    return setStats(responses.data);
+  };
 
   const data = {
     labels: [
@@ -48,10 +60,17 @@ function Chart({ stats } : { stats: Stats | undefined }) {
     ],
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      await getAllStats();      
+    };
+    fetchData();
+  }, [user]);
+
   return (
-    <div className={isMobile ? "player_data_mobile": "player_data"}>
+    <Box w={{base: "100%", md:"40%"}}>
       <Radar data={data} />
-    </div>
+    </Box>
   );
 }
 

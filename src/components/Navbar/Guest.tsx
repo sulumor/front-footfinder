@@ -19,7 +19,7 @@ import { NavLink } from "react-router-dom";
 
 export function GuestNavbar() {
   return isMobile ? (
-    <Flex h="10vh" w="100%" align="center" justify="space-between" px="1rem">
+    <Flex h="10vh" minH="4.375rem" w="100%" align="center" justify="space-between" px="1rem">
       <NavLink to="/">
         <Text textStyle="navBar">
           FootFinder
@@ -53,7 +53,7 @@ export function GuestNavbar() {
       </Center>
     </Flex>
   ) : (
-    <Flex h="10vh" w="100%" align="center" justify="space-between" px="1rem">
+    <Flex h="10vh" minH="4.375rem" w="100%" align="center" justify="space-between" px="1rem">
       <NavLink to="/">
         <Text textStyle="navBar">
           FootFinder

@@ -22,7 +22,7 @@ import { LogoutBtn } from "../Button";
 
 export function ScoutNavbar(): JSX.Element {
   return isMobile ? (
-    <Flex h="10vh" w="100%" align="center" justify="space-between" px="1rem">
+    <Flex h="10vh" minH="4.375rem" w="100%" align="center" justify="space-between" px="1rem">
       <NavLink to="/scout">
         <Text textStyle="navBar">
           FootFinder
@@ -54,7 +54,7 @@ export function ScoutNavbar(): JSX.Element {
       </Center>
     </Flex>
   ) : (
-    <Flex h="10vh" w="100%" align="center" justify="space-between" px="1rem">
+    <Flex h="10vh" minH="4.375rem" w="100%" align="center" justify="space-between" px="1rem">
       <NavLink to="/scout">
         <Text textStyle="navBar">
           FootFinder

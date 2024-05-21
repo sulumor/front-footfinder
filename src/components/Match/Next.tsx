@@ -1,27 +1,27 @@
 import { useEffect, useState } from "react";
 import { Match } from "@/@Types";
 import crud from "@/utils/crud";
-import "./Next.scss";
 import { sortByAsc } from "@/utils/functions";
+import { useAuth } from "@/context/Auth";
 
 function NextMatch() {
-  const id : string | null = localStorage.getItem("id");
+  const { user } = useAuth()
   const [match, setMatch] = useState<Match>();
 
   const getNextMatch : () => Promise<void> = async () => {
-    const responses = await crud.get(["player", "match", "stats"], [Number.parseInt(id!, 10)]);
-
+    const responses = await crud.get(["player", "match", "stats"], [user?.id]);
     const today : Date = new Date();
-    const nextMatch : Match[] = sortByAsc(responses.data).filter(((match: Match) => new Date(match.date) > today));
-    return setMatch(nextMatch[0]);
+    const [nextMatch] : Match[] = sortByAsc(responses.data).filter(((match: Match) => new Date(match.date) > today));
+    return setMatch(nextMatch);
+  };
+
+  const fetchData = async () :Promise<void> => {
+    await getNextMatch();
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      await getNextMatch();
-    };
     fetchData();
-  }, []);
+  }, [user]);
 
   return (
     <div className="player_match">

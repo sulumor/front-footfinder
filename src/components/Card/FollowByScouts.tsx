@@ -1,32 +1,40 @@
-import { Avatar, Wrap, WrapItem } from "@chakra-ui/react";
-import { isMobile } from "react-device-detect";
+import { Avatar, Box, Flex, Heading, Text, Tooltip, Wrap, WrapItem} from "@chakra-ui/react";
 import { ScoutView } from "@/@Types";
+import { useAuth } from "@/context/Auth";
 
-function FollowByScouts({ scouts } : { scouts:ScoutView[] }) {
+function FollowByScouts() {
+  const { user } = useAuth();
+
+  const scouts : ScoutView[] = user?.scouts;
+
+  
   return (
-    <div className={isMobile ? "mobile_player_follow" : "player_follow"}>
-      <h3>Suivi par</h3>
-      {" "}
-      <span>
-        {scouts?.length}
-        {" "}
-        recruteurs:
-      </span>
-      <div>
+    <Box>
+      <Flex justifyContent="start" alignItems="center" gap={2}>
+        <Heading as="h3" variant="h3">Suivi par</Heading>      
+        <Text textStyle="h3">
+          {scouts?.length}
+          {" "}
+          recruteurs:
+        </Text>
+      </Flex>
+      <Box>
         <Wrap>
           <WrapItem>
-            {scouts?.map((scout) => (
-              <Avatar
-                key={scout?.id}
-                name={`${scout?.firstname} ${scout?.lastname}`}
-                src={scout?.avatar}
-                m={1}
-              />
+            {scouts?.map((scout : ScoutView) => (
+              <Tooltip label={`${scout?.firstname} ${scout?.lastname}`} key={scout?.id}>
+                <Avatar
+                  key={scout?.id}
+                  name={`${scout?.firstname} ${scout?.lastname}`}
+                  src={scout?.avatar}
+                  m={1}
+                  />
+              </Tooltip>
             ))}
           </WrapItem>
         </Wrap>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 

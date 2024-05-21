@@ -1,3 +1,4 @@
 -> voir pour inclure l'appel à delete refresh_token dans la fonction logout
 -> Mettre en place un reset password
 -> Faire page CGU
+-> Voir expiration time du refresh token
