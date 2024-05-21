@@ -15,28 +15,27 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
   const [hasToBeRefetch, setHasToBeRefetch] = useState<boolean>(false);
 
   useEffect(() => {
-    loadUserFromToken()
+    async function loadUserFromToken(): Promise<void> {
+      if (localStorage.getItem("token")){
+        setError("");
+        try {     
+          const res =  await crud.get(["user"], []);
+          getUser(res.data);
+        } catch (error) {
+          if (error instanceof AxiosError) {
+            if (error.message === "Network Error") setError("Erreur dans le réseau");
+            if (error.message.includes("failed")) setError(error.response?.data.error);
+            setLoading(false);
+          }
+        }  
+      }
+    }
+    loadUserFromToken();
     if (hasToBeRefetch) {
-      loadUserFromToken()
+      loadUserFromToken();
     }
-  }, [hasToBeRefetch])
+  }, [hasToBeRefetch]);
 
-  async function loadUserFromToken(): Promise<void> {
-    if (localStorage.getItem("token")){
-      setError("");
-      try {     
-        const res =  await crud.get(["user"], [])
-        getUser(res.data);
-      } catch (error) {
-        if (error instanceof AxiosError) {
-          if (error.message === "Network Error") setError("Erreur dans le réseau");
-          if (error.message.includes("failed")) setError(error.response?.data.error);
-          setLoading(false);
-        }
-    }
-        
-    }
-  }
 
 
   async function login({ email, password }: { email: string; password: string }): Promise<void> {
@@ -61,7 +60,7 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
 
   async function getUser(token: { id: number; }) : Promise<void> {
     const response = await crud.get(["player"], [token.id]);
-    setUser(response.data)
+    setUser(response.data);
   }
 
   function logout(): void {
@@ -72,7 +71,7 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
 
   return (
     <AuthContext.Provider value={{
-      user, error, loading, login, logout, setHasToBeRefetch
+      user, error, loading, login, logout, setHasToBeRefetch, getUser
     }}
     >
       {children}

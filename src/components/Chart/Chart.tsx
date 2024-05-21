@@ -25,9 +25,7 @@ function Chart() {
   );
   const [stats, setStats] = useState<Stats>();
   const { user } = useAuth();
-  
-  console.log(stats);
-  
+    
   const data = user?.position === "Gardien" ? {
     labels:[
       "Arrêts",

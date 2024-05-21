@@ -4,8 +4,7 @@ import Home from "@/pages";
 import ErrorPage from "@/pages/Error/Error";
 import Match from "@/pages/Player/Match";
 import ScoutHome from "@/pages/Scout/ScoutHome";
-import { Home as Player }  from "@/pages/Player";
-import PlayerProfil from "@/pages/Player/PlayerProfil";
+import { Home as Player, ProfilPlayer }  from "@/pages/Player";
 import PlayerForScout from "@/components/PlayerForScout/PlayerForScout";
 import { Signup, Login } from "@/pages/Auth";
 import SigninPlayer from "@/pages/Signin/SigninPlayer";
@@ -32,10 +31,10 @@ export const router = createBrowserRouter([
     element: <PlayerLayout />,
     children: [
       { index: true, element: <Player /> },
-      { path: "/player/:id", element: <PlayerForScout /> },
-      { path: "/player/match", element: <Match /> },
-      { path: "/player/create", element: <SigninPlayer /> },
-      { path: "/player/me", element: <PlayerProfil /> },
+      { path: "/player/me", element: <ProfilPlayer /> },
+      // { path: "/player/:id", element: <PlayerForScout /> },
+      // { path: "/player/match", element: <Match /> },
+      // { path: "/player/create", element: <SigninPlayer /> },
     ],
   },
   {

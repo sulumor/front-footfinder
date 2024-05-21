@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios, { AxiosResponse } from "axios"
-import { checkToken, createPathWithMultipleOptions } from "./functions"
+import axios, { AxiosResponse } from "axios";
+import { checkToken, createPathWithMultipleOptions } from "./functions";
 
 interface Response {
   data: AxiosResponse<any>["data"];

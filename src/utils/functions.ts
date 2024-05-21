@@ -33,6 +33,28 @@ export function formatDate(date : string | Date) {
   return new Date(date as Date).toLocaleDateString("fr-FR", options);
 }
 
+export function formatBirthDate(date : string | Date) {
+  const options : Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+
+  return new Date(date as Date).toLocaleDateString("fr-FR", options);
+}
+
+export function calculateAge(birthdate: string): number {
+  const today = new Date();
+  const birthDate = new Date(birthdate);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+
+  return age;
+}
+
 export async function checkToken() {
   const token = localStorage.getItem("token");
   const decoded : JwtPayload = jwtDecode<JwtPayload>(token || "");

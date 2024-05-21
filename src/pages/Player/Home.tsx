@@ -14,9 +14,10 @@ import { useAuth } from "@/context/Auth";
 
 export function Home(): JSX.Element {
   const { user, setHasToBeRefetch } = useAuth();
-  
+
   useEffect(() => {
-    setHasToBeRefetch(true)
+    setHasToBeRefetch(true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

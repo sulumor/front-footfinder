@@ -5,7 +5,7 @@ import { sortByAsc } from "@/utils/functions";
 import { useAuth } from "@/context/Auth";
 
 function NextMatch() {
-  const { user } = useAuth()
+  const { user } = useAuth();
   const [match, setMatch] = useState<Match>();
 
   const getNextMatch : () => Promise<void> = async () => {

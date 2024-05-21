@@ -1,5 +1,6 @@
-import { FormControl, FormLabel, Select } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import { FormControl, FormErrorMessage, FormLabel, Select } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { Form } from "@/@Types/utils";
 import crud from "@/utils/crud";
 
 interface Team {
@@ -7,31 +8,31 @@ interface Team {
   club_name: string;
 }
 
-function SelectTeam({ label, placeholder, value, onChange, required }: { label: string; placeholder: string; value: string | number; onChange: React.ChangeEventHandler; required?: boolean }) {
+export function TeamSelect({ label, placeholder, value, onChange, required }: Form) {
   const [teams, setTeams] = useState([]);
+  const isError : boolean = required && value === "";
 
   const getAllTeams = async () => {
     const responses = await crud.get(["datas", "teams"], []);
     return setTeams(responses.data);
   };
-
+  
   useEffect(() => {
     const fetchData = async () => {
       await getAllTeams();
     };
     fetchData();
   }, []);
-
+  
   return (
-    <FormControl py={4} isRequired = { required }>
+    <FormControl py={4} isRequired = { required } isInvalid={isError}>
       <FormLabel variant="h6">
         {label}
       </FormLabel>
       <Select placeholder={placeholder} value={value} onChange={onChange}>
         {teams?.map((team: Team) => <option key={team.id} value={team.id}>{team.club_name}</option>)}
       </Select>
+      <FormErrorMessage>L'équipe est requise</FormErrorMessage>
     </FormControl>
   );
 }
-
-export default SelectTeam;

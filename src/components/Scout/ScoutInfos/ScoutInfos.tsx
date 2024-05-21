@@ -8,7 +8,7 @@ import {
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { getScoutInfos } from "@/redux/Redux-reducers/scout";
-import UpdateScoutButton from "@/components/Button/updateScoutProfil"
+import UpdateScoutButton from "@/components/Button/updateScoutProfil";
 
 function ScoutInfos() {
   const id = localStorage.getItem("id");

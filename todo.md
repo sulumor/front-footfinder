@@ -2,3 +2,4 @@
 -> Mettre en place un reset password
 -> Faire page CGU
 -> Voir expiration time du refresh token
+-> Modification du sexe dans le profil

@@ -1,1 +1,1 @@
-export * from "./NextMatch"
+export * from "./NextMatch";

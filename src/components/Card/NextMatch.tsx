@@ -9,5 +9,5 @@ export function NextMatchCard () : JSX.Element {
         <NextMatchBox/>
       </CardBody>
     </Card>
-  )
+  );
 }

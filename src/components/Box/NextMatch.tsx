@@ -7,7 +7,7 @@ import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import { AddMatchButton } from "../Button";
 
 export function NextMatchBox() {
-  const { user } = useAuth()
+  const { user } = useAuth();
   const [match, setMatch] = useState<Match>();
 
   const getNextMatch : () => Promise<void> = async () => {

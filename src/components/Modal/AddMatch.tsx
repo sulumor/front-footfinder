@@ -6,9 +6,10 @@ import { useNavigate } from "react-router-dom";
 import crud from "@/utils/crud";
 import { setMatch as setMatchType } from "@/@Types";
 import { useAuth } from "@/context/Auth";
-import SelectTeam from "../Select/TeamSelect";
+import { TeamSelect } from "../Select";
+import { Modal as ModalType } from "@/@Types/utils";
 
-export function AddMatchModal ({isOpen, onClose} : {isOpen:boolean; onClose:()=>void}) : JSX.Element {
+export function AddMatchModal ({isOpen, onClose} : ModalType) : JSX.Element {
   const navigate = useNavigate();
   const {user} = useAuth();
   const [matchValues, setMatchValues] = useState<setMatchType>({
@@ -39,7 +40,7 @@ export function AddMatchModal ({isOpen, onClose} : {isOpen:boolean; onClose:()=>
     const home = matchValues.homeTeam !== 0;
     const away = matchValues.awayTeam !== 0;
     return home && away;
-  }
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -63,14 +64,14 @@ export function AddMatchModal ({isOpen, onClose} : {isOpen:boolean; onClose:()=>
                   onChange={(e) => handleChangeField("date")(e.target.value)}
                 />
               </FormControl>
-              <SelectTeam
+              <TeamSelect
                 required={true} 
                 label={"Equipe à domicile"} 
                 placeholder={"-- Équipe à domicile --"} 
                 value={matchValues.homeTeam}
                 onChange={(e : ChangeEvent<HTMLInputElement>) => handleChangeField("homeTeam")(e.target.value)}
               />
-              <SelectTeam 
+              <TeamSelect 
                 required={true}
                 label={"Equipe visiteur"}
                 placeholder = {"-- Équipe visiteur --" }
@@ -87,5 +88,5 @@ export function AddMatchModal ({isOpen, onClose} : {isOpen:boolean; onClose:()=>
           </ModalContent>
         </form>
       </Modal>
-  )
+  );
 }

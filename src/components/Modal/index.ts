@@ -1,1 +1,2 @@
-export * from "./AddMatch"
+export * from "./AddMatch";
+export * from "./EditProfil";

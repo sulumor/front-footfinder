@@ -1,17 +1,15 @@
-import { ViewOffIcon, ViewIcon } from "@chakra-ui/icons";
 import {
-  Flex, FormControl, FormLabel, Input, InputGroup, InputRightElement, Button, Box, useToast,
+  Flex, Button, useToast,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { validateEmail, validatePassword } from "@/utils/validation";
 import { useAuth } from "@/context/Auth";
 import { Login as LoginType } from "@/@Types";
+import { FormInput, PasswordInput } from "../Input";
 
 export function LoginForm(): JSX.Element {
-  const [show, setShow] = useState<boolean>(false);
   const toast = useToast();
-  const handleClick : () => void = () => setShow(!show);
   const navigate = useNavigate();
   const {
     login, error, loading, user,
@@ -57,35 +55,19 @@ export function LoginForm(): JSX.Element {
   return (
     <Flex w="80%" m="0 auto" justifyContent="center">
       <form onSubmit={handleSubmit}>
-        <FormControl id="email" mb="5">
-          <FormLabel variant="h6">Email</FormLabel>
-          <Input
-            htmlSize={24}
-            value={formValues.email}
-            onChange={(e) => handleChangeField("email")(e.target.value)}
-            placeholder="ex: john.doe@example.io"
-            size="sm"
-          />
-        </FormControl>
-        <FormControl id="password" mb="5">
-          <FormLabel variant="h6">Mot de passe</FormLabel>
-          <InputGroup size="sm">
-            <Input
-              value={formValues.password}
-              onChange={(e) => handleChangeField("password")(e.target.value)}
-              type={show ? "text" : "password"}
-              placeholder="********"
-              size="sm"
-            />
-
-            <InputRightElement w="4.5rem" onClick={handleClick}>
-              <Box>
-                {show ? <ViewOffIcon /> : <ViewIcon />}
-              </Box>
-            </InputRightElement>
-
-          </InputGroup>
-        </FormControl>
+        <FormInput 
+          required={false}
+          label={"Email"}
+          placeholder={"ex: john.doe@example.io"}
+          value={formValues.email}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("email")(e.target.value)}
+        />
+        <PasswordInput
+          required={false}
+          label={"Mot de passe"}
+          value={formValues.password}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("password")(e.target.value)}
+        />
         <Button isLoading={loading} w="full" variant="redEvo" onClick={handleSubmit} isDisabled={!setEnableButton()}>
           Se connecter
         </Button>

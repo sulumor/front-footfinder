@@ -95,6 +95,8 @@ export function SignupForm(): JSX.Element {
             placeholder="ex: john.doe@exemple.io"
           />
         </FormControl>
+
+        
         <FormControl id="password" mb="5" isRequired>
           <FormLabel variant="h6">Mot de passe</FormLabel>
           <InputGroup size="sm">
