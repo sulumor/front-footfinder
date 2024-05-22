@@ -9,8 +9,8 @@ export function NextGamesTab({ games }: { games: Match[] }): JSX.Element {
     <TabPanel>
       <Wrap spacing=" 1.5rem">
       {games.map((game: Match) => (
-        <WrapItem key={game.match_id} maxW="300px">
-          <Card align="center" size="sm">
+        <WrapItem key={game.match_id} w="300px" h="320px">
+          <Card align="center" size="sm" w="full" h="full">
             <CardHeader>
               <Text textStyle="secondTitle" noOfLines={1}>
                 {formatDate(game.date)}

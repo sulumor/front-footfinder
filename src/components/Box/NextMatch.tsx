@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Match } from "@/@Types";
 import { sortByAsc } from "@/utils/functions";
 import { useAuth } from "@/context/Auth";
-import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import { AddMatchButton } from "../Button";
 
 export function NextMatchBox() {
@@ -47,7 +47,6 @@ export function NextMatchBox() {
           {nextMatch?.home.city}
         </Text>
       </Box>
-      <Button>Edit - A faire</Button>
     </Box>
   ) : (
     <Flex flexDirection="column" gap="1rem">

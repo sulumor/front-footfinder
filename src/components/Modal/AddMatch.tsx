@@ -1,5 +1,6 @@
 import {
   Button, FormControl, FormLabel, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay,
+  Text,
 } from "@chakra-ui/react";
 import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +12,10 @@ import { Modal as ModalType } from "@/@Types/utils";
 
 export function AddMatchModal ({isOpen, onClose} : ModalType) : JSX.Element {
   const navigate = useNavigate();
-  const {user, getUser} = useAuth();
+  const { user, getUser } = useAuth();
+  const userTeam: number = user?.teams[0].team_id;
+  const [isError, setIsError] = useState<boolean>(false);
+  
   const [matchValues, setMatchValues] = useState<setMatchType>({
     homeTeam: 0,
     awayTeam: 0,
@@ -24,17 +28,14 @@ export function AddMatchModal ({isOpen, onClose} : ModalType) : JSX.Element {
 
   
   const handleSubmit : () => void = async () => {
-    const res = await addMatch();
+    setIsError(false);
+    if(Number.parseInt(matchValues.homeTeam as string, 10) !== userTeam && Number.parseInt(matchValues.awayTeam as string, 10)!== userTeam) return setIsError(true);
+    const res = await crud.post(["player", "match"], [user?.id], { ...matchValues });
     if (res.status === 201) {
-      getUser(res.data);
+      getUser(user);
       onClose();
       navigate("/player/match");
     }
-  };
-
-  const addMatch = async () => {
-    const response = await crud.post(["player", "match"], [user?.id], { ...matchValues });
-    return response;
   };
 
   const setEnableButton = () : boolean => {
@@ -45,7 +46,7 @@ export function AddMatchModal ({isOpen, onClose} : ModalType) : JSX.Element {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-        <form onSubmit={addMatch}>
+        <form onSubmit={handleSubmit}>
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>
@@ -79,6 +80,10 @@ export function AddMatchModal ({isOpen, onClose} : ModalType) : JSX.Element {
                 value={matchValues.awayTeam}
                 onChange={(e : ChangeEvent<HTMLInputElement>) => handleChangeField("awayTeam")(e.target.value)}
                 />
+                {
+                  isError &&
+                (<Text textStyle="errorForm">Une des équipes doit être celle où vous jouez</Text>)
+                }
             </ModalBody>
             <ModalFooter gap={5}>
               <Button variant="redEvo" onClick={handleSubmit} isDisabled={!setEnableButton()}>

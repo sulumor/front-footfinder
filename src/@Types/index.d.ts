@@ -76,8 +76,8 @@ export interface Match {
 }
 
 export interface setMatch {
-  homeTeam: number;
-  awayTeam: number;
+  homeTeam: number | string;
+  awayTeam: number | string;
   date: string | Date;
 }
 

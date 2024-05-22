@@ -59,8 +59,9 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
     }
   }
 
-  async function getUser(token: { id: number; }) : Promise<void> {
-    const response = await crud.get(["player"], [token.id]);
+  async function getUser(token: { id: number; role: string }) : Promise<void> {
+    const role : "" | "player" | "scout" = token.role === "joueur" ? "player" : token.role === "recruteur" ? "scout" : "";
+    const response = await crud.get([role], [token.id]);
     setUser(response.data);
     if (response.data.role === "joueur"){
       const res = await crud.get(["player", "match", "stats"], [token.id]);
