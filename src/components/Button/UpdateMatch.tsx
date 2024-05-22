@@ -6,61 +6,15 @@ import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import { formatDate } from "@/utils/functions";
 import { Match } from "@/@Types";
 import crud from "@/utils/crud";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { playerUpdate } from "../../redux/Redux-actions/player";
+import { useAuth } from "@/context/Auth";
 
-function UpdateMatch({ match }: { match:Match }) {
-  const dispatch = useAppDispatch();
-  const position: string = useAppSelector((state) => state.player.position);
-  const id = localStorage.getItem("id");
+function UpdateMatch({ match }: { match:Match }) {  
+  
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const score = match.score.split("");
-  const [patchValues, setPatchValues] = useState({
-    score: match.score,
-    scoreHome: score[0],
-    scoreAway: score[2],
-    minutes_played: match.minutes_played,
-    fitness: match.fitness,
-    yellow_card: match.yellow_card,
-    red_card: match.red_card,
-    assists: match.assists,
-    goals_scored: match.goals_scored,
-    goals_conceded: match.goals_conceded,
-    stops: match.stops,
-  });
-  const handleChangeField = (
-    match:
-    | "scoreHome"
-    | "scoreAway"
-    | "assists"
-    | "goals_scored"
-    | "minutes_played"
-    | "fitness"
-    | "yellow_card"
-    | "red_card"
-    | "goals_conceded"
-    | "stops"
-  ) => (value: string | number) => {
-    setPatchValues({ ...patchValues, [match]: value });
-  };
+  
 
-  const handleSubmit = () => {
-    updateMatchStats();
-  };
 
-  const updateMatchStats = async () => {
-    patchValues.score = `${patchValues.scoreHome}-${patchValues.scoreAway}`;
-    const { scoreHome: score_home, scoreAway: score_away, ...data } = patchValues;
-    const responses = await crud.update(
-      ["player", "match", "stats"],
-      [Number.parseInt(id!, 10), match.match_id],
-      { ...data },
-    );
-    if (responses.status === 201) {
-      dispatch(playerUpdate());
-      onClose();
-    }
-  };
+  
 
   return (
     <>
@@ -74,13 +28,13 @@ function UpdateMatch({ match }: { match:Match }) {
             <ModalHeader>Modifier les statistiques</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
-              <h3>{formatDate(match.date)}</h3>
+              <h3>{formatDate(match?.date)}</h3>
               <Divider m={2} />
               <h3>Score</h3>
               <FormControl mt={2}>
                 <Flex gap={2}>
                   <Box>
-                    <FormLabel>{match.home.club_name}</FormLabel>
+                    <FormLabel>{match?.home.club_name}</FormLabel>
                     <NumberInput min={0} defaultValue={patchValues.scoreHome} onChange={(e) => handleChangeField("scoreHome")(e)}>
                       <NumberInputField />
                       <NumberInputStepper>
@@ -90,7 +44,7 @@ function UpdateMatch({ match }: { match:Match }) {
                     </NumberInput>
                   </Box>
                   <Box>
-                    <FormLabel>{match.away.club_name}</FormLabel>
+                    <FormLabel>{match?.away.club_name}</FormLabel>
                     <NumberInput min={0} defaultValue={patchValues.scoreAway} onChange={(e) => handleChangeField("scoreAway")(e)}>
                       <NumberInputField />
                       <NumberInputStepper>

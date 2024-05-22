@@ -1,77 +1,63 @@
 import {
-  Button,
   Tabs,
   TabList,
   Tab,
   TabPanels,
+  Box,
+  Heading,
 } from "@chakra-ui/react";
-
-import { isMobile } from "react-device-detect";
-
-import "./Match.scss";
 import { useEffect, useState } from "react";
-import crud from "@/utils/crud";
 import { Match as MatchType } from "@/@Types";
 import { sortByAsc, sortByDesc } from "@/utils/functions";
-import PastMatchesTab from "../../components/Match/PastMatchesTab";
-import FutureMatchesTab from "../../components/Match/FutureMatchesTab";
-import { useAppSelector } from "@/hooks/redux";
+import { NextGamesTab, PastGamesTab } from "@/components/Tab";
+import { useAuth } from "@/context/Auth";
+import { AddMatchButton } from "@/components/Button";
 
-function Match() {
-  const [matches, setMatches] = useState<MatchType[]>([]);
-  let pastMatches: MatchType[] = [];
-  let futureMatches: MatchType[] = [];
-  const count : number = useAppSelector((state) => state.player.count);
-  const id : string | null = localStorage.getItem("id");
+export function Match() {
+  const { user, userGames, setHasToBeRefetch } = useAuth();
+  const [nextGames, setNextGames] = useState<MatchType[]>([]);
+  const [pastGames, setPastGames] = useState<MatchType[]>([]);
 
-  const getAllMatchs = async () => {
-    const response = await crud.get(["player", "match", "stats"], [Number.parseInt(id!, 10)]);
-    return setMatches(response.data);
-  };
 
-  matches.forEach((match: MatchType) => {
-    if (new Date(match.date) < new Date()) {
-      pastMatches.push(match);
-    } else {
-      futureMatches.push(match);
-    }
-  });
-
-  pastMatches = sortByDesc(pastMatches);
-  futureMatches = sortByAsc(futureMatches);
   useEffect(() => {
-    const fetchData = async () => {
-      await getAllMatchs();
+    const sortGames : () => void = () => {
+      const next: MatchType[] = [];
+      const last : MatchType[] = [];
+      userGames?.forEach((match: MatchType) => {
+        if (new Date(match.date) <= new Date()) {
+          last.push(match);
+        } else {
+          next.push(match);
+        }
+      });
+      setNextGames(sortByAsc(next));
+      setPastGames(sortByDesc(last));
     };
-    fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [count]);
+    sortGames();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userGames]);
+  
+  useEffect(() => {
+    setHasToBeRefetch(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   return (
-    <>
-      <div className={isMobile ? "mobile_card_container": "matches_main"}>
-        <Tabs variant="soft-rounded" colorScheme="green">
+    <Box h="100%" p={10}>
+      <Heading as="h2" variant="h2">Vos matchs et leurs statistiques</Heading>
+      <Box w={{base:"full", md:"12vw"}} position="relative" left={{base: 0, md: "80vw"}}>
+        <AddMatchButton/>
+      </Box>
+        <Tabs variant="soft-rounded" colorScheme="red">
           <TabList>
-            <div className={isMobile ? "mobile_tab_panels_title" : "tab_panels_title"}>
-              <Tab>Historique</Tab>
               <Tab>A venir</Tab>
-            </div>
+              <Tab>Historique</Tab>
           </TabList>
           <TabPanels>
-            <PastMatchesTab matches={pastMatches} />
-            <FutureMatchesTab matches={futureMatches} />
+            <NextGamesTab games={nextGames}/>
+            <PastGamesTab games={pastGames} />
           </TabPanels>
         </Tabs>
-      </div>
-      {isMobile
-        ? (
-          <div className="mobile_match_button">
-            <Button colorScheme="teal">Voir plus de matchs</Button>
-          </div>
-        )
-        : ""}
-    </>
+    </Box>
   );
 }
-
-export default Match;

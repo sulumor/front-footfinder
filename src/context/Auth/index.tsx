@@ -3,13 +3,14 @@ import { jwtDecode } from "jwt-decode";
 import {
   ReactNode, createContext, useContext, useEffect, useState,
 } from "react";
-import { PlayerView, ScoutView } from "@/@Types";
+import { Match, PlayerView, ScoutView } from "@/@Types";
 import crud from "@/utils/crud";
 
 const AuthContext = createContext({});
 
 export function AuthProvider({ children }: { children: ReactNode }): JSX.Element {
   const [user, setUser] = useState<PlayerView | ScoutView | null>(null);
+  const [userGames, setUserGames] = useState<Match[] | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [hasToBeRefetch, setHasToBeRefetch] = useState<boolean>(false);
@@ -61,6 +62,10 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
   async function getUser(token: { id: number; }) : Promise<void> {
     const response = await crud.get(["player"], [token.id]);
     setUser(response.data);
+    if (response.data.role === "joueur"){
+      const res = await crud.get(["player", "match", "stats"], [token.id]);
+      setUserGames(res.data);
+    }
   }
 
   function logout(): void {
@@ -71,7 +76,7 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
 
   return (
     <AuthContext.Provider value={{
-      user, error, loading, login, logout, setHasToBeRefetch, getUser
+      user, error, loading, login, logout, setHasToBeRefetch, getUser, userGames
     }}
     >
       {children}

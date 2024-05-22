@@ -2,9 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 
 import Home from "@/pages";
 import ErrorPage from "@/pages/Error/Error";
-import Match from "@/pages/Player/Match";
 import ScoutHome from "@/pages/Scout/ScoutHome";
-import { Home as Player, ProfilPlayer }  from "@/pages/Player";
+import { Home as Player, ProfilPlayer, Match }  from "@/pages/Player";
 import PlayerForScout from "@/components/PlayerForScout/PlayerForScout";
 import { Signup, Login } from "@/pages/Auth";
 import SigninPlayer from "@/pages/Signin/SigninPlayer";
@@ -32,8 +31,8 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Player /> },
       { path: "/player/me", element: <ProfilPlayer /> },
+      { path: "/player/match", element: <Match /> },
       // { path: "/player/:id", element: <PlayerForScout /> },
-      // { path: "/player/match", element: <Match /> },
       // { path: "/player/create", element: <SigninPlayer /> },
     ],
   },

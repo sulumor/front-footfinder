@@ -11,7 +11,7 @@ import { Modal as ModalType } from "@/@Types/utils";
 
 export function AddMatchModal ({isOpen, onClose} : ModalType) : JSX.Element {
   const navigate = useNavigate();
-  const {user} = useAuth();
+  const {user, getUser} = useAuth();
   const [matchValues, setMatchValues] = useState<setMatchType>({
     homeTeam: 0,
     awayTeam: 0,
@@ -26,6 +26,7 @@ export function AddMatchModal ({isOpen, onClose} : ModalType) : JSX.Element {
   const handleSubmit : () => void = async () => {
     const res = await addMatch();
     if (res.status === 201) {
+      getUser(res.data);
       onClose();
       navigate("/player/match");
     }

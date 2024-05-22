@@ -17,26 +17,26 @@ export function ProfilPlayer() : JSX.Element {
   }, [user]);
 
   return (
-      <Flex p={10} flexDirection="column" gap="2rem">
-        <Flex my="2" gap={6}>
-          <Avatar
-            size="2xl"
-            name={user?.lastname}
-            src={user?.avatar === "SVG" ?  "https://bit.ly/kent-c-dodds" : user?.avatar}
-          />
-          <Box ml="4">
-            <Text textStyle="secondTitle">
-              {user?.firstname}
-            </Text>
-            <Text fontWeight="bold" textStyle="secondTitle">
-              {user?.lastname}
-            </Text>          
-            <Text fontSize="mainText">{user?.position}</Text>
-          </Box>
-        </Flex>
-        <ProfilInformation/>
-        <UpdateProfilButton alignSelf={"center"}/>
+    <Flex p={10} flexDirection="column" gap="2rem">
+      <Flex my="2" gap={6}>
+        <Avatar
+          size="2xl"
+          name={user?.lastname}
+          src={user?.avatar === "SVG" ?  "https://bit.ly/kent-c-dodds" : user?.avatar}
+        />
+        <Box ml="4">
+          <Text textStyle="secondTitle">
+            {user?.firstname}
+          </Text>
+          <Text fontWeight="bold" textStyle="secondTitle">
+            {user?.lastname}
+          </Text>          
+          <Text fontSize="mainText">{user?.position}</Text>
+        </Box>
       </Flex>
+      <ProfilInformation/>
+      <UpdateProfilButton alignSelf={"center"}/>
+    </Flex>
   );
 }
 

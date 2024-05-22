@@ -1,23 +1,20 @@
 import { Button } from "@chakra-ui/react";
 import crud from "@/utils/crud";
-import { useAppDispatch } from "../../hooks/redux";
-import { updateMatch } from "../../redux/Redux-actions/player";
+import { useAuth } from "@/context/Auth";
 
 function DeleteMatchButton({ matchId }: { matchId: string }) {
-  const id: string | null = localStorage.getItem("id");
-  const dispatch = useAppDispatch();
+  const { user, getUser } = useAuth();
 
-  const handleClick = async () => {
+  const handleClick : () => Promise<void> = async () => {
     const response = await crud.delete(
       ["player", "match"],
-      [Number.parseInt(id!, 10), Number.parseInt(matchId!, 10)],
+      [user?.id, Number.parseInt(matchId!, 10)],
     );
-    dispatch(updateMatch());
-    return response.data;
+    if(response.status === 204) getUser(user);
   };
 
   return (
-    <Button colorScheme="red" size="sm" onClick={handleClick}>
+    <Button variant="redEvo" onClick={handleClick}>
       Supprimer
     </Button>
   );

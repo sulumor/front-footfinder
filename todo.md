@@ -3,3 +3,5 @@
 -> Faire page CGU
 -> Voir expiration time du refresh token
 -> Modification du sexe dans le profil
+-> Gestion des heures dans les matchs
+-> Voir pour modifier la modification du profil => clique sur modifier tous les champs se transforme en input
