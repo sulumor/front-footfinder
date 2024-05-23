@@ -5,14 +5,12 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
-
-import { NextMatchCard } from "@/components/Card";
 import Chart from "@/components/Chart/Chart";
-import FollowByScouts from "@/components/Card/FollowByScouts";
-
+import { NextMatchCard } from "@/components/Card";
+import { ScoutsListBox } from "@/components/Box";
 import { useAuth } from "@/context/Auth";
 
-export function Home(): JSX.Element {
+export function HomePlayer(): JSX.Element {
   const { user, setHasToBeRefetch } = useAuth();
 
   useEffect(() => {
@@ -29,7 +27,7 @@ export function Home(): JSX.Element {
         <Flex flexDirection="column" gap="1.5rem" p="1rem">
           <NextMatchCard/>
           <Divider />
-          <FollowByScouts />
+          <ScoutsListBox />
         </Flex>
         <Chart/>
       </Flex> 

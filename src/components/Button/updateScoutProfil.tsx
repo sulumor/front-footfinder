@@ -18,14 +18,12 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import crud from "@/utils/crud";
-import { scoutUpdate } from "../../redux/Redux-actions/scout";
-import { useAppDispatch } from "../../hooks/redux";
-import { getScoutInfos } from "../../redux/Redux-reducers/scout";
+import { useAuth } from "@/context/Auth";
 
 function UpdateScoutButton() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const id = localStorage.getItem("id");
-  const dispatch = useAppDispatch();
+  const { user } = useAuth();
+  const id = user?.id;
 
   const [patchValues, setPatchValues] = useState({
     firstname: "",
@@ -48,7 +46,7 @@ function UpdateScoutButton() {
       ...patchValues,
     });
     if (response.status === 201) {
-      dispatch(scoutUpdate());
+      // dispatch(scoutUpdate());
       onClose();
     }
     return response.data;
@@ -56,13 +54,13 @@ function UpdateScoutButton() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await dispatch(getScoutInfos(id));
-      setPatchValues({ ...patchValues, firstname: res.payload.firstname });
-      patchValues.firstname = res.payload.firstname;
-      patchValues.lastname = res.payload.lastname;
-      patchValues.email = res.payload.email;
-      patchValues.city = res.payload.city;
-      patchValues.club = res.payload.club;
+      // const res = await dispatch(getScoutInfos(id));
+      // setPatchValues({ ...patchValues, firstname: res.payload.firstname });
+      // patchValues.firstname = res.payload.firstname;
+      // patchValues.lastname = res.payload.lastname;
+      // patchValues.email = res.payload.email;
+      // patchValues.city = res.payload.city;
+      // patchValues.club = res.payload.club;
     };
     fetchData();
   }, []);

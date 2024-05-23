@@ -2,7 +2,7 @@ import { Avatar, Box, Flex, Heading, Text, Tooltip, Wrap, WrapItem} from "@chakr
 import { ScoutView } from "@/@Types";
 import { useAuth } from "@/context/Auth";
 
-function FollowByScouts() {
+export function ScoutsListBox() {
   const { user } = useAuth();
 
   const scouts : ScoutView[] = user?.scouts;
@@ -37,5 +37,3 @@ function FollowByScouts() {
     </Box>
   );
 }
-
-export default FollowByScouts;

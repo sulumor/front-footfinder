@@ -6,7 +6,7 @@ import {
 import { isMobile } from "react-device-detect";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import FollowByScouts from "@/components/Card/FollowByScouts";
+import FollowByScouts from "@/components/Box/ScoutsList";
 
 import Chart from "@/components/Chart/Chart";
 import crud from "@/utils/crud";

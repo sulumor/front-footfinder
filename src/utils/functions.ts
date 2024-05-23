@@ -62,3 +62,9 @@ export async function checkToken() {
 
   if (token !== null && (decoded.exp)! < Math.floor(Date.now() / 1000)) await crud.token();
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function plurials(array: any[]):string{
+  if (array?.length > 1) return "s";
+  return "";
+}

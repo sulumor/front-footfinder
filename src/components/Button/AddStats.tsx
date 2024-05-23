@@ -1,5 +1,5 @@
 import { Button, useDisclosure } from "@chakra-ui/react";
-import { EditGameModal } from "../Modal/EditGame";
+import { EditGameModal } from "../Modal";
 import { Match } from "@/@Types";
 
 export function AddStatsBtn ({game} : { game : Match}) : JSX.Element {

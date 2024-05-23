@@ -14,9 +14,11 @@ const {user} = useAuth();
         <Flex mb="2">
           <Text textStyle="h5">Ville</Text>
           <Text ml="2" textStyle="text">
-            {user?.teams[0]?.city}
+            {user?.role === "joueur" ? user?.teams[0]?.city : user?.city}
           </Text>
         </Flex>
+        {user?.role === "joueur" && (
+        <>
         <Flex mb="2">
           <Text textStyle="h5">Sexe</Text>
           <Text ml="2" textStyle="text">
@@ -47,15 +49,18 @@ const {user} = useAuth();
             {user?.strong_foot}
           </Text>
         </Flex>
+        </>
+      )}
         <Flex mb="2">
           <Text textStyle="h5">Club</Text>
           <Text ml="2" textStyle="text">
-            {user?.teams[0]?.club_name}
+            {user?.role === "joueur" ? user?.teams[0]?.club_name : user?.club}
           </Text>
         </Flex>
       </MobileView>
 
       <BrowserView>
+      { user?.role === "joueur" ? ( 
         <Grid templateColumns="repeat(4, 1fr)" templateRows="repeat(3, 1fr)" gap={5}>
           <GridItem rowStart={1} colStart={1}>
             <Text mb="2" textStyle="h5">
@@ -124,7 +129,23 @@ const {user} = useAuth();
             <Text textStyle="text">{user?.email}</Text>
           </GridItem>
         </Grid>
+    ) : (
+      <Flex mb="2" gap={4}>
+        <Flex>
+          <Text textStyle="h5">Ville</Text>
+          <Text ml="2" textStyle="text">
+            {user?.city}
+          </Text>
+        </Flex>
+        <Flex>
+        <Text textStyle="h5">Club</Text>
+          <Text ml="2" textStyle="text">
+            {user?.club}
+          </Text>
+        </Flex>
+      </Flex>
+    )}
       </BrowserView>
-    </Box>
+      </Box>
   );
 }

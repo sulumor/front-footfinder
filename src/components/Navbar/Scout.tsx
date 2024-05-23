@@ -39,9 +39,14 @@ export function ScoutNavbar(): JSX.Element {
                 icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
               />
               <MenuList>
+              <MenuItem>
+                  <NavLink to="/scout/me">
+                    <Button variant="redEvo">Profil</Button>
+                  </NavLink>
+                </MenuItem>
                 <MenuItem>
                   <NavLink to="/scout/search">
-                    <Button variant="redEvo">Recherche</Button>
+                    <Button colorScheme="teal">Recherche</Button>
                   </NavLink>
                 </MenuItem>
                 <MenuItem>
@@ -61,8 +66,11 @@ export function ScoutNavbar(): JSX.Element {
         </Text>
       </NavLink>
       <Flex align="center" justify="space-between" gap="0.5rem">
+      <NavLink to="/scout/me">
+          <Button variant="redEvo">Profil</Button>
+        </NavLink>
         <NavLink to="/scout/search">
-          <Button variant="redEvo">Recherche</Button>
+          <Button colorScheme="teal">Recherche</Button>
         </NavLink>
         <LogoutBtn />
       </Flex>

@@ -9,7 +9,7 @@ import { UpdateProfilButton } from "@/components/Button";
 import { useAuth } from "@/context/Auth";
 import { ProfilInformation } from "@/components/Informations/Profil";
 
-export function ProfilPlayer() : JSX.Element {
+export function Profil() : JSX.Element {
   const { user, setHasToBeRefetch } = useAuth();
   useEffect(() => {
     setHasToBeRefetch(true);
@@ -31,7 +31,7 @@ export function ProfilPlayer() : JSX.Element {
           <Text fontWeight="bold" textStyle="secondTitle">
             {user?.lastname}
           </Text>          
-          <Text fontSize="mainText">{user?.position}</Text>
+          {user?.role === "joueur" && (<Text fontSize="mainText">{user?.position}</Text>)}
         </Box>
       </Flex>
       <ProfilInformation/>

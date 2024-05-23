@@ -2,24 +2,18 @@ import { Modal as ModalType } from "@/@Types/utils";
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter } from "@chakra-ui/modal";
 import { FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
 import { ChangeEvent, useState } from "react";
-import { FootSelect, NationalitySelect, PositionSelect } from "../Select";
 import { useAuth } from "@/context/Auth";
 import crud from "@/utils/crud";
-import { PlayerPatch } from "@/@Types";
+import {  ScoutPatch } from "@/@Types";
 import { FormInput } from "../Input/Form";
 
-export function EditProfilModal({isOpen, onClose} : ModalType) : JSX.Element {
+export function EditScoutModal({isOpen, onClose} : ModalType) : JSX.Element {
   const { user, getUser } = useAuth();
   
-  const [patchValues, setPatchValues] = useState<PlayerPatch>({
+  const [patchValues, setPatchValues] = useState<ScoutPatch>({
     firstname: user?.firstname,
     lastname: user?.lastname,
     email: user?.email,
-    position: user?.position,
-    nationality: user?.nationality,
-    strong_foot: user?.strong_foot,
-    height: user?.height,
-    weight: user?.weight,
   });
 
   const handleChangeField = (
@@ -27,17 +21,12 @@ export function EditProfilModal({isOpen, onClose} : ModalType) : JSX.Element {
     | "firstname"
     | "lastname"
     | "email"
-    | "position"
-    | "nationality"
-    | "strong_foot"
-    | "height"
-    | "weight"
   ) => (value: string | number) => {
     setPatchValues({ ...patchValues, [user]: value });
   };
 
   const handleSubmit = async () : Promise<void> => {
-    const response = await crud.update(["player"], [user?.id], {
+    const response = await crud.update(["scout"], [user?.id], {
       ...patchValues,
     });
         
@@ -79,42 +68,7 @@ export function EditProfilModal({isOpen, onClose} : ModalType) : JSX.Element {
                 value={patchValues?.email}
                 onChange={(e : ChangeEvent<HTMLInputElement>) => handleChangeField("email")(e.target.value)}
 
-              /> 
-
-              <NationalitySelect 
-                required = {true}
-                value={patchValues?.nationality}
-                onChange={(e : ChangeEvent<HTMLInputElement>) => handleChangeField("nationality")(e.target.value)}
-              />
-              <PositionSelect 
-                required={true}
-                value={patchValues?.position}
-                onChange={(e : ChangeEvent<HTMLInputElement>) => handleChangeField("position")(e.target.value)} 
-              />
-
-              <FormInput 
-                required={true}
-                label={"Taille (en cm)"}
-                placeholder={"ex: 183"}
-                value={patchValues?.height}
-                onChange={(e : ChangeEvent<HTMLInputElement>) => handleChangeField("height")(e.target.value)}
-
-              /> 
-              <FormInput 
-                required={true}
-                label={"Poids (en kg)"}
-                placeholder={"ex: 63"}
-                value={patchValues?.weight}
-                onChange={(e : ChangeEvent<HTMLInputElement>) => handleChangeField("weight")(e.target.value)}
-
-              /> 
-              
-              <FootSelect
-                required={true}
-                value={patchValues?.strong_foot}
-                onChange={(e : ChangeEvent<HTMLInputElement>) => handleChangeField("strong_foot")(e.target.value)}
-              />
-              
+              />               
               <FormControl mt={4}>
                 <FormLabel>Photo</FormLabel>
                 <Input size="md" type="file" />

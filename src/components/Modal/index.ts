@@ -1,2 +1,4 @@
 export * from "./AddMatch";
-export * from "./EditProfil";
+export * from "./EditPlayer";
+export * from "./EditGame";
+export * from "./EditScout";

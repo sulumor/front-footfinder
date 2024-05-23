@@ -30,6 +30,12 @@ export interface UserState {
   email: string;
 }
 
+export interface ScoutPatch {
+  firstname: string;
+  lastname: string;
+  email: string;
+}
+
 export interface Login {
   email: string;
   password: string;
