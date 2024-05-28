@@ -8,7 +8,7 @@ export interface Modal {
 export interface Form {
   label?: string; 
   placeholder?: string; 
-  value: string | number; 
+  value?: string | number; 
   onChange: React.ChangeEventHandler; 
   required: boolean;
 }

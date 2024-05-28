@@ -2,14 +2,13 @@ import { createBrowserRouter } from "react-router-dom";
 
 import Home from "@/pages";
 import ErrorPage from "@/pages/Error/Error";
-import { HomeScout } from "@/pages/Scout/Home";
+import { HomeScout, Search } from "@/pages/Scout";
 import { HomePlayer, Match }  from "@/pages/Player";
 import PlayerForScout from "@/components/PlayerForScout/PlayerForScout";
 import { Signup, Login } from "@/pages/Auth";
 import SigninPlayer from "@/pages/Signin/SigninPlayer";
 import SigninScout from "@/pages/Signin/SigninScout";
 import NoticesPage from "@/pages/Notices/NoticesPage";
-import SearchPage from "@/pages/Scout/SearchPage";
 import { GuestLayout, PlayerLayout, ScoutLayout } from "@/components/Layout";
 import { Profil } from "@/pages/Common";
 
@@ -43,8 +42,8 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <HomeScout /> },
       { path: "/scout/me", element: <Profil /> },
-      { path: "/scout/create", element: <SigninScout /> },
-      { path: "/scout/search", element: <SearchPage /> },
+      { path: "/scout/search", element: <Search/> },
+      // { path: "/scout/create", element: <SigninScout /> },
     ],
   },
 ]);

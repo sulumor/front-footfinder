@@ -1,7 +1,7 @@
 import { Form } from "@/@Types/utils";
 import { FormControl, FormErrorMessage, FormLabel, Select } from "@chakra-ui/react";
 
-export function NationalitySelect({ value, onChange, required }: Form) {
+export function NationalitySelect({ value, onChange, required, placeholder="-- Votre nationalité --" }: Form) {
   const isError : boolean = required && value === "";
   
   return (
@@ -9,7 +9,7 @@ export function NationalitySelect({ value, onChange, required }: Form) {
       <FormLabel variant="h6">
         Nationalité
       </FormLabel>
-      <Select placeholder="-- Votre nationalité --" value={value} onChange={onChange}>
+      <Select placeholder={placeholder} value={value} onChange={onChange}>
           <option value="Français">Français</option>
           <option value="Brésilien">Brésilien</option>
           <option value="Espagnol">Espagnol</option>

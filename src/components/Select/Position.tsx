@@ -8,7 +8,7 @@ interface Position {
   label: string;
 }
 
-export function PositionSelect({ value, onChange, required }: Form) {
+export function PositionSelect({ value, onChange, required, placeholder="-- Votre position --" }: Form) {
   const [positions, setPositions] = useState([]);
   const isError : boolean = required && value === "";
   
@@ -30,7 +30,7 @@ export function PositionSelect({ value, onChange, required }: Form) {
       <FormLabel variant="h6">
         Position
       </FormLabel>
-      <Select placeholder="-- Votre position --" value={value} onChange={onChange}>
+      <Select placeholder={placeholder} value={value} onChange={onChange}>
         {positions?.map((position: Position) => 
           <option key={position.id} value={position.label}>
             {position.label}

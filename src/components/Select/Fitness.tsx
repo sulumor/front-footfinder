@@ -1,7 +1,7 @@
 import { Form } from "@/@Types/utils";
 import { FormControl, FormErrorMessage, FormLabel, Select } from "@chakra-ui/react";
 
-export function FitnessSelect({ value, onChange, required }: Form) {
+export function FitnessSelect({ value, onChange, required, placeholder = "-- État de forme --" }: Form) {
   const isError : boolean = required && value === "";
   
   return (
@@ -9,7 +9,7 @@ export function FitnessSelect({ value, onChange, required }: Form) {
       <FormLabel variant="h6">
         État de forme
       </FormLabel>
-      <Select placeholder="-- État de forme --" value={value} onChange={onChange}>
+      <Select placeholder={placeholder} value={value} onChange={onChange}>
         <option value="En forme">En forme</option>
         <option value="absent">absent</option>
         <option value="blessé">blesse</option>
