@@ -1,5 +1,6 @@
 import { Match } from "@/@Types";
 import { useAuth } from "@/context/Auth";
+import { plurials } from "@/utils/functions";
 import { Text, Wrap, WrapItem } from "@chakra-ui/react";
 
 export function StatsBox ({ game } : {game: Match}) : JSX.Element {
@@ -25,10 +26,10 @@ export function StatsBox ({ game } : {game: Match}) : JSX.Element {
       ) : (
         <>
         <WrapItem>
-            <Text> But(s) marqué(s) : {game?.goals_scored}</Text>
+            <Text> But{plurials(game?.goals_scored)} marqué{plurials(game?.goals_scored)} : {game?.goals_scored}</Text>
           </WrapItem>
           <WrapItem>
-            <Text> Passe(s) décisive(s) : {game?.assists}</Text>
+            <Text> Passe{plurials(game?.assists)} décisive{plurials(game?.assists)} : {game?.assists}</Text>
           </WrapItem>
         </>
       )}

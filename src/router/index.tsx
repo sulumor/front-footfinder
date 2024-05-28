@@ -4,7 +4,6 @@ import Home from "@/pages";
 import ErrorPage from "@/pages/Error/Error";
 import { HomeScout, Search } from "@/pages/Scout";
 import { HomePlayer, Match }  from "@/pages/Player";
-import PlayerForScout from "@/components/PlayerForScout/PlayerForScout";
 import { Signup, Login } from "@/pages/Auth";
 import SigninPlayer from "@/pages/Signin/SigninPlayer";
 import SigninScout from "@/pages/Signin/SigninScout";
@@ -32,7 +31,6 @@ export const router = createBrowserRouter([
       { index: true, element: <HomePlayer /> },
       { path: "/player/me", element: <Profil /> },
       { path: "/player/match", element: <Match /> },
-      // { path: "/player/:id", element: <PlayerForScout /> },
       // { path: "/player/create", element: <SigninPlayer /> },
     ],
   },

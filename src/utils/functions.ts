@@ -64,7 +64,8 @@ export async function checkToken() {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function plurials(array: any[]):string{
-  if (array?.length > 1) return "s";
+export function plurials(arg: any[] | number):string{
+  if (typeof arg === "number") return arg > 1 ? "s" : "";
+  if (arg?.length > 1) return "s";
   return "";
 }

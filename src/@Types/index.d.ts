@@ -62,6 +62,7 @@ export interface Team {
   city: string;
   longitude: string;
   latitude: string;
+  season?: string;
 }
 
 export interface Match {
