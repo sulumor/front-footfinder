@@ -13,7 +13,7 @@ import { Modal as ModalType } from "@/@Types/utils";
 export function AddMatchModal ({isOpen, onClose} : ModalType) : JSX.Element {
   const navigate = useNavigate();
   const { user, getUser } = useAuth();
-  const userTeam: number = user?.teams[0].team_id;
+  const userTeam: number = user?.teams[0]?.team_id;
   const [isError, setIsError] = useState<boolean>(false);
   
   const [matchValues, setMatchValues] = useState<setMatchType>({

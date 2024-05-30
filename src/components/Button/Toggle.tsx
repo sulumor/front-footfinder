@@ -11,7 +11,7 @@ export function ToggleBtn({ setJob }: { setJob: any }): JSX.Element {
   };
 
   return (
-    <Flex bg={colors.toggleGrey} borderRadius="10px" maxW="300px">
+    <Flex bg={colors.toggleGrey} borderRadius="10px" maxW="300px" m="0 auto">
       <Box
         borderRadius="10px"
         onClick={() => ChangeProperty(property)}

@@ -3,7 +3,7 @@ import { jwtDecode } from "jwt-decode";
 import {
   ReactNode, createContext, useContext, useEffect, useState,
 } from "react";
-import { Match, PlayerView, ScoutView } from "@/@Types";
+import { Login, Match, PlayerView, ScoutView, Signup } from "@/@Types";
 import crud from "@/utils/crud";
 
 const AuthContext = createContext({});
@@ -39,13 +39,13 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
 
 
 
-  async function login({ email, password }: { email: string; password: string }): Promise<void> {
+  async function login(body: Login): Promise<void> {
     setLoading(true);
     setError("");
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACK}/login`,
-        { email, password },
+        body,
       );     
       setLoading(false);
       localStorage.setItem("token", response.data.accessToken);
@@ -69,6 +69,27 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
     }
   }
 
+  async function signup(body : Signup ) : Promise<void> {
+    setLoading(true);
+    setError("");
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACK}/register`, 
+        body,
+      );
+      setLoading(false);
+      localStorage.setItem("token", response.data.accessToken);
+      getUser(jwtDecode(response.data.accessToken));
+      return jwtDecode(response.data.accessToken);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.message === "Network Error") setError("Erreur dans le réseau");
+        if (error.message.includes("failed")) setError(error.response?.data.error);
+        setLoading(false);
+      }
+    }
+  }
+
   function logout(): void {
     localStorage.removeItem("token");
     setUser(null);
@@ -77,7 +98,7 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
 
   return (
     <AuthContext.Provider value={{
-      user, error, loading, login, logout, setHasToBeRefetch, getUser, userGames
+      user, error, loading, login, logout, setHasToBeRefetch, getUser, userGames, signup
     }}
     >
       {children}

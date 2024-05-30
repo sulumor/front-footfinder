@@ -1,13 +1,18 @@
-import { Modal as ModalType } from "@/@Types/utils";
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter } from "@chakra-ui/modal";
 import { FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useAuth } from "@/context/Auth";
 import crud from "@/utils/crud";
 import {  ScoutPatch } from "@/@Types";
 import { FormInput } from "../Input/Form";
 
-export function EditScoutModal({isOpen, onClose} : ModalType) : JSX.Element {
+export interface ModalType {
+  isOpen:boolean; 
+  onClose:() => void;
+  signup?: boolean
+}
+
+export function EditScoutModal({isOpen, onClose, signup = false} : ModalType) : JSX.Element {
   const { user, getUser } = useAuth();
   
   const [patchValues, setPatchValues] = useState<ScoutPatch>({
@@ -35,14 +40,22 @@ export function EditScoutModal({isOpen, onClose} : ModalType) : JSX.Element {
       onClose();
     }
   };
+
+  useEffect(() => {
+    setPatchValues({
+      firstname: user?.firstname,
+      lastname: user?.lastname,
+      email: user?.email,
+    });
+  }, [user]);
   
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
         <form onSubmit={handleSubmit}>
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>Modifiez vos informations</ModalHeader>
-            <ModalCloseButton />
+            <ModalHeader>{signup ? "Renseignez vos information" : "Modifiez vos informations"}</ModalHeader>
+            {!signup && <ModalCloseButton />} 
             <ModalBody pb={6}>
               
               <FormInput 
@@ -78,12 +91,12 @@ export function EditScoutModal({isOpen, onClose} : ModalType) : JSX.Element {
             <ModalFooter>
               <Button
                 onClick={handleSubmit}
-                colorScheme="teal"
+                variant="redEvo"
                 mr={3}
               >
-                Modifier
+               {signup ? "Enregistrer": "Modifier"}
               </Button>
-              <Button onClick={onClose}>Annuler</Button>
+              { !signup && <Button onClick={onClose}>Annuler</Button> }
             </ModalFooter>
           </ModalContent>
         </form>

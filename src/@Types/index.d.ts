@@ -9,20 +9,20 @@ export interface ScoutState {
 }
 
 export interface ScoutView {
-  id:number;
+  id: number;
   scout_id: number;
-  role:string;
+  role: string;
   firstname: string;
   lastname: string;
   email: string;
-  avatar:string;
+  avatar: string;
   club: string,
   city: string,
   players_id: number[],
 }
 
 export interface UserState {
-  pwd:string;
+  pwd: string;
   logged: boolean;
   role?: string;
   id?: string | number;
@@ -39,6 +39,15 @@ export interface ScoutPatch {
 export interface Login {
   email: string;
   password: string;
+}
+
+export interface Signup { 
+  email: string; 
+  lastname: string; 
+  firstname: string; 
+  password: string; 
+  confirmedPassword: string;
+  role: string; 
 }
 
 // ----------------Type Player ----------
@@ -69,7 +78,7 @@ export interface Match {
   id: number;
   match_id: number;
   score: string;
-  date: string | Date ;
+  date: string | Date;
   assists: number;
   goals_conceded: number;
   red_card: number;
@@ -112,12 +121,12 @@ export interface PlayerPatch {
 export interface PlayerView {
   id: number;
   player_id: number;
-  role:string;
+  role: string;
   firstname: string;
   lastname: string;
-  email:string;
+  email: string;
   avatar: string;
-  genre:string;
+  genre: string;
   birth_date: string;
   nationality: string;
   position: string;
@@ -131,12 +140,12 @@ export interface PlayerView {
 export interface PlayerState {
   id: number;
   player_id: number;
-  role:string;
+  role: string;
   firstname: string;
   lastname: string;
-  email:string;
+  email: string;
   avatar: string;
-  genre:string;
+  genre: string;
   birth_date: string;
   nationality: string;
   position: string;
@@ -146,5 +155,5 @@ export interface PlayerState {
   number_of_matches_played: number;
   scouts: ScoutView[];
   teams: Team[];
-  count:number;
+  count: number;
 }

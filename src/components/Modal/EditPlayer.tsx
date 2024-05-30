@@ -1,16 +1,21 @@
-import { Modal as ModalType } from "@/@Types/utils";
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter } from "@chakra-ui/modal";
 import { FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { FootSelect, NationalitySelect, PositionSelect } from "../Select";
 import { useAuth } from "@/context/Auth";
 import crud from "@/utils/crud";
 import { PlayerPatch } from "@/@Types";
 import { FormInput } from "../Input/Form";
 
-export function EditPlayerModal({isOpen, onClose} : ModalType) : JSX.Element {
+export interface ModalType {
+  isOpen:boolean; 
+  onClose:() => void;
+  signup?: boolean
+}
+
+export function EditPlayerModal({isOpen, onClose, signup = false} : ModalType) : JSX.Element {
   const { user, getUser } = useAuth();
-  
+
   const [patchValues, setPatchValues] = useState<PlayerPatch>({
     firstname: user?.firstname,
     lastname: user?.lastname,
@@ -45,15 +50,28 @@ export function EditPlayerModal({isOpen, onClose} : ModalType) : JSX.Element {
       getUser(user);
       onClose();
     }
-  };
+  }; 
+
+  useEffect(() => {
+    setPatchValues({
+      firstname: user?.firstname,
+      lastname: user?.lastname,
+      email: user?.email,
+      position: user?.position,
+      nationality: user?.nationality,
+      strong_foot: user?.strong_foot,
+      height: user?.height,
+      weight: user?.weight,
+    });
+  }, [user]);
   
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
         <form onSubmit={handleSubmit}>
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>Modifiez vos informations</ModalHeader>
-            <ModalCloseButton />
+            <ModalHeader>{signup ? "Renseignez vos information" : "Modifiez vos informations"} </ModalHeader>
+            {!signup && <ModalCloseButton />} 
             <ModalBody pb={6}>
               
               <FormInput 
@@ -124,12 +142,12 @@ export function EditPlayerModal({isOpen, onClose} : ModalType) : JSX.Element {
             <ModalFooter>
               <Button
                 onClick={handleSubmit}
-                colorScheme="teal"
+                variant="redEvo"
                 mr={3}
               >
-                Modifier
+                {signup ? "Enregistrer": "Modifier"}
               </Button>
-              <Button onClick={onClose}>Annuler</Button>
+              { !signup && <Button onClick={onClose}>Annuler</Button> }
             </ModalFooter>
           </ModalContent>
         </form>

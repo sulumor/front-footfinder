@@ -88,7 +88,7 @@ function Chart() {
 
   return (
     <Box w={{base: "100%", md:"40%"}}>
-      <Heading as="h2" variant="h2">Vos statistiques avec {user?.teams[0].club_name}</Heading>
+      <Heading as="h2" variant="h2">Vos statistiques avec {user?.teams[0]?.club_name}</Heading>
       <Radar data={data} />
     </Box>
   );

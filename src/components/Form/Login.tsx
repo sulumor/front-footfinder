@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { validateEmail, validatePassword } from "@/utils/validation";
 import { useAuth } from "@/context/Auth";
 import { Login as LoginType } from "@/@Types";
-import { FormInput, PasswordInput } from "../Input";
+import { EmailInput, PasswordInput } from "../Input";
 
 export function LoginForm(): JSX.Element {
   const toast = useToast();
@@ -55,10 +55,8 @@ export function LoginForm(): JSX.Element {
   return (
     <Flex w="80%" m="0 auto" justifyContent="center">
       <form onSubmit={handleSubmit}>
-        <FormInput 
+        <EmailInput
           required={false}
-          label={"Email"}
-          placeholder={"ex: john.doe@example.io"}
           value={formValues.email}
           onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("email")(e.target.value)}
         />
