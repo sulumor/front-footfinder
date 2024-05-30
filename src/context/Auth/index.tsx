@@ -98,7 +98,7 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
 
   return (
     <AuthContext.Provider value={{
-      user, error, loading, login, logout, setHasToBeRefetch, getUser, userGames, signup
+      isAuthenticated: !!localStorage.getItem("token"), user, error, loading, login, logout, setHasToBeRefetch, getUser, userGames, signup
     }}
     >
       {children}
