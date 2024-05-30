@@ -1,4 +1,3 @@
-import crud from "@/utils/crud";
 import { EditIcon } from "@chakra-ui/icons";
 import {
   Modal,
@@ -18,14 +17,13 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { scoutUpdate } from "../store/actions/scout";
-import { useAppDispatch } from "../hooks/redux";
-import { getScoutInfos } from "../store/reducers/scout";
+import crud from "@/utils/crud";
+import { useAuth } from "@/context/Auth";
 
-const UpdateScoutButton = () => {
+function UpdateScoutButton() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const id = localStorage.getItem("id");
-  const dispatch = useAppDispatch();
+  const { user } = useAuth();
+  const id = user?.id;
 
   const [patchValues, setPatchValues] = useState({
     firstname: "",
@@ -35,11 +33,9 @@ const UpdateScoutButton = () => {
     city: "",
   });
 
-  const handleChangeField =
-    (scout: "firstname" | "lastname" | "email" | "club" | "city") =>
-    (value: string) => {
-      setPatchValues({ ...patchValues, [scout]: value });
-    };
+  const handleChangeField = (scout: "firstname" | "lastname" | "email" | "club" | "city") => (value: string) => {
+    setPatchValues({ ...patchValues, [scout]: value });
+  };
 
   const handleSubmit = () => {
     updateScoutInfos();
@@ -50,21 +46,21 @@ const UpdateScoutButton = () => {
       ...patchValues,
     });
     if (response.status === 201) {
-        dispatch(scoutUpdate());
-        onClose();
-      } 
+      // dispatch(scoutUpdate());
+      onClose();
+    }
     return response.data;
   };
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await dispatch(getScoutInfos(id));
-      setPatchValues({ ...patchValues, firstname: res.payload.firstname });
-      patchValues.firstname = res.payload.firstname;
-      patchValues.lastname = res.payload.lastname;
-      patchValues.email = res.payload.email;
-      patchValues.city = res.payload.city;
-      patchValues.club = res.payload.club;
+      // const res = await dispatch(getScoutInfos(id));
+      // setPatchValues({ ...patchValues, firstname: res.payload.firstname });
+      // patchValues.firstname = res.payload.firstname;
+      // patchValues.lastname = res.payload.lastname;
+      // patchValues.email = res.payload.email;
+      // patchValues.city = res.payload.city;
+      // patchValues.club = res.payload.club;
     };
     fetchData();
   }, []);
@@ -88,9 +84,7 @@ const UpdateScoutButton = () => {
                 <FormLabel>Prénom</FormLabel>
                 <Input
                   value={patchValues.firstname}
-                  onChange={(e) =>
-                    handleChangeField("firstname")(e.target.value)
-                  }
+                  onChange={(e) => handleChangeField("firstname")(e.target.value)}
                 />
               </FormControl>
 
@@ -98,9 +92,7 @@ const UpdateScoutButton = () => {
                 <FormLabel>Nom</FormLabel>
                 <Input
                   value={patchValues.lastname}
-                  onChange={(e) =>
-                    handleChangeField("lastname")(e.target.value)
-                  }
+                  onChange={(e) => handleChangeField("lastname")(e.target.value)}
                 />
               </FormControl>
 
@@ -145,6 +137,6 @@ const UpdateScoutButton = () => {
       </Modal>
     </>
   );
-};
+}
 
 export default UpdateScoutButton;
