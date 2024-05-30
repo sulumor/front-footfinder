@@ -3,6 +3,7 @@ import { UseCounterProps } from "@chakra-ui/react";
 export interface Modal {
   isOpen:boolean; 
   onClose:() => void;
+  signup?: boolean
 }
 
 export interface Form {

@@ -1,3 +1,4 @@
+import { Modal as ModalType } from "@/@Types/utils";
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter } from "@chakra-ui/modal";
 import { FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -7,11 +8,7 @@ import crud from "@/utils/crud";
 import { PlayerPatch } from "@/@Types";
 import { FormInput } from "../Input/Form";
 
-export interface ModalType {
-  isOpen:boolean; 
-  onClose:() => void;
-  signup?: boolean
-}
+
 
 export function EditPlayerModal({isOpen, onClose, signup = false} : ModalType) : JSX.Element {
   const { user, getUser } = useAuth();
