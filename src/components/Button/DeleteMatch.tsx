@@ -2,7 +2,7 @@ import { Button } from "@chakra-ui/react";
 import crud from "@/utils/crud";
 import { useAuth } from "@/context/Auth";
 
-function DeleteMatchButton({ matchId }: { matchId: string }) {
+export function DeleteMatchButton({ matchId }: { matchId: string }) {
   const { user, getUser } = useAuth();
 
   const handleClick : () => Promise<void> = async () => {
@@ -19,5 +19,3 @@ function DeleteMatchButton({ matchId }: { matchId: string }) {
     </Button>
   );
 }
-
-export default DeleteMatchButton;

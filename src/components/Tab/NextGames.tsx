@@ -1,8 +1,7 @@
 import { Match } from "@/@Types";
 import { formatDate } from "@/utils/functions";
 import { Box, Card, CardBody, CardFooter, CardHeader, Flex, Heading, TabPanel, Text, Wrap, WrapItem } from "@chakra-ui/react";
-import DeleteMatchButton from "../Button/DeleteMatch";
-import { AddMatchButton } from "../Button";
+import { AddMatchButton, DeleteMatchButton } from "../Button";
 
 export function NextGamesTab({ games }: { games: Match[] }): JSX.Element {
   return (
