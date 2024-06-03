@@ -35,9 +35,9 @@ export function LoginForm(): JSX.Element {
 
   useEffect(() => {
     if (user) {
-      if (user.role === "joueur") {
+      if (user.role) {
         navigate("/player");
-      } else if (user.role === "recruteur") {
+      } else if (!user.role) {
         navigate("/scout");
       }
     }

@@ -11,7 +11,7 @@ export function PlayerLayout(): JSX.Element {
 
   return !isAuthenticated ? 
     <Navigate to="/login"/>
-  : user?.role !== "joueur" ? (
+  : !user?.role ? (
     <ErrorPage/>
   ) : (
     <Box h="100vh">

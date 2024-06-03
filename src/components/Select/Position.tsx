@@ -12,9 +12,8 @@ export function PositionSelect({ value, onChange, required, placeholder="-- Votr
   const [positions, setPositions] = useState([]);
   const isError : boolean = required && value === "";
   
-
   const getAllPositions = async () => {
-    const responses = await crud.get(["datas", "position"], []);
+    const responses = await crud.get(["datas", "positions"], []);
     return setPositions(responses.data);
   };
 

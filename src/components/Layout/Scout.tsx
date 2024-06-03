@@ -11,7 +11,7 @@ export function ScoutLayout(): JSX.Element {
 
   return !isAuthenticated ? 
     <Navigate to="/login"/>
-  : user?.role !== "recruteur" ? (
+  : user?.role ? (
     <ErrorPage/>
   ) : (
     <Box h="100vh">

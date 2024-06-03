@@ -1,8 +1,28 @@
 import { Form } from "@/@Types/utils";
+import crud from "@/utils/crud";
 import { FormControl, FormLabel, Select, FormErrorMessage } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+
+interface Gender {
+  id: number;
+  label: string;
+}
 
 export function GenderSelect({ value, onChange, required, placeholder = "-- Votre genre --" }: Form):JSX.Element{
+  const [genders, setGenders] = useState([]);
   const isError : boolean = required && value === "";
+
+  const getAllGenders = async () => {
+    const responses = await crud.get(["datas", "genders"], []);
+    return setGenders(responses.data);
+  };
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      await getAllGenders();
+    };
+    fetchData();
+  }, []);
   
   return (
     <FormControl py={4} isRequired = { required } isInvalid={isError}>
@@ -10,11 +30,11 @@ export function GenderSelect({ value, onChange, required, placeholder = "-- Votr
         Genre
       </FormLabel>
       <Select placeholder={placeholder} value={value} onChange={onChange}>
-          <option value="Homme">Homme</option>
-          <option value="Femme">Femme</option>
-          <option value="Non-binaire">Non-binaire</option>
+        {genders?.map((gender : Gender) => (
+          <option key={gender.id} value={gender.label}>{gender.label}</option>
+        ))}
       </Select>
-      <FormErrorMessage>Le pied fort est requis</FormErrorMessage>
+      <FormErrorMessage>Le genre est requis</FormErrorMessage>
     </FormControl>
   );
 }

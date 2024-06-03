@@ -15,7 +15,7 @@ export function UpdateProfilButton({  alignSelf } : { alignSelf: string;}) {
         Modifier
       </Button>
       {
-        user?.role === "joueur" ? (
+        user?.role ? (
           <EditPlayerModal isOpen={isOpen} onClose={onClose} />
         ) : (
           <EditScoutModal isOpen={isOpen} onClose={onClose} />

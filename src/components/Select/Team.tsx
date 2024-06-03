@@ -11,7 +11,7 @@ interface Team {
 export function TeamSelect({ label, placeholder, value, onChange, required }: Form) {
   const [teams, setTeams] = useState([]);
   const isError : boolean = required && value === "";
-
+  
   const getAllTeams = async () => {
     const responses = await crud.get(["datas", "teams"], []);
     return setTeams(responses.data);

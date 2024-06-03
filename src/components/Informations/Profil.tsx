@@ -5,6 +5,7 @@ import { MobileView, BrowserView } from "react-device-detect";
 
 export function ProfilInformation(): JSX.Element{
 const {user} = useAuth();
+
   return (
     <Box p={6}>
       <Text textStyle="h3" mt="4" mb={{ base: "4", lg: "8" }}>
@@ -14,15 +15,15 @@ const {user} = useAuth();
         <Flex mb="2">
           <Text textStyle="h5">Ville</Text>
           <Text ml="2" textStyle="text">
-            {user?.role === "joueur" ? user?.teams[0]?.city : user?.city}
+            {user?.role ? user?.teams[0]?.city : user?.city}
           </Text>
         </Flex>
-        {user?.role === "joueur" && (
+        {user?.role && (
         <>
         <Flex mb="2">
-          <Text textStyle="h5">Sexe</Text>
+          <Text textStyle="h5">Genre</Text>
           <Text ml="2" textStyle="text">
-            {user?.genre}
+            {user?.gender}
           </Text>
         </Flex>
         <Flex mb="2">
@@ -54,13 +55,13 @@ const {user} = useAuth();
         <Flex mb="2">
           <Text textStyle="h5">Club</Text>
           <Text ml="2" textStyle="text">
-            {user?.role === "joueur" ? user?.teams[0]?.club_name : user?.club}
+            {user?.role ? user?.teams[0]?.club_name : user?.club}
           </Text>
         </Flex>
       </MobileView>
 
       <BrowserView>
-      { user?.role === "joueur" ? ( 
+      { user?.role ? ( 
         <Grid templateColumns="repeat(4, 1fr)" templateRows="repeat(3, 1fr)" gap={5}>
           <GridItem rowStart={1} colStart={1}>
             <Text mb="2" textStyle="h5">
@@ -70,9 +71,9 @@ const {user} = useAuth();
           </GridItem>
           <GridItem rowStart={1} colStart={2}>
             <Text textStyle="h5" mb="2">
-              Sexe
+              Genre
             </Text>
-            <Text textStyle="text">{user?.genre}</Text>
+            <Text textStyle="text">{user?.gender}</Text>
           </GridItem>
           <GridItem rowStart={1} colStart={3}>
             <Text textStyle="h5" mb="2">
@@ -111,7 +112,7 @@ const {user} = useAuth();
             <Text textStyle="h5" mb="2">
               Pied
             </Text>
-            <Text textStyle="text">{user?.strong_foot}</Text>
+            <Text textStyle="text">{user?.strong_foot ? "Droit" : "Gauche"}</Text>
           </GridItem>
 
           <GridItem rowStart={3} colStart={1}>

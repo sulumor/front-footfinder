@@ -7,7 +7,7 @@ import { FootSelect, GenderSelect, NationalitySelect, PositionSelect } from "../
 export function SearchForm({setPlayers} : {setPlayers:React.Dispatch<React.SetStateAction<PlayerView[] | null>>}): JSX.Element {
   const [patchValues, setPatchValues] = useState({  });
 
-  const handleChangeField = (search: "nationality" | "genre" | "strong_foot" | "position") => (value: string | number) => {
+  const handleChangeField = (search: "nationality" | "gender" | "strong_foot" | "position") => (value: string | number) => {
     setPatchValues({ ...patchValues, [search]: value });
   };
 
@@ -28,7 +28,7 @@ export function SearchForm({setPlayers} : {setPlayers:React.Dispatch<React.SetSt
       <GenderSelect
         required={false}
         placeholder={"Sélectionner un genre"}
-        onChange={(e: ChangeEvent<HTMLSelectElement>)=> handleChangeField("genre")(e.target.value)}
+        onChange={(e: ChangeEvent<HTMLSelectElement>)=> handleChangeField("gender")(e.target.value)}
         />
       <FootSelect
         required={false}
