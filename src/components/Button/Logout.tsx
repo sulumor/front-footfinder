@@ -7,7 +7,7 @@ export function LogoutBtn() : JSX.Element {
   const { logout } = useAuth();
 
   const handleDisconect = async () => {
-    await axios.delete("http://localhost:3000/refresh_token");
+    await axios.delete(`${import.meta.env.VITE_BACK}/refresh_token`);
     logout();
   };
   return (
