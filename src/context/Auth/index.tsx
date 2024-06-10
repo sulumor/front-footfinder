@@ -42,14 +42,15 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
   async function login(body: Login): Promise<void> {
     setLoading(true);
     setError("");
+    
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACK}/login`,
         body,
       );     
-      setLoading(false);
       localStorage.setItem("token", response.data.accessToken);
       getUser(jwtDecode(response.data.accessToken));
+      setLoading(false);
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.message === "Network Error") setError("Erreur dans le réseau");
@@ -104,7 +105,16 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
 
   return (
     <AuthContext.Provider value={{
-      isAuthenticated: !!localStorage.getItem("token"), user, error, loading, login, logout, setHasToBeRefetch, getUser, userGames, signup
+      isAuthenticated: !!localStorage.getItem("token"), 
+      user, 
+      error, 
+      loading, 
+      login, 
+      logout, 
+      setHasToBeRefetch, 
+      getUser, 
+      userGames, 
+      signup
     }}
     >
       {children}
