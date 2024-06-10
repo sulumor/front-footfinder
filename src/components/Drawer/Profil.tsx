@@ -31,8 +31,8 @@ export function ProfilDrawer({ player } : { player: PlayerView}): JSX.Element {
             <Flex mb="2">
               <Text textStyle="h5">Club{plurials(player?.teams)}</Text>
               <Flex flexDirection="column">
-                { player?.teams.map((team: Team) => (          
-                  <Text ml="2" textStyle="text">
+                {player?.teams.map((team: Team) => (          
+                  <Text key={player.id - team.id} ml="2" textStyle="text">
                     {team?.season} { team?.club_name}
                   </Text>
                 ))}

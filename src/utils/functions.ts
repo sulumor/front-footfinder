@@ -13,13 +13,11 @@ export function createPathWithMultipleOptions(options:string[], ids: number[]) :
 
 export function sortByAsc(matches: Match[]) {
   const sortResponse : Match[] = matches?.sort((a : Match, b : Match) => new Date(a.date).getTime() - new Date(b.date).getTime());
-
   return sortResponse;
 }
 
 export function sortByDesc(matches: Match[]) {
   const sortResponse : Match[] = matches.sort((a : Match, b : Match) => new Date(b.date).getTime() - new Date(a.date).getTime());
-
   return sortResponse;
 }
 

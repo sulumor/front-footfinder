@@ -17,7 +17,7 @@ export function FollowerCard({ player }: { player: PlayerView }): JSX.Element {
     const fetchData = async (): Promise<void> => {
       const response = await crud.get(["scout/player", "match"], [ player?.id]);
       let oneMatch : Match[] = []; 
-      if (response.data) oneMatch = sortByDesc(response.data);    
+      if (response.status === 200) oneMatch = sortByDesc(response.data);    
       setNextMatch(oneMatch[0]);
     };
     fetchData();
