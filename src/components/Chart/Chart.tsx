@@ -74,7 +74,7 @@ function Chart() {
     const getAllStats : () => Promise<void> = async () => {
       const responses = await crud.get(
         ["player", "stats"],
-        [user?.id],
+        [],
       );
       return setStats(responses.data);
     };

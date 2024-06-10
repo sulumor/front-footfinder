@@ -18,12 +18,12 @@ export function AddPlayerFollowerAlert({ isOpen, onClose, player } : AddAlert):J
 
   const addScoutFollow = async () => {
     const res = await crud.post(
-      ["scout", "player"],
-      [user?.id, player?.id],
+      ["scout/player"],
+      [player?.id],
       {}
     );
 
-    if (res.status === 200){ 
+    if (res.status === 201){ 
       onClose();
       getUser(user);
       toast({

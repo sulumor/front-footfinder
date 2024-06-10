@@ -39,11 +39,11 @@ export function EditPlayerModal({isOpen, onClose, signup = false} : ModalType) :
   };
 
   const handleSubmit = async () : Promise<void> => {
-    const response = await crud.update(["player"], [user?.id], {
+    const response = await crud.update(["player"], [], {
       ...patchValues,
     });
         
-    if (response.status === 201) {
+    if (response.status === 200) {
       getUser(user);
       onClose();
     }
@@ -77,16 +77,16 @@ export function EditPlayerModal({isOpen, onClose, signup = false} : ModalType) :
                 placeholder={"ex: John"}
                 value={patchValues?.firstname}
                 onChange={(e : ChangeEvent<HTMLInputElement>) => handleChangeField("firstname")(e.target.value)}
-
               /> 
+
               <FormInput 
                 required={true}
                 label={"Nom"}
                 placeholder={"ex: Doe"}
                 value={patchValues?.lastname}
                 onChange={(e : ChangeEvent<HTMLInputElement>) => handleChangeField("lastname")(e.target.value)}
-
               /> 
+
               <FormInput 
                 required={true}
                 label={"Email"}
@@ -101,6 +101,7 @@ export function EditPlayerModal({isOpen, onClose, signup = false} : ModalType) :
                 value={patchValues?.nationality}
                 onChange={(e : ChangeEvent<HTMLInputElement>) => handleChangeField("nationality")(e.target.value)}
               />
+
               <PositionSelect 
                 required={true}
                 value={patchValues?.position}
@@ -113,15 +114,14 @@ export function EditPlayerModal({isOpen, onClose, signup = false} : ModalType) :
                 placeholder={"ex: 183"}
                 value={patchValues?.height}
                 onChange={(e : ChangeEvent<HTMLInputElement>) => handleChangeField("height")(e.target.value)}
-
               /> 
+
               <FormInput 
                 required={true}
                 label={"Poids (en kg)"}
                 placeholder={"ex: 63"}
                 value={patchValues?.weight}
                 onChange={(e : ChangeEvent<HTMLInputElement>) => handleChangeField("weight")(e.target.value)}
-
               /> 
               
               <FootSelect

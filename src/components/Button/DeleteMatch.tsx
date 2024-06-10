@@ -7,8 +7,8 @@ export function DeleteMatchButton({ matchId }: { matchId: string }) {
 
   const handleClick : () => Promise<void> = async () => {
     const response = await crud.delete(
-      ["player", "match"],
-      [user?.id, Number.parseInt(matchId!, 10)],
+      ["player/match"],
+      [Number.parseInt(matchId!, 10)],
     );
     if(response.status === 204) getUser(user);
   };

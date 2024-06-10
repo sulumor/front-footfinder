@@ -9,7 +9,7 @@ import { EditPlayerModal, EditScoutModal } from "../Modal";
 import { useAuth } from "@/context/Auth";
 
 export function SignupForm(): JSX.Element {
-  const [job, setJob] = useState<boolean>(true);
+  const [job, setJob] = useState<boolean>(false);
   const [accepted, setAccepted] = useState<boolean>(false);
   const [openPlayer, setOpenPlayer] = useState<boolean>(false);
   const [openScout, setOpenScout] = useState<boolean>(false);
@@ -26,7 +26,7 @@ export function SignupForm(): JSX.Element {
   };
 
   const [formValues, setFormValues] = useState({
-    role: "recruteur",
+    role: false,
     firstname: undefined,
     lastname: undefined,
     email: undefined,
@@ -49,8 +49,8 @@ export function SignupForm(): JSX.Element {
   const handleSubmit = async () => {
     const res = await signup(formValues);
           
-    if (res.role === "joueur")  setOpenPlayer(true);
-    if (res.role === "recruteur") setOpenScout(true);
+    if (res.role)  setOpenPlayer(true);
+    else setOpenScout(true);
   };
 
   const setEnableButton = () : boolean => {
@@ -62,7 +62,7 @@ export function SignupForm(): JSX.Element {
   };
 
   useEffect(() => {
-    setFormValues({ ...formValues, role: job ? "recruteur" : "joueur"});
+    setFormValues({ ...formValues, role: job });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [job, user]);
 

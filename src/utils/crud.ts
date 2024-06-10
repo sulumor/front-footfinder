@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { checkToken, createPathWithMultipleOptions } from "./functions";
 
 interface Response {
@@ -10,24 +10,29 @@ interface Response {
 axios.defaults.withCredentials = true;
 
 class Crud {
-  private BASE_URL:string;
+  private BASE_URL: string;
 
   constructor(BASE_URL: string) {
     this.BASE_URL = BASE_URL;
   }
 
-  async get(options:string[], ids:number[]) : Promise<Response> {
+  async get(options: string[], ids: number[]): Promise<Response> {
     await checkToken();
 
     const path: string = createPathWithMultipleOptions(options, ids);
-    const res = await axios.get(`${this.BASE_URL}/${path}`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
+    try {
+      const res = await axios.get(`${this.BASE_URL}/${path}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      return { data: res.data, status: res.status };
+    } catch (error) {
+      if (error instanceof AxiosError) return { status: error.response?.status, data: error.response?.data };
+      return { status: 500, data: "Internal Server Error" };
+    }
 
-    return { data: res.data, status: res.status };
   }
 
   async post(
@@ -36,7 +41,7 @@ class Crud {
     body: { [k: string]: string | number | boolean | Date | [] | "En forme" | "absent" | "blessé" | undefined | null },
   ): Promise<Response> {
     await checkToken();
-    const path:string = createPathWithMultipleOptions(options, ids);
+    const path: string = createPathWithMultipleOptions(options, ids);
     const res = await axios.post(
       `${this.BASE_URL}/${path}`,
       {
@@ -58,7 +63,7 @@ class Crud {
     body: { [k: string]: string | number | boolean | any[] },
   ): Promise<Response> {
     await checkToken();
-    const path:string = createPathWithMultipleOptions(options, ids);
+    const path: string = createPathWithMultipleOptions(options, ids);
     const res = await axios.patch(
       `${this.BASE_URL}/${path}`,
       {
@@ -79,7 +84,7 @@ class Crud {
     ids: number[],
   ): Promise<Response> {
     await checkToken();
-    const path:string = createPathWithMultipleOptions(options, ids);
+    const path: string = createPathWithMultipleOptions(options, ids);
     const res = await axios.delete(`${this.BASE_URL}/${path}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -88,7 +93,7 @@ class Crud {
     return { data: res.data, status: res.status };
   }
 
-  async search(options: string[], params:any): Promise<Response> {
+  async search(options: string[], params: any): Promise<Response> {
     await checkToken();
     const path: string = createPathWithMultipleOptions(options, []);
     const res = await axios.get(`${this.BASE_URL}/${path}`, {

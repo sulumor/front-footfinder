@@ -18,11 +18,11 @@ export function DeletePlayerFollowerAlert({ isOpen, onClose, player } : DeleteAl
 
   const deleteScoutFollow = async () => {
     const res = await crud.delete(
-      ["scout", "player"],
-      [user?.id, player?.id],
+      ["scout/player"],
+      [player?.id],
     );
 
-    if (res.status === 200){ 
+    if (res.status === 204){ 
       onClose();
       getUser(user);
       toast({

@@ -30,7 +30,7 @@ export function AddMatchModal ({isOpen, onClose} : ModalType) : JSX.Element {
   const handleSubmit : () => void = async () => {
     setIsError(false);
     if(Number.parseInt(matchValues.homeTeam as string, 10) !== userTeam && Number.parseInt(matchValues.awayTeam as string, 10)!== userTeam) return setIsError(true);
-    const res = await crud.post(["player", "match"], [user?.id], { ...matchValues });
+    const res = await crud.post(["player", "match"], [], { ...matchValues });
     if (res.status === 201) {
       getUser(user);
       onClose();
@@ -41,7 +41,7 @@ export function AddMatchModal ({isOpen, onClose} : ModalType) : JSX.Element {
   const setEnableButton = () : boolean => {
     const home = matchValues.homeTeam !== 0;
     const away = matchValues.awayTeam !== 0;
-    return home && away;
+    return home && away && matchValues.homeTeam !== matchValues.awayTeam;
   };
 
   return (

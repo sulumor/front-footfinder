@@ -26,11 +26,11 @@ export function EditScoutModal({isOpen, onClose, signup = false} : ModalType) : 
   };
 
   const handleSubmit = async () : Promise<void> => {
-    const response = await crud.update(["scout"], [user?.id], {
+    const response = await crud.update(["scout"], [], {
       ...patchValues,
     });
         
-    if (response.status === 201) {
+    if (response.status === 200) {
       getUser(user);
       onClose();
     }

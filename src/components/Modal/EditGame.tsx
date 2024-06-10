@@ -49,11 +49,11 @@ export function EditGameModal ( {isOpen, onClose, game} : {isOpen:boolean; onClo
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { scoreHome: score_home, scoreAway: score_away, ...data } = patchValues;
     const responses = await crud.update(
-      ["player", "match", "stats"],
-      [user?.id, game?.match_id],
+      ["player/match"],
+      [game?.match_id],
       { ...data },
     );
-    if (responses.status === 201) {
+    if (responses.status === 200) {
       getUser(user);
       onClose();
     }

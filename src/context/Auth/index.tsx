@@ -61,10 +61,16 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
 
   async function getUser(token: { id: number; role: string }) : Promise<void> {
     const role :  "player" | "scout" = token.role ? "player" :  "scout" ;
-    const response = await crud.get([role], [token.id]);
-    setUser(response.data);
-    if (response.data.role){
-      const res = await crud.get(["player", "match", "stats"], [token.id]);
+    const response = await crud.get([role], []);
+    
+    if(response.status === 403) {
+      setError(response.data);
+      logout();
+      return;
+    }
+    setUser(response.data[0]);
+    if (response.data[0].role){
+      const res = await crud.get(["player", "match", "stats"], []);
       setUserGames(res.data);
     }
   }

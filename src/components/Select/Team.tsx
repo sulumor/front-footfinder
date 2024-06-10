@@ -4,7 +4,7 @@ import { Form } from "@/@Types/utils";
 import crud from "@/utils/crud";
 
 interface Team {
-  id: number;
+  team_id: number;
   club_name: string;
 }
 
@@ -23,14 +23,16 @@ export function TeamSelect({ label, placeholder, value, onChange, required }: Fo
     };
     fetchData();
   }, []);
-  
+    
   return (
     <FormControl py={4} isRequired = { required } isInvalid={isError}>
       <FormLabel variant="h6">
         {label}
       </FormLabel>
       <Select placeholder={placeholder} value={value} onChange={onChange}>
-        {teams?.map((team: Team) => <option key={team.id} value={team.id}>{team.club_name}</option>)}
+        {teams?.map((team: Team) => 
+          <option key={team.team_id} value={team.team_id}>{team.club_name}</option>
+        )}
       </Select>
       <FormErrorMessage>L'équipe est requise</FormErrorMessage>
     </FormControl>
