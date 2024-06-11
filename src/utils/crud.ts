@@ -18,7 +18,6 @@ class Crud {
 
   async get(options: string[], ids: number[]): Promise<Response> {
     await checkToken();
-
     const path: string = createPathWithMultipleOptions(options, ids);
     try {
       const res = await axios.get(`${this.BASE_URL}/${path}`, {

@@ -3,7 +3,7 @@ import { jwtDecode } from "jwt-decode";
 import {
   ReactNode, createContext, useContext, useEffect, useState,
 } from "react";
-import { Login, Match, PlayerView, ScoutView, Signup } from "@/@Types";
+import { Login, Match, PlayerView, ScoutView, Signup, Stats } from "@/@Types";
 import crud from "@/utils/crud";
 
 const AuthContext = createContext({});
@@ -11,6 +11,7 @@ const AuthContext = createContext({});
 export function AuthProvider({ children }: { children: ReactNode }): JSX.Element {
   const [user, setUser] = useState<PlayerView | ScoutView | null>(null);
   const [userGames, setUserGames] = useState<Match[] | null>(null);
+  const [userGlobalStats, setUserGlobalStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [hasToBeRefetch, setHasToBeRefetch] = useState<boolean>(false);
@@ -69,10 +70,14 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
       logout();
       return;
     }
+
     setUser(response.data[0]);
+
     if (response.data[0].role){
       const res = await crud.get(["player", "match", "stats"], []);
       setUserGames(res.data);
+      const responses = await crud.get(["player", "stats"],[]);
+      setUserGlobalStats(responses.data);
     }
   }
 
@@ -113,7 +118,8 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
       logout, 
       setHasToBeRefetch, 
       getUser, 
-      userGames, 
+      userGames,
+      userGlobalStats, 
       signup
     }}
     >
