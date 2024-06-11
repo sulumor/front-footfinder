@@ -71,7 +71,7 @@ export interface Team {
   city: string;
   longitude: string;
   latitude: string;
-  season?: string;
+  season: string;
 }
 
 export interface Match {
@@ -126,11 +126,11 @@ export interface PlayerView {
   lastname: string;
   email: string;
   avatar: string;
-  genre: string;
+  gender: string;
   birth_date: string;
   nationality: string;
   position: string;
-  strong_foot: string;
+  strong_foot: boolean;
   height: number;
   weight: number;
   number_of_matches_played: number;

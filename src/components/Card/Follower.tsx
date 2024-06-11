@@ -1,28 +1,25 @@
-import { Match, PlayerView } from "@/@Types";
-import { Avatar, Box, Button, ButtonGroup, Card, CardBody, CardFooter, CardHeader, Flex, Heading, Text, useDisclosure } from "@chakra-ui/react";
+import { PlayerView, Stats } from "@/@Types";
+import { Avatar, Box, Button, ButtonGroup, Card, CardBody, CardFooter, CardHeader, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import { DeletePlayerFollowerAlert } from "../Alert";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/Auth";
 import crud from "@/utils/crud";
-import { StatsBox } from "../Box";
 import { ProfilDrawer } from "../Drawer";
-import { sortByDesc } from "@/utils/functions";
+import Chart from "../Chart/Chart";
 
 export function FollowerCard({ player }: { player: PlayerView }): JSX.Element {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { user } = useAuth();
-  const [nextMatch, setNextMatch] = useState<Match>();
+  const [globalStats, setGlobalStats] = useState<Stats>();
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
-      const response = await crud.get(["scout/player", "match"], [ player?.id]);
-      let oneMatch : Match[] = []; 
-      if (response.status === 200) oneMatch = sortByDesc(response.data);    
-      setNextMatch(oneMatch[0]);
+      const res = await crud.get(["scout/player", "stats"],[player?.id]);
+      if (res.status === 200) setGlobalStats(res.data);
     };
     fetchData();
   }, [user, player]);
-  
+
   return (
     <Card key={player?.id}>
       <CardHeader>
@@ -48,37 +45,12 @@ export function FollowerCard({ player }: { player: PlayerView }): JSX.Element {
         </Flex>
       </CardHeader>
       <CardBody>
-        {
-          nextMatch ? (
-            <>
-            <Heading as="h3" variant="h3" textAlign="center">Dernier match</Heading>
-            <Box>
-            <Text textStyle="h4" textAlign="center">
-              {new Date(nextMatch?.date as Date).toLocaleDateString("fr-FR", {
-                weekday: "long",
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </Text>
-          <Text textStyle="h3" p="0.8rem" >
-            {nextMatch?.home.club_name}
-            {" "}
-            {nextMatch?.score}
-            {" "}
-            {nextMatch?.away.club_name}
-          </Text>
-          <StatsBox game={nextMatch}/>
-        </Box>
-              </>
-        ) : (
-          <Heading as="h3" variant="h3" textAlign="center">Ce joueur n'as pas encore enregistré de statistique</Heading>
-        )
-      }
+        <Text textStyle="h4" textAlign="center">Les statistiques globaux</Text>
+        <Chart position={player?.position} stats={globalStats}/>
       </CardBody>
       <CardFooter>
         <ButtonGroup spacing="2" m="0 auto">
-          <ProfilDrawer player={player}/>
+          <ProfilDrawer player={player} />
           <Button
             variant="outline"
             colorScheme="red"

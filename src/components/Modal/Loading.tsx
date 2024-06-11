@@ -31,7 +31,7 @@ export function LoadingModal(): JSX.Element {
             color={colors.redEvo}
             size='xl' />
             </Center>
-          <Text>Attends une seconde, il fini son café et répond à ta requête</Text>
+          <Text>Attends une seconde, il finit son café et répond à ta requête</Text>
         </ModalBody>
         <ModalFooter>
           <Text textStyle="textSmall">Une fois la requête validée, cette fenêtre va se fermer automatiquement</Text>

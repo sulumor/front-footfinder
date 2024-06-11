@@ -11,7 +11,7 @@ import { ScoutsListBox } from "@/components/Box";
 import { useAuth } from "@/context/Auth";
 
 export function HomePlayer(): JSX.Element {
-  const { user, setHasToBeRefetch } = useAuth();
+  const { user, userGlobalStats, setHasToBeRefetch } = useAuth();
 
   useEffect(() => {
     setHasToBeRefetch(true);
@@ -29,7 +29,10 @@ export function HomePlayer(): JSX.Element {
           <Divider />
           <ScoutsListBox />
         </Flex>
-        <Chart/>
+        <Box w={{base: "100%", md:"40%"}}>
+          <Heading as="h2" variant="h2">Vos statistiques avec {user?.teams[0].club_name}</Heading>
+          <Chart position={user?.position} stats={userGlobalStats}/>
+        </Box>
       </Flex> 
     </Box>
   );

@@ -9,12 +9,9 @@ import {
 } from "chart.js";
 import { Radar } from "react-chartjs-2";
 import { Stats } from "@/@Types";
-import { Box, Heading } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import crud from "@/utils/crud";
-import { useAuth } from "@/context/Auth";
+import { Text } from "@chakra-ui/react";
 
-function Chart() {
+function Chart({ position, stats } : { position : string; stats : Stats | undefined }) {  
   ChartJS.register(
     RadialLinearScale,
     PointElement,
@@ -23,14 +20,12 @@ function Chart() {
     Tooltip,
     Legend,
   );
-  const [stats, setStats] = useState<Stats>();
-  const { user } = useAuth();
     
-  const data = user?.position === "Gardien" ? {
+  const data = position === "Gardien" ? {
     labels:[
       "Arrêts",
-      "Cartons jaunes",
-      "Cartons rouges",
+      "Jaunes",
+      "Rouges",
       "Buts concedés",
     ], 
     datasets: [
@@ -49,10 +44,10 @@ function Chart() {
     ],
   }:{
     labels: [
-      "Passes décisives",
-      "Buts marqués",
-      "Cartons jaunes",
-      "Cartons rouges",
+      "Passes",
+      "Buts",
+      "Jaunes",
+      "Rouges",
     ],
     datasets: [
       {
@@ -69,28 +64,11 @@ function Chart() {
       },
     ],
   };
-  
-  useEffect(() => {
-    const getAllStats : () => Promise<void> = async () => {
-      const responses = await crud.get(
-        ["player", "stats"],
-        [],
-      );
-      return setStats(responses.data);
-    };
 
-    const fetchData = async () => {
-      await getAllStats();      
-    };
-
-    fetchData();
-  }, [user]);
-
-  return (
-    <Box w={{base: "100%", md:"40%"}}>
-      <Heading as="h2" variant="h2">Vos statistiques avec {user?.teams[0]?.club_name}</Heading>
-      <Radar data={data} />
-    </Box>
+  return stats?.yellow_card ? (
+    <Radar data={data} />
+  ) : (
+    <Text textStyle="h3" textAlign="center" mt={5}>Pas de statistiques enregistrées pour l'instant</Text>
   );
 }
 
