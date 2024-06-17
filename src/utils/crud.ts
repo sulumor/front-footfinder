@@ -106,7 +106,9 @@ class Crud {
   }
 
   async token() {
-    const response = await axios.get(`${this.BASE_URL}/refresh_token`);
+    const response = await axios.post(`${this.BASE_URL}/refresh_token`, {
+      refreshToken : localStorage.getItem("refreshToken"),
+    });
     localStorage.setItem("token", response.data.accessToken);
   }
 }
