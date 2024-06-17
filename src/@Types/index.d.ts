@@ -31,9 +31,11 @@ export interface UserState {
 }
 
 export interface ScoutPatch {
+  gender: string;
   firstname: string;
   lastname: string;
   email: string;
+  nationality: string;
 }
 
 export interface Login {
@@ -108,14 +110,17 @@ export interface Player {
 }
 
 export interface PlayerPatch {
+  gender: string;
   firstname: string;
   lastname: string;
   email: string;
   position: string;
   nationality: string;
+  team: number;
   strong_foot: string;
+  birth_date: string;
   height: number | string;
-  weight: number | string
+  weight: number | string;
 }
 
 export interface PlayerView {

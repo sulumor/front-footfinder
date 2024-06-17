@@ -15,7 +15,7 @@ export function HomePlayer(): JSX.Element {
 
   useEffect(() => {
     setHasToBeRefetch(true);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -25,15 +25,15 @@ export function HomePlayer(): JSX.Element {
       </Heading>
       <Flex w="80%" m="0 auto" justifyContent="space-between" wrap="wrap" p="1rem">
         <Flex flexDirection="column" gap="1.5rem" p="1rem">
-          <NextMatchCard/>
+          <NextMatchCard />
           <Divider />
           <ScoutsListBox />
         </Flex>
-        <Box w={{base: "100%", md:"40%"}}>
-          <Heading as="h2" variant="h2">Vos statistiques avec {user?.teams[0].club_name}</Heading>
-          <Chart position={user?.position} stats={userGlobalStats}/>
+        <Box w={{ base: "100%", md: "40%" }}>
+          <Heading as="h2" variant="h2">Vos statistiques avec {user?.teams[0]?.club_name}</Heading>
+          <Chart position={user?.position} stats={userGlobalStats} />
         </Box>
-      </Flex> 
+      </Flex>
     </Box>
   );
 }

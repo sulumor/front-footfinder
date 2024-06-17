@@ -4,32 +4,37 @@ import { FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useAuth } from "@/context/Auth";
 import crud from "@/utils/crud";
-import {  ScoutPatch } from "@/@Types";
+import { ScoutPatch } from "@/@Types";
 import { FormInput } from "../Input/Form";
+import { GenderSelect, NationalitySelect } from "../Select";
 
-export function EditScoutModal({isOpen, onClose, signup = false} : ModalType) : JSX.Element {
+export function EditScoutModal({ isOpen, onClose, signup = false }: ModalType): JSX.Element {
   const { user, getUser } = useAuth();
-  
+
   const [patchValues, setPatchValues] = useState<ScoutPatch>({
+    gender: user?.gender,
     firstname: user?.firstname,
     lastname: user?.lastname,
     email: user?.email,
+    nationality: user?.nationality,
   });
 
   const handleChangeField = (
     user:
-    | "firstname"
-    | "lastname"
-    | "email"
+      | "gender"
+      | "firstname"
+      | "lastname"
+      | "email"
+      | "nationality"
   ) => (value: string | number) => {
     setPatchValues({ ...patchValues, [user]: value });
   };
 
-  const handleSubmit = async () : Promise<void> => {
+  const handleSubmit = async (): Promise<void> => {
     const response = await crud.update(["scout"], [], {
       ...patchValues,
     });
-        
+
     if (response.status === 200) {
       getUser(user);
       onClose();
@@ -41,61 +46,69 @@ export function EditScoutModal({isOpen, onClose, signup = false} : ModalType) : 
       firstname: user?.firstname,
       lastname: user?.lastname,
       email: user?.email,
+      gender: user?.gender,
+      nationality: user?.nationality
     });
   }, [user]);
-  
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-        <form onSubmit={handleSubmit}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>{signup ? "Renseignez vos information" : "Modifiez vos informations"}</ModalHeader>
-            {!signup && <ModalCloseButton />} 
-            <ModalBody pb={6}>
-              
-              <FormInput 
-                required={true}
-                label={"Prénom"}
-                placeholder={"ex: John"}
-                value={patchValues?.firstname}
-                onChange={(e : ChangeEvent<HTMLInputElement>) => handleChangeField("firstname")(e.target.value)}
+      <form onSubmit={handleSubmit}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>{signup ? "Renseignez vos informations" : "Modifiez vos informations"}</ModalHeader>
+          {!signup && <ModalCloseButton />}
+          <ModalBody pb={6}>
+            <GenderSelect
+              required={true}
+              onChange={(e: ChangeEvent<HTMLSelectElement>) => handleChangeField("gender")(e.target.value)}
+              value={patchValues?.gender}
+            />
+            <FormInput
+              required={true}
+              label={"Prénom"}
+              placeholder={"ex: John"}
+              value={patchValues?.firstname}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("firstname")(e.target.value)}
+            />
+            <FormInput
+              required={true}
+              label={"Nom"}
+              placeholder={"ex: Doe"}
+              value={patchValues?.lastname}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("lastname")(e.target.value)}
+            />
+            <FormInput
+              required={true}
+              label={"Email"}
+              placeholder={"ex: john.doe@example.io"}
+              value={patchValues?.email}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("email")(e.target.value)}
+            />
+            <NationalitySelect
+              required={true}
+              onChange={(e: ChangeEvent<HTMLSelectElement>) => handleChangeField("nationality")(e.target.value)}
+              value={patchValues?.nationality}
+            />
+            <FormControl mt={4}>
+              <FormLabel>Photo</FormLabel>
+              <Input size="md" type="file" />
+            </FormControl>
+          </ModalBody>
 
-              /> 
-              <FormInput 
-                required={true}
-                label={"Nom"}
-                placeholder={"ex: Doe"}
-                value={patchValues?.lastname}
-                onChange={(e : ChangeEvent<HTMLInputElement>) => handleChangeField("lastname")(e.target.value)}
-
-              /> 
-              <FormInput 
-                required={true}
-                label={"Email"}
-                placeholder={"ex: john.doe@example.io"}
-                value={patchValues?.email}
-                onChange={(e : ChangeEvent<HTMLInputElement>) => handleChangeField("email")(e.target.value)}
-
-              />               
-              <FormControl mt={4}>
-                <FormLabel>Photo</FormLabel>
-                <Input size="md" type="file" />
-              </FormControl>
-            </ModalBody>
-
-            <ModalFooter>
-              <Button
-                onClick={handleSubmit}
-                variant="redEvo"
-                mr={3}
-              >
-               {signup ? "Enregistrer": "Modifier"}
-              </Button>
-              { !signup && <Button onClick={onClose}>Annuler</Button> }
-            </ModalFooter>
-          </ModalContent>
-        </form>
-      </Modal>
+          <ModalFooter>
+            <Button
+              onClick={handleSubmit}
+              variant="redEvo"
+              mr={3}
+            >
+              {signup ? "Enregistrer" : "Modifier"}
+            </Button>
+            {!signup && <Button onClick={onClose}>Annuler</Button>}
+          </ModalFooter>
+        </ModalContent>
+      </form>
+    </Modal>
   );
 }
 
