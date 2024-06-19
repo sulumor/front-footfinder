@@ -31,7 +31,7 @@ export function Profil(): JSX.Element {
           <Text fontWeight="bold" textStyle="secondTitle">
             {user?.lastname}
           </Text>
-          <Text fontSize="mainText">{user?.role ? user?.position : user?.team.club_name}</Text>
+          <Text fontSize="mainText">{user?.role ? user?.position : user?.team?.club_name}</Text>
         </Box>
       </Flex>
       <ProfilInformation />

@@ -15,7 +15,7 @@ export function ProfilInformation(): JSX.Element {
         <Flex mb="2">
           <Text textStyle="h5">Ville</Text>
           <Text ml="2" textStyle="text">
-            {user?.role ? user?.teams[0]?.city : user?.team.city}
+            {user?.role ? user?.teams[0]?.city : user?.team?.city}
           </Text>
         </Flex>
         {user?.role && (
@@ -55,7 +55,7 @@ export function ProfilInformation(): JSX.Element {
         <Flex mb="2">
           <Text textStyle="h5">Club</Text>
           <Text ml="2" textStyle="text">
-            {user?.role ? user?.teams[0]?.club_name : user?.team.club_name}
+            {user?.role ? user?.teams[0]?.club_name : user?.team?.club_name}
           </Text>
         </Flex>
       </MobileView>
@@ -153,7 +153,7 @@ export function ProfilInformation(): JSX.Element {
             <Flex>
               <Text textStyle="h5">Ville</Text>
               <Text ml="2" textStyle="text">
-                {user?.team.city}
+                {user?.team?.city}
               </Text>
             </Flex>
           </Flex>
