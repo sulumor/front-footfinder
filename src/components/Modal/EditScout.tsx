@@ -6,7 +6,7 @@ import { useAuth } from "@/context/Auth";
 import crud from "@/utils/crud";
 import { ScoutPatch } from "@/@Types";
 import { FormInput } from "../Input/Form";
-import { GenderSelect, NationalitySelect } from "../Select";
+import { GenderSelect, NationalitySelect, TeamSelect } from "../Select";
 
 export function EditScoutModal({ isOpen, onClose, signup = false }: ModalType): JSX.Element {
   const { user, getUser } = useAuth();
@@ -17,6 +17,7 @@ export function EditScoutModal({ isOpen, onClose, signup = false }: ModalType): 
     lastname: user?.lastname,
     email: user?.email,
     nationality: user?.nationality,
+    team: user?.team,
   });
 
   const handleChangeField = (
@@ -26,6 +27,7 @@ export function EditScoutModal({ isOpen, onClose, signup = false }: ModalType): 
       | "lastname"
       | "email"
       | "nationality"
+      | "team"
   ) => (value: string | number) => {
     setPatchValues({ ...patchValues, [user]: value });
   };
@@ -47,7 +49,8 @@ export function EditScoutModal({ isOpen, onClose, signup = false }: ModalType): 
       lastname: user?.lastname,
       email: user?.email,
       gender: user?.gender,
-      nationality: user?.nationality
+      nationality: user?.nationality,
+      team: user?.team
     });
   }, [user]);
 
@@ -64,31 +67,41 @@ export function EditScoutModal({ isOpen, onClose, signup = false }: ModalType): 
               onChange={(e: ChangeEvent<HTMLSelectElement>) => handleChangeField("gender")(e.target.value)}
               value={patchValues?.gender}
             />
-            <FormInput
-              required={true}
-              label={"Prénom"}
-              placeholder={"ex: John"}
-              value={patchValues?.firstname}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("firstname")(e.target.value)}
-            />
-            <FormInput
-              required={true}
-              label={"Nom"}
-              placeholder={"ex: Doe"}
-              value={patchValues?.lastname}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("lastname")(e.target.value)}
-            />
-            <FormInput
-              required={true}
-              label={"Email"}
-              placeholder={"ex: john.doe@example.io"}
-              value={patchValues?.email}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("email")(e.target.value)}
-            />
+            {!signup && (
+              <>
+                <FormInput
+                  required={true}
+                  label={"Prénom"}
+                  placeholder={"ex: John"}
+                  value={patchValues?.firstname}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("firstname")(e.target.value)}
+                />
+                <FormInput
+                  required={true}
+                  label={"Nom"}
+                  placeholder={"ex: Doe"}
+                  value={patchValues?.lastname}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("lastname")(e.target.value)}
+                />
+                <FormInput
+                  required={true}
+                  label={"Email"}
+                  placeholder={"ex: john.doe@example.io"}
+                  value={patchValues?.email}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("email")(e.target.value)}
+                />
+              </>
+            )}
             <NationalitySelect
               required={true}
               onChange={(e: ChangeEvent<HTMLSelectElement>) => handleChangeField("nationality")(e.target.value)}
               value={patchValues?.nationality}
+            />
+            <TeamSelect
+              required={true}
+              value={patchValues?.team}
+              label={"Équipe avec laquelle vous travaillez"}
+              onChange={(e: ChangeEvent<HTMLSelectElement>) => handleChangeField("team")(e.target.value)}
             />
             <FormControl mt={4}>
               <FormLabel>Photo</FormLabel>

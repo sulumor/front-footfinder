@@ -42,7 +42,7 @@ export function EditPlayerModal({ isOpen, onClose, signup = false }: ModalType):
     setPatchValues({ ...patchValues, [user]: value });
   };
 
-  const handleSubmit = async (): Promise<void> => {
+  const handleSubmit: () => Promise<void> = async () => {
     const response = await crud.update(["player"], [], {
       ...patchValues,
     });
@@ -77,19 +77,42 @@ export function EditPlayerModal({ isOpen, onClose, signup = false }: ModalType):
           <ModalHeader>{signup ? "Renseignez vos information" : "Modifiez vos informations"} </ModalHeader>
           {!signup && <ModalCloseButton />}
           <ModalBody pb={6}>
+            {!signup && (
+              <>
+                <FormInput
+                  required={true}
+                  label={"Prénom"}
+                  placeholder={"ex: John"}
+                  value={patchValues?.firstname}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("firstname")(e.target.value)}
+                />
+                <FormInput
+                  required={true}
+                  label={"Nom"}
+                  placeholder={"ex: Doe"}
+                  value={patchValues?.lastname}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("lastname")(e.target.value)}
+                />
+                <FormInput
+                  required={true}
+                  label={"Email"}
+                  placeholder={"ex: john.doe@example.io"}
+                  value={patchValues?.email}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("email")(e.target.value)}
+                />
+              </>
+            )}
 
             <GenderSelect
               required={true}
               value={patchValues?.gender}
               onChange={(e: ChangeEvent<HTMLSelectElement>) => handleChangeField("gender")(e.target.value)}
             />
-
             <NationalitySelect
               required={true}
               value={patchValues?.nationality}
               onChange={(e: ChangeEvent<HTMLSelectElement>) => handleChangeField("nationality")(e.target.value)}
             />
-
             <FormControl py={4} isRequired>
               <FormLabel variant="h6">Votre date de naissance</FormLabel>
               <Input
@@ -100,13 +123,11 @@ export function EditPlayerModal({ isOpen, onClose, signup = false }: ModalType):
                 onChange={(e) => handleChangeField("birth_date")(e.target.value)}
               />
             </FormControl>
-
             <PositionSelect
               required={true}
               value={patchValues?.position}
               onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("position")(e.target.value)}
             />
-
             <FormInput
               required={true}
               label={"Taille (en cm)"}
@@ -114,7 +135,6 @@ export function EditPlayerModal({ isOpen, onClose, signup = false }: ModalType):
               value={patchValues?.height}
               onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("height")(e.target.value)}
             />
-
             <FormInput
               required={true}
               label={"Poids (en kg)"}
@@ -122,20 +142,17 @@ export function EditPlayerModal({ isOpen, onClose, signup = false }: ModalType):
               value={patchValues?.weight}
               onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("weight")(e.target.value)}
             />
-
             <FootSelect
               required={true}
               value={patchValues?.strong_foot}
               onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("strong_foot")(e.target.value)}
             />
-
             <TeamSelect
               required={true}
               value={patchValues?.team}
               label={'Votre équipe pour cette année'}
               onChange={(e: ChangeEvent<HTMLSelectElement>) => handleChangeField("team")(e.target.value)}
             />
-
             <FormControl mt={4}>
               <FormLabel>Photo</FormLabel>
               <Input size="md" type="file" />

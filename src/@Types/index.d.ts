@@ -36,6 +36,7 @@ export interface ScoutPatch {
   lastname: string;
   email: string;
   nationality: string;
+  team: number;
 }
 
 export interface Login {
