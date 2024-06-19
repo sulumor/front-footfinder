@@ -18,10 +18,10 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
 
   useEffect(() => {
     async function loadUserFromToken(): Promise<void> {
-      if (localStorage.getItem("token")){
+      if (localStorage.getItem("token")) {
         setError("");
-        try {     
-          const res =  await crud.get(["user"], []);
+        try {
+          const res = await crud.get(["user"], []);
           getUser(res.data);
         } catch (error) {
           if (error instanceof AxiosError) {
@@ -29,7 +29,7 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
             if (error.message.includes("failed")) setError(error.response?.data.error);
             setLoading(false);
           }
-        }  
+        }
       }
     }
     loadUserFromToken();
@@ -43,12 +43,12 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
   async function login(body: Login): Promise<void> {
     setLoading(true);
     setError("");
-    
+
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACK}/login`,
         body,
-      );     
+      );
       localStorage.setItem("token", response.data.accessToken);
       localStorage.setItem("refreshToken", response.data.refreshToken);
       getUser(jwtDecode(response.data.accessToken));
@@ -62,11 +62,11 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
     }
   }
 
-  async function getUser(token: { id: number; role: string }) : Promise<void> {
-    const role :  "player" | "scout" = token.role ? "player" :  "scout" ;
+  async function getUser(token: { id: number; role: string }): Promise<void> {
+    const role: "player" | "scout" = token.role ? "player" : "scout";
     const response = await crud.get([role], []);
-    
-    if(response.status === 403) {
+
+    if (response.status === 403) {
       setError(response.data);
       logout();
       return;
@@ -74,24 +74,26 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
 
     setUser(response.data[0]);
 
-    if (response.data[0].role){
+    if (response.data[0].role) {
       const res = await crud.get(["player", "match", "stats"], []);
       setUserGames(res.data);
-      const responses = await crud.get(["player", "stats"],[]);
+      const responses = await crud.get(["player", "stats"], []);
       setUserGlobalStats(responses.data);
     }
   }
 
-  async function signup(body : Signup ) : Promise<void> {
+  async function signup(body: Signup): Promise<void> {
     setLoading(true);
     setError("");
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BACK}/register`, 
+        `${import.meta.env.VITE_BACK}/register`,
         body,
       );
       setLoading(false);
+
       localStorage.setItem("token", response.data.accessToken);
+      localStorage.setItem("refreshToken", response.data.refreshToken);
       getUser(jwtDecode(response.data.accessToken));
       return jwtDecode(response.data.accessToken);
     } catch (error) {
@@ -112,16 +114,16 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
 
   return (
     <AuthContext.Provider value={{
-      isAuthenticated: !!localStorage.getItem("token"), 
-      user, 
-      error, 
-      loading, 
-      login, 
-      logout, 
-      setHasToBeRefetch, 
-      getUser, 
+      isAuthenticated: !!localStorage.getItem("token"),
+      user,
+      error,
+      loading,
+      login,
+      logout,
+      setHasToBeRefetch,
+      getUser,
       userGames,
-      userGlobalStats, 
+      userGlobalStats,
       signup
     }}
     >

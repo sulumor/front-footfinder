@@ -8,7 +8,7 @@ export function HomeScout(): JSX.Element {
 
   useEffect(() => {
     setHasToBeRefetch(true);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -16,7 +16,7 @@ export function HomeScout(): JSX.Element {
       <Heading as="h2" variant="h2">
         Bonjour,{" "}{user?.firstname}
       </Heading>
-      <PlayersFollowersListBox/>
+      <PlayersFollowersListBox />
     </Box>
   );
 }

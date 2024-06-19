@@ -1,5 +1,6 @@
 import {
-  Link as LinkChakra, FormControl, FormLabel, Button, Flex, Checkbox, Text} from "@chakra-ui/react";
+  Link as LinkChakra, FormControl, FormLabel, Button, Flex, Checkbox, Text
+} from "@chakra-ui/react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToggleBtn } from "../Button/Toggle";
@@ -16,11 +17,11 @@ export function SignupForm(): JSX.Element {
   const { signup, user } = useAuth();
   const navigate = useNavigate();
 
-  const onPlayerModalClose : () => void = () => { 
+  const onPlayerModalClose: () => void = () => {
     setOpenPlayer(false);
     navigate("/player");
   };
-  const onScoutModalClose : () => void = () => { 
+  const onScoutModalClose: () => void = () => {
     setOpenScout(false);
     navigate("/scout");
   };
@@ -36,73 +37,73 @@ export function SignupForm(): JSX.Element {
 
   const handleChangeField = (
     user:
-    | "email"
-    | "password"
-    | "role"
-    | "firstname"
-    | "lastname"
-    | "confirmedPassword"
+      | "email"
+      | "password"
+      | "role"
+      | "firstname"
+      | "lastname"
+      | "confirmedPassword"
   ) => (value: string) => {
     setFormValues({ ...formValues, [user]: value });
   };
 
   const handleSubmit = async () => {
     const res = await signup(formValues);
-          
-    if (res.role)  setOpenPlayer(true);
+
+    if (res.role) setOpenPlayer(true);
     else setOpenScout(true);
   };
 
-  const setEnableButton = () : boolean => {
-    const isFilledLastname : boolean = formValues.lastname !== "";
-    const isFilledFirstname : boolean = formValues.firstname !== "";
-    const isValidEmail : boolean = validateEmail(formValues.email);
-    const isValidPassword : boolean = validatePassword(formValues.password);
+  const setEnableButton = (): boolean => {
+    const isFilledLastname: boolean = formValues.lastname !== "";
+    const isFilledFirstname: boolean = formValues.firstname !== "";
+    const isValidEmail: boolean = validateEmail(formValues.email);
+    const isValidPassword: boolean = validatePassword(formValues.password);
     return isFilledLastname && isFilledFirstname && isValidEmail && isValidPassword && accepted && formValues.password === formValues.confirmedPassword;
   };
 
   useEffect(() => {
     setFormValues({ ...formValues, role: job });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [job, user]);
 
   return (
-    <Flex w={{base: "80%", md: "50%" }} m="0 auto" justifyContent="center">
+    <Flex w={{ base: "80%", md: "50%" }} m="0 auto" justifyContent="center">
       <form onSubmit={handleSubmit}>
         <FormControl id="role" mb="5" w="full" isRequired>
           <FormLabel variant="h6">Vous êtes un :</FormLabel>
-          <ToggleBtn setJob={setJob} />
+          <ToggleBtn job={job} setJob={setJob} />
         </FormControl>
         <FormInput
           required={true}
           label={"Prénom"}
           value={formValues.firstname}
-          onChange={(e : ChangeEvent<HTMLInputElement>) => handleChangeField("firstname")(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("firstname")(e.target.value)}
           placeholder={"ex: John"}
         />
         <FormInput
           required={true}
           label={"Nom"}
           value={formValues.lastname}
-          onChange={(e : ChangeEvent<HTMLInputElement>) => handleChangeField("lastname")(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("lastname")(e.target.value)}
           placeholder={"ex: Doe"}
         />
         <EmailInput
           required={true}
           value={formValues.email}
-          onChange={(e : ChangeEvent<HTMLInputElement>) => handleChangeField("email")(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("email")(e.target.value)}
         />
         <PasswordInput
-          required={ true }
+          required={true}
           label={"Mot de passe"}
           value={formValues.password}
-          onChange={(e : ChangeEvent<HTMLInputElement>) => handleChangeField("password")(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("password")(e.target.value)}
         />
         <PasswordInput
-          required={ true }
+          required={true}
           label={"Confirmation de mot de passe"}
           value={formValues.confirmedPassword}
-          onChange={(e : ChangeEvent<HTMLInputElement>) => handleChangeField("confirmedPassword")(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("confirmedPassword")(e.target.value)}
         />
         <Checkbox mb="5" isChecked={accepted} onChange={() => setAccepted(!accepted)}>
           J'ai lu et j'accepte les{" "}
