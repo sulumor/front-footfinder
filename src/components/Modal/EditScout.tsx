@@ -17,7 +17,7 @@ export function EditScoutModal({ isOpen, onClose, signup = false }: ModalType): 
     lastname: user?.lastname,
     email: user?.email,
     nationality: user?.nationality,
-    team: user?.team,
+    team: user?.team.team_id,
   });
 
   const handleChangeField = (
@@ -50,7 +50,7 @@ export function EditScoutModal({ isOpen, onClose, signup = false }: ModalType): 
       email: user?.email,
       gender: user?.gender,
       nationality: user?.nationality,
-      team: user?.team
+      team: user?.team.team_id
     });
   }, [user]);
 
