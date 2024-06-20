@@ -97,7 +97,7 @@ export interface Match {
 export interface setMatch {
   homeTeam: number | string;
   awayTeam: number | string;
-  date: string | Date;
+  date: string | number;
 }
 
 export interface Player {

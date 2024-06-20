@@ -11,17 +11,17 @@ export function createPathWithMultipleOptions(options:string[], ids: number[]) :
   return path;
 }
 
-export function sortByAsc(matches: Match[]) {
+export function sortByAsc(matches: Match[]) : Match[]{
   const sortResponse : Match[] = matches?.sort((a : Match, b : Match) => new Date(a.date).getTime() - new Date(b.date).getTime());
   return sortResponse;
 }
 
-export function sortByDesc(matches: Match[]) {
+export function sortByDesc(matches: Match[]) : Match[] {
   const sortResponse : Match[] = matches.sort((a : Match, b : Match) => new Date(b.date).getTime() - new Date(a.date).getTime());
   return sortResponse;
 }
 
-export function formatDate(date : string | Date) {
+export function formatDate(date : string | Date) : string {
   const options : Intl.DateTimeFormatOptions = {
     weekday: "long",
     year: "numeric",
@@ -32,7 +32,7 @@ export function formatDate(date : string | Date) {
   return new Date(date as Date).toLocaleDateString("fr-FR", options);
 }
 
-export function formatBirthDate(date : string | Date) {
+export function formatBirthDate(date : string | Date) : string {
   const options : Intl.DateTimeFormatOptions = {
     year: "numeric",
     month: "long",
@@ -40,6 +40,11 @@ export function formatBirthDate(date : string | Date) {
   };
 
   return new Date(date as Date).toLocaleDateString("fr-FR", options);
+}
+
+export function formatToCalendar(date: number ) : string {
+  const d = new Date(date);
+  return `${d.getFullYear()}-${Intl.DateTimeFormat("fr-FR", { month: "2-digit"}).format(d)}-${d.getDate()}`;
 }
 
 export function calculateAge(birthdate: string): number {
