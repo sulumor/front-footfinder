@@ -1,5 +1,5 @@
 import {
-  Button, FormControl, FormLabel, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay,
+  Button, Heading, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay,
   Text,
 } from "@chakra-ui/react";
 import { ChangeEvent, useState } from "react";
