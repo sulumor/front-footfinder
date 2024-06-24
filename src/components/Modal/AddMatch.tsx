@@ -1,5 +1,5 @@
 import {
-  Button, FormControl, FormLabel, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay,
+  Button, Heading, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay,
   Text,
 } from "@chakra-ui/react";
 import { ChangeEvent, useState } from "react";
@@ -9,7 +9,7 @@ import { setMatch as setMatchType } from "@/@Types";
 import { useAuth } from "@/context/Auth";
 import { TeamSelect } from "../Select";
 import { Modal as ModalType } from "@/@Types/utils";
-import { DateInput } from "../Input";
+import { DateInput, TimeInput } from "../Input";
 import { formatToCalendar, today } from "@/utils/dateFunctions";
 
 export function AddMatchModal({ isOpen, onClose }: ModalType): JSX.Element {
@@ -65,14 +65,11 @@ export function AddMatchModal({ isOpen, onClose }: ModalType): JSX.Element {
               label="Date du match"
               onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("date")(e.target.value)}
             />
-            <FormControl>
-              <FormLabel>Heure du match</FormLabel>
-              <Input
-                type="time"
-                value={matchValues.time}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("time")(e.target.value)}
-              />
-            </FormControl>
+            <TimeInput
+              required={true}
+              value={matchValues.time}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("time")(e.target.value)}
+            />
             <TeamSelect
               required={true}
               label={"Equipe à domicile"}
