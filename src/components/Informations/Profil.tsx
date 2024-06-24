@@ -7,10 +7,9 @@ import { Team } from "@/@Types";
 
 export function ProfilInformation(): JSX.Element {
   const { user } = useAuth();
-  const playerCurrentTeam: Team = user?.teams.filter((team: Team) => team.season === '2023-2024')[0];
-
-
-  console.log(user);
+  const currentTeam: Team = user?.role ?
+    user?.teams.filter((team: Team) => team.season === '2023-2024')[0] :
+    user?.team;
 
   return (
     <Box p={6}>
@@ -21,7 +20,7 @@ export function ProfilInformation(): JSX.Element {
         <Flex mb="2">
           <Text textStyle="h5">Ville</Text>
           <Text ml="2" textStyle="text">
-            {user?.role ? playerCurrentTeam?.city : user?.team?.city}
+            {currentTeam?.city}
           </Text>
         </Flex>
         {user?.role && (
@@ -61,7 +60,7 @@ export function ProfilInformation(): JSX.Element {
         <Flex mb="2">
           <Text textStyle="h5">Club</Text>
           <Text ml="2" textStyle="text">
-            {user?.role ? playerCurrentTeam?.club_name : user?.team?.club_name}
+            {currentTeam?.club_name}
           </Text>
         </Flex>
       </MobileView>
@@ -73,7 +72,7 @@ export function ProfilInformation(): JSX.Element {
               <Text mb="2" textStyle="h5">
                 Ville
               </Text>
-              <Text textStyle="text">{user?.teams[0]?.city}</Text>
+              <Text textStyle="text">{currentTeam?.city}</Text>
             </GridItem>
             <GridItem rowStart={1} colStart={2}>
               <Text textStyle="h5" mb="2">
@@ -92,7 +91,7 @@ export function ProfilInformation(): JSX.Element {
                 Club
               </Text>
               <Text textStyle="text">
-                {playerCurrentTeam?.club_name}, {playerCurrentTeam?.city}
+                {currentTeam?.club_name}, {currentTeam?.city}
               </Text>
             </GridItem>
 
@@ -100,7 +99,7 @@ export function ProfilInformation(): JSX.Element {
               <Text textStyle="h5" mb="2">
                 Stade
               </Text>
-              <Text textStyle="text">{playerCurrentTeam?.stadium_name}</Text>
+              <Text textStyle="text">{currentTeam?.stadium_name}</Text>
             </GridItem>
             <GridItem rowStart={2} colStart={2}>
               <Text textStyle="h5" mb="2">
@@ -159,7 +158,7 @@ export function ProfilInformation(): JSX.Element {
             <Flex>
               <Text textStyle="h5">Ville</Text>
               <Text ml="2" textStyle="text">
-                {user?.team?.city}
+                {currentTeam?.city}
               </Text>
             </Flex>
           </Flex>
