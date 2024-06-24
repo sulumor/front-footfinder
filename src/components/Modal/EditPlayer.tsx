@@ -5,7 +5,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { FootSelect, GenderSelect, NationalitySelect, PositionSelect, TeamSelect } from "../Select";
 import { useAuth } from "@/context/Auth";
 import crud from "@/utils/crud";
-import { PlayerPatch } from "@/@Types";
+import { PlayerPatch, Team } from "@/@Types";
 import { FormInput } from "../Input/Form";
 import { DateInput } from "../Input";
 
@@ -22,7 +22,7 @@ export function EditPlayerModal({ isOpen, onClose, signup = false }: ModalType):
     height: user?.height,
     weight: user?.weight,
     gender: user?.gender,
-    team: user?.team,
+    team: user?.teams.filter((team: Team) => team.season === '2023-2024')[0]?.team_id,
     birth_date: user?.birth_date,
   });
 
@@ -65,7 +65,7 @@ export function EditPlayerModal({ isOpen, onClose, signup = false }: ModalType):
       height: user?.height,
       weight: user?.weight,
       gender: user?.gender,
-      team: user?.team,
+      team: user?.teams.filter((team: Team) => team.season === '2023-2024')[0]?.team_id,
       birth_date: user?.birth_date,
     });
   }, [user]);

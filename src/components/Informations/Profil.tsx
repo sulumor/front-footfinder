@@ -3,9 +3,14 @@ import { calculateAge } from "@/utils/functions";
 import { formatBirthDate } from "@/utils/dateFunctions";
 import { Flex, Grid, GridItem, Box, Text } from "@chakra-ui/react";
 import { MobileView, BrowserView } from "react-device-detect";
+import { Team } from "@/@Types";
 
 export function ProfilInformation(): JSX.Element {
   const { user } = useAuth();
+  const playerCurrentTeam: Team = user?.teams.filter((team: Team) => team.season === '2023-2024')[0];
+
+
+  console.log(user);
 
   return (
     <Box p={6}>
@@ -16,7 +21,7 @@ export function ProfilInformation(): JSX.Element {
         <Flex mb="2">
           <Text textStyle="h5">Ville</Text>
           <Text ml="2" textStyle="text">
-            {user?.role ? user?.teams[0]?.city : user?.team?.city}
+            {user?.role ? playerCurrentTeam?.city : user?.team?.city}
           </Text>
         </Flex>
         {user?.role && (
@@ -56,7 +61,7 @@ export function ProfilInformation(): JSX.Element {
         <Flex mb="2">
           <Text textStyle="h5">Club</Text>
           <Text ml="2" textStyle="text">
-            {user?.role ? user?.teams[0]?.club_name : user?.team?.club_name}
+            {user?.role ? playerCurrentTeam?.club_name : user?.team?.club_name}
           </Text>
         </Flex>
       </MobileView>
@@ -87,7 +92,7 @@ export function ProfilInformation(): JSX.Element {
                 Club
               </Text>
               <Text textStyle="text">
-                {user?.teams[0]?.club_name}, {user?.teams[0]?.city}
+                {playerCurrentTeam?.club_name}, {playerCurrentTeam?.city}
               </Text>
             </GridItem>
 
@@ -95,7 +100,7 @@ export function ProfilInformation(): JSX.Element {
               <Text textStyle="h5" mb="2">
                 Stade
               </Text>
-              <Text textStyle="text">{user?.teams[0]?.stadium_name}</Text>
+              <Text textStyle="text">{playerCurrentTeam?.stadium_name}</Text>
             </GridItem>
             <GridItem rowStart={2} colStart={2}>
               <Text textStyle="h5" mb="2">
