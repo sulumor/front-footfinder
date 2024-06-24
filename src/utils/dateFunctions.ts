@@ -16,7 +16,7 @@ export function formatDate(date : string) : string {
     dateToFormat;
 }
 
-export function formatBirthDate(date : string ) : string {
+export function formatBirthDate(date : string) : string {
   const options : Intl.DateTimeFormatOptions = {
     year: "numeric",
     month: "long",
@@ -25,7 +25,8 @@ export function formatBirthDate(date : string ) : string {
   return new Date(date).toLocaleDateString("fr-FR", options);
 }
 
-export function formatToCalendar(date: number ) : string {
+export function formatToCalendar(date: number | string) : string {
+  if(typeof date === "string") date = Date.parse(date)
   const d : Date = new Date(date);
   return `${d.getFullYear()}-${Intl.DateTimeFormat("fr-FR", { month: "2-digit"}).format(d)}-${d.getDate()}`;
 }

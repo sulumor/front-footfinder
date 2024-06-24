@@ -1,5 +1,5 @@
 import { Form } from "@/@Types/utils";
-import { formatToCalendar } from "@/utils/dateFunctions";
+import { formatToCalendar, today } from "@/utils/dateFunctions";
 import { FormControl, FormErrorMessage, FormLabel, Input } from "@chakra-ui/react";
 
 export function DateInput({ value, onChange, required, label, placeholder = "Selectionner la date" }: Form): JSX.Element {
@@ -10,7 +10,7 @@ export function DateInput({ value, onChange, required, label, placeholder = "Sel
       <Input
         type="date"
         placeholder={placeholder}
-        value={formatToCalendar(value as number)}
+        value={value ? formatToCalendar(value) : formatToCalendar(today.getTime())}
         onChange={onChange}
       />
       <FormErrorMessage>{label} est obligatoire</FormErrorMessage>
