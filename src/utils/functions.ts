@@ -21,31 +21,6 @@ export function sortByDesc(matches: Match[]) : Match[] {
   return sortResponse;
 }
 
-export function formatDate(date : string | Date) : string {
-  const options : Intl.DateTimeFormatOptions = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-
-  return new Date(date as Date).toLocaleDateString("fr-FR", options);
-}
-
-export function formatBirthDate(date : string | Date) : string {
-  const options : Intl.DateTimeFormatOptions = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-
-  return new Date(date as Date).toLocaleDateString("fr-FR", options);
-}
-
-export function formatToCalendar(date: number ) : string {
-  const d = new Date(date);
-  return `${d.getFullYear()}-${Intl.DateTimeFormat("fr-FR", { month: "2-digit"}).format(d)}-${d.getDate()}`;
-}
 
 export function calculateAge(birthdate: string): number {
   const today = new Date();

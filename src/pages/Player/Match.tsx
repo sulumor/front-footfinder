@@ -9,6 +9,7 @@ import {
 import { useEffect, useState } from "react";
 import { Match as MatchType } from "@/@Types";
 import { sortByAsc, sortByDesc } from "@/utils/functions";
+import { stringToTimestamp, today } from "@/utils/dateFunctions";
 import { NextGamesTab, PastGamesTab } from "@/components/Tab";
 import { useAuth } from "@/context/Auth";
 import { AddMatchButton } from "@/components/Button";
@@ -20,11 +21,13 @@ export function Match() {
 
 
   useEffect(() => {
-    const sortGames : () => void = () => {
+    const sortGames: () => void = () => {
       const next: MatchType[] = [];
-      const last : MatchType[] = [];
+      const last: MatchType[] = [];
+      const todayGetTime: number = today.getTime() / 1000;
       userGames?.forEach((match: MatchType) => {
-        if (new Date(match.date) <= new Date()) {
+        const schedule: number = new Date(match.date).getTime() / 1000 + stringToTimestamp(match.time);
+        if (schedule < todayGetTime) {
           last.push(match);
         } else {
           next.push(match);
@@ -36,7 +39,7 @@ export function Match() {
     sortGames();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userGames]);
-  
+
   useEffect(() => {
     setHasToBeRefetch(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -45,19 +48,19 @@ export function Match() {
   return (
     <Box h="100%" p={10}>
       <Heading as="h2" variant="h2">Vos matchs et leurs statistiques</Heading>
-      <Box w={{base:"full", md:"12vw"}} position="relative" left={{base: 0, md: "80vw"}}>
-        <AddMatchButton/>
+      <Box w={{ base: "full", md: "12vw" }} position="relative" left={{ base: 0, md: "80vw" }}>
+        <AddMatchButton />
       </Box>
-        <Tabs variant="soft-rounded" colorScheme="red">
-          <TabList>
-              <Tab>A venir</Tab>
-              <Tab>Historique</Tab>
-          </TabList>
-          <TabPanels>
-            <NextGamesTab games={nextGames}/>
-            <PastGamesTab games={pastGames} />
-          </TabPanels>
-        </Tabs>
+      <Tabs variant="soft-rounded" colorScheme="red">
+        <TabList>
+          <Tab>A venir</Tab>
+          <Tab>Historique</Tab>
+        </TabList>
+        <TabPanels>
+          <NextGamesTab games={nextGames} />
+          <PastGamesTab games={pastGames} />
+        </TabPanels>
+      </Tabs>
     </Box>
   );
 }

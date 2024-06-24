@@ -1,5 +1,5 @@
 import { Form } from "@/@Types/utils";
-import { formatToCalendar } from "@/utils/functions";
+import { formatToCalendar } from "@/utils/dateFunctions";
 import { FormControl, FormErrorMessage, FormLabel, Input } from "@chakra-ui/react";
 
 export function DateInput({ value, onChange, required, label, placeholder = "Selectionner la date et l'heure" }: Form): JSX.Element {

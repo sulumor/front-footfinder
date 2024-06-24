@@ -6,6 +6,7 @@ import { Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody } from "
 import { Box, Button, Flex, Heading, Text, useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { StatsBox } from "../Box";
+import { formatDate } from "@/utils/dateFunctions";
 
 export function ProfilDrawer({ player }: { player: PlayerView }): JSX.Element {
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -13,7 +14,7 @@ export function ProfilDrawer({ player }: { player: PlayerView }): JSX.Element {
   const [nextMatch, setNextMatch] = useState<Match>();
 
   useEffect(() => {
-    const fetchData = async () : Promise<void> => {
+    const fetchData = async (): Promise<void> => {
       const response = await crud.get(["scout/player", "match"], [player?.id]);
       let oneMatch: Match[] = [];
       if (response.status === 200) oneMatch = sortByDesc(response.data);
@@ -47,8 +48,8 @@ export function ProfilDrawer({ player }: { player: PlayerView }): JSX.Element {
             <Flex mb="2">
               <Text textStyle="h5">Club{plurials(player?.teams)}</Text>
               <Flex flexDirection="column">
-                {player?.teams.sort(function (a: Team, b : Team) {
-                    return Number.parseInt(b.season, 10) - Number.parseInt(a.season, 10);
+                {player?.teams.sort(function (a: Team, b: Team) {
+                  return Number.parseInt(b.season, 10) - Number.parseInt(a.season, 10);
                 }).map((team: Team) => (
                   <Text key={player.id - team.id} ml="2" textStyle="text">
                     {team?.season} {team?.club_name}
@@ -85,12 +86,7 @@ export function ProfilDrawer({ player }: { player: PlayerView }): JSX.Element {
                 <Box>
                   <Heading as="h3" variant="h3" textAlign="center">Dernier match</Heading>
                   <Text textStyle="h4" textAlign="center">
-                    {new Date(nextMatch?.date as Date).toLocaleDateString("fr-FR", {
-                      weekday: "long",
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
+                    {formatDate(nextMatch?.date)}
                   </Text>
                   <Text textStyle="h3" p="0.8rem" >
                     {nextMatch?.home.club_name}

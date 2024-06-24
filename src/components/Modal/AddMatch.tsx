@@ -1,5 +1,5 @@
 import {
-  Button, Heading, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay,
+  Button, FormControl, FormLabel, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay,
   Text,
 } from "@chakra-ui/react";
 import { ChangeEvent, useState } from "react";
@@ -10,7 +10,7 @@ import { useAuth } from "@/context/Auth";
 import { TeamSelect } from "../Select";
 import { Modal as ModalType } from "@/@Types/utils";
 import { DateInput } from "../Input";
-import { formatToCalendar } from "@/utils/functions";
+import { formatToCalendar, today } from "@/utils/dateFunctions";
 
 export function AddMatchModal({ isOpen, onClose }: ModalType): JSX.Element {
   const navigate = useNavigate();
@@ -18,14 +18,14 @@ export function AddMatchModal({ isOpen, onClose }: ModalType): JSX.Element {
   const userTeam: number = user?.teams[0]?.team_id;
   const [isError, setIsError] = useState<boolean>(false);
 
-  const today = Date.now()
   const [matchValues, setMatchValues] = useState<setMatchType>({
     homeTeam: 0,
     awayTeam: 0,
-    date: formatToCalendar(today),
+    date: formatToCalendar(today.getTime()),
+    time: undefined
   });
 
-  const handleChangeField = (match: "homeTeam" | "awayTeam" | "date") => (value: number | string | Date): void => {
+  const handleChangeField = (match: "homeTeam" | "awayTeam" | "date" | "time") => (value: number | string): void => {
     setMatchValues({ ...matchValues, [match]: value });
   };
 
@@ -47,9 +47,6 @@ export function AddMatchModal({ isOpen, onClose }: ModalType): JSX.Element {
     return home && away && matchValues.homeTeam !== matchValues.awayTeam;
   };
 
-
-  console.log(matchValues.date);
-
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <form onSubmit={handleSubmit}>
@@ -68,6 +65,14 @@ export function AddMatchModal({ isOpen, onClose }: ModalType): JSX.Element {
               label="Date du match"
               onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("date")(e.target.value)}
             />
+            <FormControl>
+              <FormLabel>Heure du match</FormLabel>
+              <Input
+                type="time"
+                value={matchValues.time}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeField("time")(e.target.value)}
+              />
+            </FormControl>
             <TeamSelect
               required={true}
               label={"Equipe à domicile"}

@@ -81,7 +81,8 @@ export interface Match {
   id: number;
   match_id: number;
   score: string;
-  date: string | Date;
+  date: string;
+  time: string;
   assists: number;
   goals_conceded: number;
   red_card: number;
@@ -98,6 +99,7 @@ export interface setMatch {
   homeTeam: number | string;
   awayTeam: number | string;
   date: string | number;
+  time?: string | number;
 }
 
 export interface Player {

@@ -1,5 +1,5 @@
 import { Match } from "@/@Types";
-import { formatDate } from "@/utils/functions";
+import { formatDate, formatTime } from "@/utils/dateFunctions";
 import { Box, Card, CardBody, CardFooter, CardHeader, Flex, Heading, TabPanel, Text, Wrap, WrapItem } from "@chakra-ui/react";
 import { AddMatchButton, DeleteMatchButton } from "../Button";
 
@@ -14,6 +14,9 @@ export function NextGamesTab({ games }: { games: Match[] }): JSX.Element {
                 <CardHeader>
                   <Text textStyle="secondTitle" noOfLines={1}>
                     {formatDate(game.date)}
+                  </Text>
+                  <Text textStyle="secondTitle" align="center" noOfLines={1}>
+                    à {formatTime(game.time)}
                   </Text>
                 </CardHeader>
                 <CardBody>
