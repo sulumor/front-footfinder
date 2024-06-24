@@ -1,5 +1,6 @@
 import { useAuth } from "@/context/Auth";
-import { calculateAge, formatBirthDate } from "@/utils/functions";
+import { calculateAge } from "@/utils/functions";
+import { formatBirthDate } from "@/utils/dateFunctions";
 import { Flex, Grid, GridItem, Box, Text } from "@chakra-ui/react";
 import { MobileView, BrowserView } from "react-device-detect";
 

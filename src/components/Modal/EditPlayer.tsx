@@ -7,6 +7,7 @@ import { useAuth } from "@/context/Auth";
 import crud from "@/utils/crud";
 import { PlayerPatch } from "@/@Types";
 import { FormInput } from "../Input/Form";
+import { DateInput } from "../Input";
 
 export function EditPlayerModal({ isOpen, onClose, signup = false }: ModalType): JSX.Element {
   const { user, getUser } = useAuth();
@@ -113,16 +114,12 @@ export function EditPlayerModal({ isOpen, onClose, signup = false }: ModalType):
               value={patchValues?.nationality}
               onChange={(e: ChangeEvent<HTMLSelectElement>) => handleChangeField("nationality")(e.target.value)}
             />
-            <FormControl py={4} isRequired>
-              <FormLabel variant="h6">Votre date de naissance</FormLabel>
-              <Input
-                placeholder="Select Date and Time"
-                size="md"
-                type="date"
-                value={patchValues?.birth_date as string}
-                onChange={(e) => handleChangeField("birth_date")(e.target.value)}
-              />
-            </FormControl>
+            <DateInput
+              label="Votre date de naissance"
+              required={true}
+              value={patchValues?.birth_date as string}
+              onChange={(e: ChangeEvent<HTMLSelectElement>) => handleChangeField("birth_date")(e.target.value)}
+            />
             <PositionSelect
               required={true}
               value={patchValues?.position}
