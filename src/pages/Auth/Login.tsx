@@ -1,7 +1,6 @@
 import { Flex, Heading, Text } from "@chakra-ui/react";
 import { LoginForm } from "@/components/Form";
 import { LoadingModal } from "@/components/Modal";
-import { Link } from "react-router-dom";
 import { TestPopover } from "@/components/Popover";
 
 export function Login(): JSX.Element {

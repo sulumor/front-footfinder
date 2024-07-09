@@ -8,7 +8,6 @@ import { validateEmail, validatePassword } from "@/utils/validation";
 import { useAuth } from "@/context/Auth";
 import { Login as LoginType } from "@/@Types";
 import { EmailInput, PasswordInput } from "../Input";
-import { TestPopover } from "../Popover";
 
 export function LoginForm(): JSX.Element {
   const toast = useToast();
