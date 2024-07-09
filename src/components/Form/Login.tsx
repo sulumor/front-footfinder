@@ -1,8 +1,9 @@
 import {
   Flex, Button, useToast,
+  Text,
 } from "@chakra-ui/react";
 import { ChangeEvent, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { validateEmail, validatePassword } from "@/utils/validation";
 import { useAuth } from "@/context/Auth";
 import { Login as LoginType } from "@/@Types";
@@ -15,21 +16,21 @@ export function LoginForm(): JSX.Element {
     login, error, loading, user,
   } = useAuth();
   const [formValues, setFormValues] = useState<LoginType>({
-    email: "jean.dujardin@mail.io",
-    password: "yjjk8E676a9JQZ!",
+    email: "",
+    password: "",
   });
 
-  const handleChangeField = (user: "email" | "password") => (value: string) : void => {
+  const handleChangeField = (user: "email" | "password") => (value: string): void => {
     setFormValues({ ...formValues, [user]: value });
   };
 
-  const setEnableButton = () : boolean => {
-    const isValidPassword : boolean = validatePassword(formValues.password);
-    const isValidEmail : boolean = validateEmail(formValues.email);
+  const setEnableButton = (): boolean => {
+    const isValidPassword: boolean = validatePassword(formValues.password);
+    const isValidEmail: boolean = validateEmail(formValues.email);
     return isValidEmail && isValidPassword;
   };
 
-  const handleSubmit = async () : Promise<void> => {
+  const handleSubmit = async (): Promise<void> => {
     await login(formValues);
   };
 
@@ -69,10 +70,9 @@ export function LoginForm(): JSX.Element {
         <Button isLoading={loading} w="full" variant="redEvo" onClick={handleSubmit} isDisabled={!setEnableButton()}>
           Se connecter
         </Button>
-        <div>
-          <p>scout:</p>
-          <p>nicolas.dupon@mail.io X346Dc5V7kfYmv!</p>
-        </div>
+        <Text textAlign={"right"} mt={2} textStyle="textSmall">
+          <Link to={"/forgot-password"}>Mot de passe oublié</Link>
+        </Text>
       </form>
     </Flex>
   );
