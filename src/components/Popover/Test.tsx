@@ -4,7 +4,7 @@ export function TestPopover(): JSX.Element {
   return (
     <Popover>
       <PopoverTrigger>
-        <Button>Voir compte de tests</Button>
+        <Button w={{ base: "50%", md: "20%" }} variant="black">Voir compte de tests</Button>
       </PopoverTrigger>
       <PopoverContent>
         <PopoverArrow />
@@ -20,6 +20,6 @@ export function TestPopover(): JSX.Element {
             password: X346Dc5V7kfYmv!</Text>
         </PopoverBody>
       </PopoverContent>
-    </Popover>
+    </Popover >
   )
 }

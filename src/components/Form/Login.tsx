@@ -54,8 +54,8 @@ export function LoginForm(): JSX.Element {
   }, [error, user]);
 
   return (
-    <Flex w="80%" m="0 auto" justifyContent="center">
-      <form onSubmit={handleSubmit}>
+    <Flex w={{ base: "80%", md: "45%" }} m="0 auto" justifyContent="center">
+      <form style={{ width: "100%" }} onSubmit={handleSubmit}>
         <EmailInput
           required={false}
           value={formValues.email}
