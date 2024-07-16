@@ -1,7 +1,4 @@
--> Mettre en place un reset password
--> Faire page CGU
 -> Voir expiration time du refresh token
 -> Pagination des matchs
 -> Voir pour modifier la modification du profil => clique sur modifier tous les champs se transforme en input
 ->Back faire une route pour avoir le prochain match du joueur et une autre pour les stats de son dernier match ou bien modifier le rendu des joueurs suivis
-->Lors du clique profil du joueur suivi, ne pas changer de page mais mettre une modal ou page sur le coté avec les infos 

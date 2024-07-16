@@ -3,8 +3,8 @@ import { createBrowserRouter } from "react-router-dom";
 import Home from "@/pages";
 import ErrorPage from "@/pages/Error/Error";
 import { HomeScout, Search } from "@/pages/Scout";
-import { HomePlayer, Match }  from "@/pages/Player";
-import { Signup, Login } from "@/pages/Auth";
+import { HomePlayer, Match } from "@/pages/Player";
+import { Signup, Login, ForgotPassword, ResetPassword } from "@/pages/Auth";
 import { GuestLayout, PlayerLayout, ScoutLayout } from "@/components/Layout";
 import { Profil, Notices } from "@/pages/Common";
 
@@ -18,6 +18,8 @@ export const router = createBrowserRouter([
       { path: "/login", element: <Login /> },
       { path: "/signup", element: <Signup /> },
       { path: "/notices", element: <Notices /> },
+      { path: "/forgot-password", element: <ForgotPassword /> },
+      { path: "/reset-password/:id/:token", element: <ResetPassword /> }
 
     ],
   },
@@ -36,7 +38,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <HomeScout /> },
       { path: "/scout/me", element: <Profil /> },
-      { path: "/scout/search", element: <Search/> },
+      { path: "/scout/search", element: <Search /> },
     ],
   },
 ]);

@@ -62,6 +62,52 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
     }
   }
 
+  async function forgotPassword(body: { email: string; }): Promise<string | void> {
+    setLoading(true);
+    setError("");
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACK}/forgot-password`,
+        body,
+      )
+      setLoading(false);
+      if (response.status === 204) return "success"
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.message === "Network Error") setError("Erreur dans le réseau");
+        else setError(error.response?.data.error);
+        setLoading(false);
+      }
+    }
+  }
+
+  async function resetPassword(body: { password: string; confirmedPassword: string; id: string; }, token: string): Promise<string | void> {
+    setLoading(true);
+    setError("");
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACK}/reset-password`,
+        {
+          ...body,
+        },
+        {
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      )
+      setLoading(false);
+      if (response.status === 204) return "success"
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.message === "Network Error") setError("Erreur dans le réseau");
+        else setError(error.response?.data.error);
+        setLoading(false);
+      }
+    }
+  }
+
   async function getUser(token: { id: number; role: string }): Promise<void> {
     const role: "player" | "scout" = token.role ? "player" : "scout";
     const response = await crud.get([role], []);
@@ -124,7 +170,9 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
       getUser,
       userGames,
       userGlobalStats,
-      signup
+      signup,
+      forgotPassword,
+      resetPassword
     }}
     >
       {children}
